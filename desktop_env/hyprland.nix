@@ -1,7 +1,13 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
-  home.activation.symlinkHyprlandConf = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ln -sf $HOME/.dotfiles/user/config_files/hypr/hyprland.conf $HOME/.config/hypr/hyprland.conf
+  home.activation.symlinkHyprlandConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ln -sf $HOME/.home-manager/config_files/hypr/hyprland.conf $HOME/.config/hypr/hyprland.conf
   '';
 }

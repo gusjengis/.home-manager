@@ -4,10 +4,8 @@
   home.sessionVariables = {
     # Tells apps that prefer GTK what theme variant to use
     GTK_THEME = "Adwaita:dark";
-    QT_STYLE_OVERRIDE =
-      "kvantum"; # Use Kvantum for better dark theme support on Qt
-    QT_QPA_PLATFORMTHEME =
-      "qt5ct"; # So you can control themes via qt5ct if needed
+    QT_STYLE_OVERRIDE = "kvantum"; # Use Kvantum for better dark theme support on Qt
+    QT_QPA_PLATFORMTHEME = "qt5ct"; # So you can control themes via qt5ct if needed
   };
 
   # Set GTK theme

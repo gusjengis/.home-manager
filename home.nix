@@ -14,7 +14,7 @@
     ./directories/mod.nix
     ./repos/mod.nix
     ./nvim/mod.nix
-    ~/.dotfiles/user/secrets.nix
+    ./secrets.nix
   ];
 
   home.username = "gusjengis";
@@ -37,4 +37,5 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  waybar.enable = true;
 }

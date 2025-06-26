@@ -1,5 +1,5 @@
 {
-  description = "My first flake!";
+  description = "Home Manager Flake";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
@@ -63,29 +63,20 @@
       alga = inputs.alga.packages.${system}.default;
     in
     {
-      nixosConfigurations = {
-        nixos = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            # ./system/configuration.nix
-            # ./system/steam.nix
-            # /home/gusjengis/.dotfiles/system/grub.nix
-            # ./system/graphics/drivers.nix
-            /etc/nixos/hardware-configuration.nix
-            /etc/nixos/configuration.nix
-          ];
-        };
-      };
       homeConfigurations = {
         gusjengis = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
             inherit alga;
+            inherit inputs;
             inherit (pkgs) plasticscm;
           };
-          modules = [ ./user/home.nix ];
+          modules = [
+            ./home.nix
+            /etc/nix-modules/homeManagerModules
+          ];
         };
       };
+
     };
 }

@@ -20,8 +20,8 @@
     enable = true;
     initExtra = "";
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos/flake.nix";
-      rehome = "home-manager switch --impure --flake ~/.home-manager/flake.nix";
+      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos/";
+      rehome = "home-manager switch --impure --flake ~/.home-manager/";
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";
       vim = "nvim";
@@ -30,7 +30,6 @@
 
   home.packages = with pkgs; [ pipes-rs ];
 
-  home.file.".config/pipes-rs/config.toml".source =
-    ~/.dotfiles/user/config_files/pipes-rs/config.toml;
+  home.file.".config/pipes-rs/config.toml".source = ~/.home-manager/config_files/pipes-rs/config.toml;
   home.file.".config/pipes-rs/config.toml".force = true;
 }
