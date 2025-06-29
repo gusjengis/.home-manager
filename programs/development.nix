@@ -7,5 +7,8 @@
     blender
     vscode
     openssl
+    immersed
+    mutter
+    arduino
   ];
 }

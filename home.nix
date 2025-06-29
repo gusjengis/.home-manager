@@ -8,6 +8,7 @@
   programs.home-manager.enable = true;
 
   imports = [
+    ./modules.nix
     ./desktop_env/mod.nix
     ./programs/mod.nix
     ./utilities/mod.nix

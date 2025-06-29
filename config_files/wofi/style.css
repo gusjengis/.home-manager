@@ -7,7 +7,7 @@
 window {
   font-size: 14px;
   background-color: transparent;
-  border-radius: 0px;
+  /* border-radius: 0px; */
   opacity: 1.0;
   padding: 10px 10px 10px 10px;
 }
@@ -26,22 +26,23 @@ window {
 
 #entry {
   padding: 5px 10px;
-  /* border-radius: 20px; */
 }
 
 #entry #text {
   padding: 0px 0px 0px 10px;
   font-weight: normal;
-  color: white;
+  /* color: grey; */
 }
 
 #entry:selected {
+  /* background: rgba(0, 0, 0, 255); */
   background-color: rgba(100, 100, 100, 255);
 }
 
 #entry:selected #text {
   padding: 0px 0px 0px 10px;
   font-weight: normal;
+  color: white;
 }
 
 #input {
