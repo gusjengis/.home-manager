@@ -14,6 +14,7 @@
     ./messaging.nix
     ./music.nix
     ./notes.nix
+    ./office.nix
     ./recording.nix
     ./terminal.nix
   ];
