@@ -1,4 +1,9 @@
-{ config, pkgs, alga, ... }:
+{
+  config,
+  pkgs,
+  alga,
+  ...
+}:
 
 {
   home.packages = with pkgs; [

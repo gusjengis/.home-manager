@@ -25,6 +25,8 @@
     clone_repo https://github.com/gusjengis/mermaid-class-diagrams.git
     clone_repo https://github.com/gusjengis/lsp-servers.git
     clone_repo https://github.com/gusjengis/lsp-servers-cli.git
+    clone_repo https://github.com/gusjengis/hyprfocus.git
+    clone_repo https://github.com/gusjengis/Resume.git
   '';
 }
 

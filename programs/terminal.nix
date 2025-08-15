@@ -4,8 +4,10 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "Meslo Nerd Font";
+      name = "MesloLGS Nerd Font";
       size = 9;
+      # name = "GohuFont 14 Nerd Font Mono";
+      # size = 10.5;
     };
     themeFile = "GitHub_Dark";
     extraConfig = ''
@@ -16,9 +18,18 @@
     '';
   };
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    TERMINAL = "kitty";
+  };
+
+  home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
+
   programs.bash = {
     enable = true;
     initExtra = "";
+    bashrcExtra = ''export PATH="$HOME/.cargo/bin:$PATH"'';
+    profileExtra = ''export PATH="$HOME/.cargo/bin:$PATH"'';
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos/";
       rehome = "home-manager switch --impure --flake ~/.home-manager/";
@@ -27,6 +38,8 @@
       vim = "nvim";
     };
   };
+
+  systemd.user.sessionVariables.PATH = "$HOME/.cargo/bin:$PATH";
 
   home.packages = with pkgs; [ pipes-rs ];
 

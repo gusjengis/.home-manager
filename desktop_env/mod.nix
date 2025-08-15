@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./idle.nix
     ./hyprland.nix
     ./cursor.nix
     ./theme.nix

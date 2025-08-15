@@ -10,5 +10,12 @@
     immersed
     mutter
     arduino
+    android-studio
+    rustup
+    cloc
+    alacritty
+    typst
+    zathura
+    cudaPackages.nsight_systems
   ];
 }

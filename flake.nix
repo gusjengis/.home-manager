@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
+    unstable-nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
@@ -17,6 +18,7 @@
     {
       self,
       nixpkgs,
+      unstable-nixpkgs,
       home-manager,
       plasticscm-nixpkgs,
       ...
@@ -56,10 +58,16 @@
 
         plasticscm = final.plasticscm-client-complete;
       };
+
       pkgs = import nixpkgs {
         inherit system;
         overlays = [ plasticscmOverlay ];
       };
+
+      unstable = import unstable-nixpkgs {
+        inherit system;
+      };
+
       alga = inputs.alga.packages.${system}.default;
     in
     {
@@ -70,6 +78,7 @@
             inherit alga;
             inherit inputs;
             inherit (pkgs) plasticscm;
+            inherit unstable;
           };
           modules = [
             ./home.nix
