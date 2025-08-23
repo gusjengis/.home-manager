@@ -25,7 +25,7 @@
     }@inputs:
     let
       lib = nixpkgs.lib;
-      system = "x86_64-linux";
+      system = "aarch64-linux";
       plasticscmOverlay = final: prev: {
         plasticscm-client-core = prev.callPackage (
           plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-core/package.nix"

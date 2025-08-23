@@ -2,9 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    discord-canary
-    slack
-    whatsie
+    #!mac    discord-canary
+    #!mac       slack
     wireplumber
     libsForQt5.xwaylandvideobridge
   ];

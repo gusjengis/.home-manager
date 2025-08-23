@@ -9,9 +9,9 @@
   programs.chromium = {
     enable = true;
     commandLineArgs = [
-      "--ozone-platform=x11"
+      "--ozone-platform=wayland"
       # "--enable-unsafe-webgpu"
-      # "--enable-features=Vulkan"
+      "--enable-features=Vulkan"
     ];
     extensions = [
       "iobmefdldoplhmonnnkchglfdeepnfhd" # Google Search Keyboard Shortcuts

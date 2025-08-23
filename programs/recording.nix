@@ -8,8 +8,8 @@
 
 {
   home.packages = with pkgs; [
-    obs-studio
-    audacity
-    unstable.sunshine
+    # obs-studio
+    # audacity
+    # unstable.sunshine
   ];
 }

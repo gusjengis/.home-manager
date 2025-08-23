@@ -2,8 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    unityhub
-    plasticscm
-    verco
+    #!mac    unityhub
+    #!mac    plasticscm
+    # verco
   ];
 }

@@ -1,28 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  programs.kitty = {
-    enable = true;
-    font = {
-      name = "MesloLGS Nerd Font";
-      size = 9;
-      # name = "GohuFont 14 Nerd Font Mono";
-      # size = 10.5;
-    };
-    themeFile = "GitHub_Dark";
-    extraConfig = ''
-      enable_audio_bell no
-      background_opacity 1.0
-      scrollback_lines 10000
-      cursor_shape block
-    '';
-  };
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    TERMINAL = "kitty";
-  };
-
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
 
   programs.bash = {
@@ -36,13 +19,24 @@
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";
       vim = "nvim";
+      clean = "nix-collect-garbage -d && sudo nix-collect-garbage -d && nix store optimise && sudo nix store optimise";
+      nd = "nix develop";
     };
   };
 
   systemd.user.sessionVariables.PATH = "$HOME/.cargo/bin:$PATH";
 
-  home.packages = with pkgs; [ pipes-rs ];
+  home.packages = with pkgs; [
+    pipes-rs
+  ];
 
   home.file.".config/pipes-rs/config.toml".source = ~/.home-manager/config_files/pipes-rs/config.toml;
   home.file.".config/pipes-rs/config.toml".force = true;
+
+  home.activation.symlinkKittyConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p ~/.config/kitty
+
+    ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
+  '';
+
 }

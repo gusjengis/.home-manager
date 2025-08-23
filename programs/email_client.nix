@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ thunderbird ];
+  home.packages = with pkgs; [ 
+  #thunderbird 
+  ];
 }

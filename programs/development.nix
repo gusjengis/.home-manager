@@ -4,18 +4,19 @@
   home.packages = with pkgs; [
     postman
     docker
-    blender
-    vscode
+    #    blender
+    # vscode
     openssl
-    immersed
-    mutter
-    arduino
-    android-studio
+    #    immersed
+    # mutter
+    #    arduino
+    #    android-studio
     rustup
     cloc
-    alacritty
+    nodejs_24
+    # alacritty
     typst
     zathura
-    cudaPackages.nsight_systems
+    #    cudaPackages.nsight_systems
   ];
 }

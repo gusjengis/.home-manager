@@ -15,6 +15,8 @@
   ];
 
   home.activation.symlinkHyprlandConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p ~/.config/dunst
+
     ln -sf $HOME/.home-manager/config_files/hypr/hyprland.conf $HOME/.config/hypr/hyprland.conf
     ln -sf $HOME/.home-manager/config_files/hypr/hyprsunset.conf $HOME/.config/hypr/hyprsunset.conf
     ln -sf $HOME/.home-manager/config_files/hypr/hypridle.conf $HOME/.config/hypr/hypridle.conf
