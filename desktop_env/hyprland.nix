@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  unstable,
   lib,
   inputs,
   ...
@@ -10,11 +9,12 @@
 {
 
   home.packages = with pkgs; [
-    unstable.hyprsunset
+    hyprsunset
     hypridle
+    dunst
   ];
 
-  home.activation.symlinkHyprlandConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.symlinkTmuxConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/dunst
 
     ln -sf $HOME/.home-manager/config_files/hypr/hyprland.conf $HOME/.config/hypr/hyprland.conf

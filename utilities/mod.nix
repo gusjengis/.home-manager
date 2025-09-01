@@ -12,5 +12,6 @@
   ];
   home.packages = with pkgs; [
     acpi
+    btop
   ];
 }

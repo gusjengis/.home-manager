@@ -2,8 +2,9 @@
 
 {
   home.packages = with pkgs; [
-    postman
+    posting
     docker
+    oxker
     #    blender
     # vscode
     openssl
@@ -13,10 +14,12 @@
     #    android-studio
     rustup
     cloc
-    nodejs_24
-    # alacritty
+    # nodejs_24
     typst
     zathura
+    mesa-demos
+    vulkan-tools
+    mermaid-cli
     #    cudaPackages.nsight_systems
   ];
 }

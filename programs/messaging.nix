@@ -5,6 +5,6 @@
     #!mac    discord-canary
     #!mac       slack
     wireplumber
-    libsForQt5.xwaylandvideobridge
+    kdePackages.xwaylandvideobridge
   ];
 }

@@ -2,11 +2,9 @@
   description = "Home Manager Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
-    unstable-nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     alga.url = "github:Tenzer/alga";
     plasticscm-nixpkgs = {
       url = "github:musjj/nixpkgs/plasticscm";
@@ -18,14 +16,13 @@
     {
       self,
       nixpkgs,
-      unstable-nixpkgs,
       home-manager,
       plasticscm-nixpkgs,
       ...
     }@inputs:
     let
       lib = nixpkgs.lib;
-      system = "aarch64-linux";
+      system = builtins.currentSystem;
       plasticscmOverlay = final: prev: {
         plasticscm-client-core = prev.callPackage (
           plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-core/package.nix"
@@ -64,10 +61,6 @@
         overlays = [ plasticscmOverlay ];
       };
 
-      unstable = import unstable-nixpkgs {
-        inherit system;
-      };
-
       alga = inputs.alga.packages.${system}.default;
     in
     {
@@ -78,7 +71,6 @@
             inherit alga;
             inherit inputs;
             inherit (pkgs) plasticscm;
-            inherit unstable;
           };
           modules = [
             ./home.nix

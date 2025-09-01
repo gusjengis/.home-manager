@@ -11,8 +11,14 @@
   programs.bash = {
     enable = true;
     initExtra = "";
-    bashrcExtra = ''export PATH="$HOME/.cargo/bin:$PATH"'';
-    profileExtra = ''export PATH="$HOME/.cargo/bin:$PATH"'';
+    bashrcExtra = ''
+      export PATH="$HOME/.cargo/bin:$PATH"
+      export PS1=" \033[1;32m\]\w\[\033[0m "
+    '';
+    profileExtra = ''
+      export PATH="$HOME/.cargo/bin:$PATH"
+      export PS1=" \033[1;32m\]\w\[\033[0m "
+    '';
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos/";
       rehome = "home-manager switch --impure --flake ~/.home-manager/";
@@ -20,7 +26,8 @@
       venv = ". .venv/bin/activate";
       vim = "nvim";
       clean = "nix-collect-garbage -d && sudo nix-collect-garbage -d && nix store optimise && sudo nix store optimise";
-      nd = "nix develop";
+      nd = "nix develop --impure";
+      ta = "tmux attach || tmux";
     };
   };
 
@@ -37,6 +44,7 @@
     mkdir -p ~/.config/kitty
 
     ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
+
   '';
 
 }

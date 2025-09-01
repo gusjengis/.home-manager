@@ -10,8 +10,10 @@
     enable = true;
     commandLineArgs = [
       "--ozone-platform=wayland"
-      # "--enable-unsafe-webgpu"
-      "--enable-features=Vulkan"
+      "--use-angle=vulkan"
+      "--enable-features=Vulkan,UseSkiaRenderer"
+      "--ignore-gpu-blocklist"
+      "--enable-unsafe-webgpu"
     ];
     extensions = [
       "iobmefdldoplhmonnnkchglfdeepnfhd" # Google Search Keyboard Shortcuts
