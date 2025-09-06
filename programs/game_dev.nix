@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  stable,
   lib,
   PC,
   ...
@@ -13,6 +14,7 @@
     ++ lib.optionals PC [
       unityhub
       # plasticscm
+      stable.roslyn-ls
       verco
     ];
 }
