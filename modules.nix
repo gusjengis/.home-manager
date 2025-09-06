@@ -5,7 +5,7 @@
   ...
 }:
 {
-  waybar.enable = true;
+  # waybar.enable = true;
   wofi.enable = true;
   hyprpaper.enable = true;
 }

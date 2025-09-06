@@ -7,5 +7,7 @@
     xfce.thunar-volman
     gvfs
     qimgv
+    file-roller
+    udiskie
   ];
 }

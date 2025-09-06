@@ -1,9 +1,18 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  PC,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    #!mac    unityhub
-    #!mac    plasticscm
-    # verco
-  ];
+  home.packages =
+    with pkgs;
+    [ ]
+    ++ lib.optionals PC [
+      unityhub
+      plasticscm
+      verco
+    ];
 }

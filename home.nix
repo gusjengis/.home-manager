@@ -15,7 +15,6 @@
     ./directories/mod.nix
     ./repos/mod.nix
     ./nvim/mod.nix
-    #    ./secrets.nix
   ];
 
   home.username = "gusjengis";
@@ -34,7 +33,6 @@
 
   home.sessionVariables = {
     LD_LIBRARY_PATH = /run/opengl-driver/lib;
-    #    ANTHROPIC_API_KEY = config.secrets.anthropicApiKey;
   };
 
   nixpkgs.config.allowUnfree = true;

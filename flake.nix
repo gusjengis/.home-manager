@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    stable-nixpkgs.url = "nixpkgs/nixos-25.05";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
@@ -16,6 +17,7 @@
     {
       self,
       nixpkgs,
+      stable-nixpkgs,
       home-manager,
       plasticscm-nixpkgs,
       ...
@@ -61,7 +63,13 @@
         overlays = [ plasticscmOverlay ];
       };
 
+      stable = import stable-nixpkgs {
+        inherit system;
+      };
+
       alga = inputs.alga.packages.${system}.default;
+      Mac = pkgs.hostPlatform.isAarch64;
+      PC = pkgs.hostPlatform.isx86_64;
     in
     {
       homeConfigurations = {
@@ -69,7 +77,10 @@
           inherit pkgs;
           extraSpecialArgs = {
             inherit alga;
+            inherit Mac;
+            inherit PC;
             inherit inputs;
+            inherit stable;
             inherit (pkgs) plasticscm;
           };
           modules = [

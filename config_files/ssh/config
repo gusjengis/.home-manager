@@ -1,0 +1,4 @@
+Host portfolio
+    HostName 44.229.53.240
+    User ec2-user
+    IdentityFile ~/.config/secrets/ssh/Portfolio-SSH.pem

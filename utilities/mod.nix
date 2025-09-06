@@ -1,4 +1,10 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  Mac,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -10,8 +16,10 @@
     ./lg_tv.nix
     ./tmux.nix
   ];
-  home.packages = with pkgs; [
-    acpi
-    btop
-  ];
+  home.packages =
+    with pkgs;
+    [
+      btop
+    ]
+    ++ lib.optionals Mac [ acpi ];
 }

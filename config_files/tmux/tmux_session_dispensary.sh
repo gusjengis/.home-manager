@@ -2,6 +2,7 @@
 
 DIRS=(
   "$HOME/Documents/Code"
+  "$HOME/Documents/Code/Plinth"
   "$HOME/Documents/Obsidian"
 )
 

@@ -1,7 +1,7 @@
 mode=drun
 allow_images=true
 image_size=28
-prompt= Search
+prompt=Search
 columns=1
 width=310
 height=600
@@ -24,4 +24,4 @@ line_wrap=char
 key_down=Down
 key_forward=Right
 monitor=auto
-hide_search=true
+hide_search=false

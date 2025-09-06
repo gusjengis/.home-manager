@@ -22,6 +22,7 @@
 
     cd ~/Documents/Code/
 
+    clone_repo https://github.com/gusjengis/Portfolio.git
     clone_repo https://github.com/gusjengis/CRT.git
     clone_repo https://github.com/gusjengis/Graph.git
     clone_repo https://github.com/gusjengis/Line_Test.git
@@ -40,5 +41,3 @@
     clone_repo https://github.com/gusjengis/Game-of-Life.git
   '';
 }
-
-# clone_repo https://github.com/gusjengis/neovim-project.git

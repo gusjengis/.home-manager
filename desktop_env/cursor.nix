@@ -13,14 +13,12 @@ in
     size = CURSOR_SIZE;
   };
 
-  # Apply to GTK applications
   gtk.cursorTheme = {
     name = CURSOR_THEME;
     package = CURSOR_PKG;
     size = CURSOR_SIZE;
   };
 
-  # Apply settings immediately
   home.sessionVariables = {
     XCURSOR_THEME = CURSOR_THEME;
     XCURSOR_SIZE = "${toString CURSOR_SIZE}";

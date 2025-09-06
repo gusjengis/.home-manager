@@ -1,10 +1,22 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  PC,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    #!mac    discord-canary
-    #!mac       slack
-    wireplumber
-    kdePackages.xwaylandvideobridge
-  ];
+  home.packages =
+    with pkgs;
+    [
+      gurk-rs
+      wireplumber
+      kdePackages.xwaylandvideobridge
+      signal-desktop
+    ]
+    ++ lib.optionals PC [
+      #discord-canary
+      #slack
+    ];
 }

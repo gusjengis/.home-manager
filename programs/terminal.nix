@@ -42,8 +42,10 @@
 
   home.activation.symlinkKittyConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/kitty
+    mkdir -p ~/.ssh
 
     ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
+    ln -sf $HOME/.home-manager/config_files/ssh/config $HOME/.ssh/config
 
   '';
 

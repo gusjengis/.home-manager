@@ -1,8 +1,16 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  PC,
+  lib,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    pavucontrol
-    # easyeffects
-  ];
+  home.packages =
+    with pkgs;
+    [
+      pavucontrol
+    ]
+    ++ lib.optionals PC [ easyeffects ];
 }

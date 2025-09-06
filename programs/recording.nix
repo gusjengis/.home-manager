@@ -7,8 +7,7 @@
 
 {
   home.packages = with pkgs; [
-    # obs-studio
-    # audacity
-    # sunshine
+    obs-studio
+    audacity
   ];
 }

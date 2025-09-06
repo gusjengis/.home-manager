@@ -2,10 +2,9 @@
 
 {
   imports = [
-    ./circuits.nix
-    # ./imagequeue.nix
     ./misc.nix
     ./mosaic.nix
     ./plinth.nix
+    ./portfolio.nix
   ];
 }
