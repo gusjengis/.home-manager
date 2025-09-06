@@ -10,8 +10,6 @@
     enable = true;
     commandLineArgs = [
       "--ozone-platform=wayland"
-      "--use-angle=vulkan"
-      "--enable-features=Vulkan,UseSkiaRenderer"
       "--ignore-gpu-blocklist"
       "--enable-unsafe-webgpu"
     ];
