@@ -12,7 +12,7 @@
     [ ]
     ++ lib.optionals PC [
       unityhub
-      plasticscm
+      # plasticscm
       verco
     ];
 }
