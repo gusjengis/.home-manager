@@ -42,11 +42,14 @@
 
   home.activation.symlinkKittyConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/kitty
+    mkdir -p ~/.config/zed
     mkdir -p ~/.ssh
 
     ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
     ln -sf $HOME/.home-manager/config_files/ssh/config $HOME/.ssh/config
 
+    ln -sf $HOME/.home-manager/config_files/zed/settings.json $HOME/.config/zed/settings.json
+    ln -sf $HOME/.home-manager/config_files/zed/keymap.json $HOME/.config/zed/keymap.json
   '';
 
 }
