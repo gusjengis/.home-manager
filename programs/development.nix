@@ -18,7 +18,7 @@
       rustup
       cloc
       stable.nodejs_24
-      typst
+      stable.typst
       zathura
       mesa-demos
       vulkan-tools
