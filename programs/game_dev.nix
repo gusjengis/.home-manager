@@ -13,7 +13,7 @@
     [ ]
     ++ lib.optionals PC [
       unityhub
-      # plasticscm
+      plasticscm
       stable.roslyn-ls
       verco
     ];

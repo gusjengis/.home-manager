@@ -14,6 +14,7 @@
       posting
       docker
       oxker
+      numlockx
       openssl
       rustup
       cloc

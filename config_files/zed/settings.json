@@ -1,13 +1,13 @@
 {
   "auto_install_extensions": {
-    "github-dark-default": true
+    "github-theme": true
   },
   "theme": "Github Dark",
   "tab_bar": { "show": false },
   "title_bar": { "show_menus": false },
   "ui_font_size": 13,
   "buffer_font_size": 13,
-  "buffer_line_height": "standard",
+  "buffer_line_height": { "custom": 1.19 },
   "buffer_font_family": "CommitMono",
   "ui_font_family": "CommitMono",
   "project_panel": { "starts_open": false },

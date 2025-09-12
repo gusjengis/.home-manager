@@ -25,42 +25,17 @@
     let
       lib = nixpkgs.lib;
       system = builtins.currentSystem;
-      plasticscmOverlay = final: prev: {
-        plasticscm-client-core = prev.callPackage (
-          plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-core/package.nix"
-        ) { };
 
-        plasticscm-client-gui = prev.callPackage (
-          plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-gui/package.nix"
-        ) { };
+      exposeInputsOverlay = (final: prev: { inputs = inputs; });
 
-        plasticscm-theme = prev.callPackage (
-          plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-theme/package.nix"
-        ) { };
-
-        plasticscm-client-core-unwrapped = prev.callPackage (
-          plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-core-unwrapped/package.nix"
-        ) { };
-
-        plasticscm-client-gui-unwrapped = prev.callPackage (
-          plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-gui-unwrapped/package.nix"
-        ) { };
-
-        plasticscm-client-complete =
-          prev.callPackage (plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-complete/package.nix")
-            {
-              inherit (final)
-                plasticscm-client-core
-                plasticscm-client-gui
-                ;
-            };
-
-        plasticscm = final.plasticscm-client-complete;
-      };
+      plasticscmOverlay = import ./overlays/plasticscm.nix;
 
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ plasticscmOverlay ];
+        overlays = [
+          exposeInputsOverlay
+          plasticscmOverlay
+        ];
       };
 
       stable = import stable-nixpkgs {
