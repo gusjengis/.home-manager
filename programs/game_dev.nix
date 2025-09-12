@@ -4,6 +4,7 @@
   stable,
   lib,
   PC,
+  plasticscm,
   ...
 }:
 

@@ -36,8 +36,8 @@
           exposeInputsOverlay
           plasticscmOverlay
         ];
+        config.allowUnfree = true;
       };
-
       stable = import stable-nixpkgs {
         inherit system;
       };

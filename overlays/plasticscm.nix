@@ -1,41 +1,46 @@
-# overlays/plasticscm.nix
 final: prev:
 let
-  # Centralize updated hashes
   hashes = {
     plasticscm-theme = "sha256-2qeYrnqgzh2uG/Met7WdpR9WVQJ9nx8+IlJL5C45kYA=";
-    # Fill these after prefetching:
-    # plasticscm-client-core = "sha256-...";
-    # plasticscm-client-gui  = "sha256-...";
+    plasticscm-client-core-unwrapped = "sha256-grU/HmE8EkuY9ienErviv2n8qm0GD9A5Fe3AjujkyQQ=";
+    plasticscm-client-gui-unwrapped = "sha256-yWeKPObssHG57Ijd3TNJWy0IJVmMmwAjkfLWA6AhExk=";
   };
 
-  # Helper: replace src with canonical URL + pinned hash
-  overridePlastic =
+  fromFork = rel: prev.callPackage (final.inputs.plasticscm-nixpkgs + rel) { };
+
+  bumpHash =
     base:
     base.overrideAttrs (old: {
-      src = prev.fetchurl {
-        url = "https://www.plasticscm.com/plasticrepo/stable/debian/amd64/${old.pname}_${old.version}_amd64.deb";
-        hash = hashes.${old.pname} or (throw "Missing hash for ${old.pname} in overlays/plasticscm.nix");
-      };
+      src = old.src.overrideAttrs (_: {
+        outputHash =
+          hashes.${old.pname} or (throw "Missing hash for ${old.pname} in overlays/plasticscm.nix");
+      });
     });
-
-  # Pull the package from the fork. We reference the fork via final.inputs (see flake wiring below).
-  fromFork = relPath: prev.callPackage (final.inputs.plasticscm-nixpkgs + relPath) { };
-
 in
 {
-  plasticscm-theme = overridePlastic (fromFork "/pkgs/by-name/pl/plasticscm-theme/package.nix");
-  plasticscm-client-core = overridePlastic (
-    fromFork "/pkgs/by-name/pl/plasticscm-client-core/package.nix"
-  );
-  plasticscm-client-gui = overridePlastic (
-    fromFork "/pkgs/by-name/pl/plasticscm-client-gui/package.nix"
+  plasticscm-theme = bumpHash (fromFork "/pkgs/by-name/pl/plasticscm-theme/package.nix");
+
+  plasticscm-client-core-unwrapped = bumpHash (
+    fromFork "/pkgs/by-name/pl/plasticscm-client-core-unwrapped/package.nix"
   );
 
-  # If the *-unwrapped ones also fetch .debs and fail, add them here too:
-  # plasticscm-client-core-unwrapped = overridePlastic (fromFork "/pkgs/by-name/pl/plasticscm-client-core-unwrapped/package.nix");
-  # plasticscm-client-gui-unwrapped  = overridePlastic (fromFork "/pkgs/by-name/pl/plasticscm-client-gui-unwrapped/package.nix");
+  plasticscm-client-gui-unwrapped = bumpHash (
+    fromFork "/pkgs/by-name/pl/plasticscm-client-gui-unwrapped/package.nix"
+  );
 
-  # Keep your convenience alias if you depend on it elsewhere:
+  plasticscm-client-core = fromFork "/pkgs/by-name/pl/plasticscm-client-core/package.nix";
+
+  plasticscm-client-gui = fromFork "/pkgs/by-name/pl/plasticscm-client-gui/package.nix";
+
+  plasticscm-client-complete =
+    prev.callPackage
+      (final.inputs.plasticscm-nixpkgs + "/pkgs/by-name/pl/plasticscm-client-complete/package.nix")
+      {
+        inherit (final)
+          plasticscm-client-core
+          plasticscm-client-gui
+          ;
+      };
+
   plasticscm = final.plasticscm-client-complete;
 }
