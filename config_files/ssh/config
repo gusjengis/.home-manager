@@ -2,3 +2,9 @@ Host portfolio
     HostName 44.229.53.240
     User ec2-user
     IdentityFile ~/.config/secrets/ssh/Portfolio-SSH.pem
+
+Host mosaic
+    HostName 35.155.119.40
+    User ec2-user
+    IdentityFile ~/.config/secrets/ssh/Mosaic-SSH.pem
+
