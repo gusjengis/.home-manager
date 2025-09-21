@@ -32,9 +32,13 @@
     clone_repo https://github.com/gusjengis/Particle-Life.git
     clone_repo https://github.com/zed-industries/zed.git
 
-    mkdir -p ~/.config/secrets/
-    cd ~/.config/secrets/
+    cd ~/Documents/zed-forks/
 
+    clone_repo https://github.com/gusjengis/zed.git
+
+    mkdir -p ~/.config/secrets/
+
+    cd ~/.config/secrets/
     clone_repo https://github.com/gusjengis/ssh.git
   '';
 }

@@ -2,8 +2,10 @@
 
 DIRS=(
   "$HOME/Documents/Code"
+  "$HOME/Documents/zed-forks/"
   "$HOME/Documents/Code/Plinth"
   "$HOME/Documents/Obsidian"
+  "$HOME/Hundo/"
 )
 
 if [[ $# -eq 1 ]]; then

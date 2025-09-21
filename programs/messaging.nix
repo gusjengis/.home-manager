@@ -14,6 +14,7 @@
       wireplumber
       kdePackages.xwaylandvideobridge
       signal-desktop
+      zoom-us
     ]
     ++ lib.optionals PC [
       #discord-canary

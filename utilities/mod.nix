@@ -20,6 +20,7 @@
     with pkgs;
     [
       btop
+      zip
     ]
     ++ lib.optionals Mac [ acpi ];
 }
