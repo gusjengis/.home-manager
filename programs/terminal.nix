@@ -44,6 +44,12 @@
     pipes-rs
   ];
 
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   home.file.".config/pipes-rs/config.toml".source = ~/.home-manager/config_files/pipes-rs/config.toml;
   home.file.".config/pipes-rs/config.toml".force = true;
 

@@ -15,6 +15,7 @@
       kdePackages.xwaylandvideobridge
       signal-desktop
       zoom-us
+      presenterm
     ]
     ++ lib.optionals PC [
       #discord-canary
