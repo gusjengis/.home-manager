@@ -7,6 +7,7 @@ DIRS=(
   "$HOME/Documents/Code/Mosaic"
   "$HOME/Documents/Obsidian"
   "$HOME/Hundo/"
+  "$HOME/3D Screen/"
 )
 
 if [[ $# -eq 1 ]]; then

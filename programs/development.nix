@@ -28,7 +28,7 @@
       sherlock-launcher
     ]
     ++ lib.optionals PC [
-      cudaPackages.nsight_systems
+      # cudaPackages.nsight_systems
       blender
       vscode
       immersed
