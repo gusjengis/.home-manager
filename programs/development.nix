@@ -35,8 +35,6 @@
       mutter
       arduino
       android-studio
-      lutris
-      protonplus
     ];
 }
 # ~/.home-manager/ rehome

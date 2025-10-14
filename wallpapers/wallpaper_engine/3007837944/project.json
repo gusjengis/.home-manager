@@ -1,0 +1,86 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "图源来自P站画师:Uomi(11065404)\n音乐:i'm tired of feeling this way(elijah who)\n: D终于重置了!",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"newproperty" : 
+			{
+				"fraction" : true,
+				"index" : 4,
+				"max" : 1,
+				"min" : 0,
+				"order" : 104,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "风吹草动",
+				"type" : "slider",
+				"value" : 0.4
+			},
+			"newproperty1" : 
+			{
+				"fraction" : true,
+				"index" : 2,
+				"max" : 1,
+				"min" : 0,
+				"order" : 102,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "鸟啼",
+				"type" : "slider",
+				"value" : 0.7
+			},
+			"newproperty2" : 
+			{
+				"fraction" : true,
+				"index" : 3,
+				"max" : 1,
+				"min" : 0,
+				"order" : 103,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "溪流",
+				"type" : "slider",
+				"value" : 0.6
+			},
+			"newproperty3" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "时间",
+				"type" : "bool",
+				"value" : true
+			},
+			"newproperty4" : 
+			{
+				"fraction" : true,
+				"index" : 1,
+				"max" : 1,
+				"min" : 0,
+				"order" : 101,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "音乐",
+				"type" : "slider",
+				"value" : 1
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.7529411764705882 0.7529411764705882 0.7529411764705882"
+			}
+		}
+	},
+	"preview" : "preview.gif",
+	"tags" : [ "Landscape" ],
+	"title" : "午后余荫4K(有声)",
+	"type" : "scene",
+	"version" : 19,
+	"visibility" : "public",
+	"workshopid" : "3007837944",
+	"workshopurl" : "steam://url/CommunityFilePage/3007837944"
+}

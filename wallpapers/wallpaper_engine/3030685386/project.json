@@ -1,0 +1,35 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "图源来自P站画师:Uomi(11065404)",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"clock" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "时间(clock)",
+				"type" : "bool",
+				"value" : true
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.7529411764705882 0.7529411764705882 0.7529411764705882"
+			}
+		},
+		"supportsaudioprocessing" : true
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Landscape" ],
+	"title" : "初雪深秋4k",
+	"type" : "scene",
+	"version" : 3,
+	"visibility" : "public",
+	"workshopid" : "3030685386",
+	"workshopurl" : "steam://url/CommunityFilePage/3030685386"
+}

@@ -32,6 +32,7 @@
     clone_repo https://github.com/agreenweb/cronosearch.git
     clone_repo https://github.com/gusjengis/Particle-Life.git
     clone_repo https://github.com/zed-industries/zed.git
+    clone_repo https://github.com/Trevogre/logoanimation
 
     cd ~/Documents/zed-forks/
 

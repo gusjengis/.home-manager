@@ -1,0 +1,36 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "图源来自P站画师:Uomi(11065404)",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"leaves" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "落叶(leaves)",
+				"type" : "bool",
+				"value" : true
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.7529411764705882 0.7529411764705882 0.7529411764705882"
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Landscape" ],
+	"title" : "春色满园4K",
+	"type" : "scene",
+	"version" : 1,
+	"visibility" : "public",
+	"workshopid" : "3123321641",
+	"workshopurl" : "steam://url/CommunityFilePage/3123321641"
+}

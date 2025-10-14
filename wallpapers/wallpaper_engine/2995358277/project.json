@@ -1,0 +1,34 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "图源来自P站画师:super[wo(2604061)",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"newproperty" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "时钟",
+				"type" : "bool",
+				"value" : true
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.7529411764705882 0.7529411764705882 0.7529411764705882"
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Landscape" ],
+	"title" : "树下小屋4K",
+	"type" : "Scene",
+	"version" : 5,
+	"visibility" : "public",
+	"workshopid" : "2995358277",
+	"workshopurl" : "steam://url/CommunityFilePage/2995358277"
+}

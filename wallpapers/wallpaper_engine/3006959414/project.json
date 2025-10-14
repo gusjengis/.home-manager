@@ -1,0 +1,56 @@
+{
+	"approved" : true,
+	"contentrating" : "Everyone",
+	"description" : "图源来自P站画师:Uomi(11065404)\n音乐:τ - α·Pav",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"newproperty" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "体积光(Volume light)",
+				"type" : "bool",
+				"value" : true
+			},
+			"newproperty1" : 
+			{
+				"index" : 1,
+				"order" : 101,
+				"text" : "落樱(Fallen Sakura)",
+				"type" : "bool",
+				"value" : true
+			},
+			"newproperty2" : 
+			{
+				"fraction" : true,
+				"index" : 2,
+				"max" : 1,
+				"min" : 0,
+				"order" : 102,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "音乐(music)",
+				"type" : "slider",
+				"value" : 1
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.7529411764705882 0.7529411764705882 0.7529411764705882"
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Landscape" ],
+	"title" : "群樱守望4K",
+	"type" : "Scene",
+	"version" : 13,
+	"visibility" : "public",
+	"workshopid" : "3006959414",
+	"workshopurl" : "steam://url/CommunityFilePage/3006959414"
+}

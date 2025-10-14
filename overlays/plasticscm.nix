@@ -1,9 +1,9 @@
 final: prev:
 let
   hashes = {
-    plasticscm-theme = "sha256-2qeYrnqgzh2uG/Met7WdpR9WVQJ9nx8+IlJL5C45kYA=";
-    plasticscm-client-core-unwrapped = "sha256-grU/HmE8EkuY9ienErviv2n8qm0GD9A5Fe3AjujkyQQ=";
-    plasticscm-client-gui-unwrapped = "sha256-yWeKPObssHG57Ijd3TNJWy0IJVmMmwAjkfLWA6AhExk=";
+    plasticscm-theme = "sha256-GSZ2j/xZOUDI2SoqLWeGYq8YdPGLJ7ZXaJaOrsru8PY=";
+    plasticscm-client-core-unwrapped = "sha256-4ywIltUBg050pm7h67ZabvBOrCsOpt8KjlcHJqsLLjQ=";
+    plasticscm-client-gui-unwrapped = "sha256-H+9vi9Yfz3uVA/dUwpMmrPOfGt0elAJ+jeFs2usp5L0=";
   };
 
   fromFork = rel: prev.callPackage (final.inputs.plasticscm-nixpkgs + rel) { };

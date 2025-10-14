@@ -1,0 +1,100 @@
+{
+	"approved" : true,
+	"contentrating" : "Everyone",
+	"description" : "图源来自P站画师:Uomi(11065404)\r\n音乐:η",
+	"file" : "scene.json",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"clock" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "时间(clock)",
+				"type" : "bool",
+				"value" : true
+			},
+			"doorbell" : 
+			{
+				"fraction" : true,
+				"index" : 6,
+				"max" : 1,
+				"min" : 0,
+				"order" : 106,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "门铃(Doorbell)",
+				"type" : "slider",
+				"value" : 0.7
+			},
+			"fallenleaves" : 
+			{
+				"index" : 1,
+				"order" : 101,
+				"text" : "落叶(Fallen leaves)",
+				"type" : "bool",
+				"value" : true
+			},
+			"newproperty" : 
+			{
+				"fraction" : true,
+				"index" : 4,
+				"max" : 1,
+				"min" : 0,
+				"order" : 104,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "音乐",
+				"type" : "slider",
+				"value" : 1
+			},
+			"puddle" : 
+			{
+				"index" : 2,
+				"order" : 102,
+				"text" : "水坑(Puddle)",
+				"type" : "bool",
+				"value" : true
+			},
+			"rain" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "雨(rain)",
+				"type" : "bool",
+				"value" : true
+			},
+			"rain1" : 
+			{
+				"fraction" : true,
+				"index" : 5,
+				"max" : 1,
+				"min" : 0,
+				"order" : 105,
+				"precision" : 2,
+				"step" : 0.1,
+				"text" : "雨(rain)",
+				"type" : "slider",
+				"value" : 0.8
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.7529411764705882 0.7529411764705882 0.7529411764705882"
+			}
+		}
+	},
+	"preview" : "preview.gif",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Landscape" ],
+	"title" : "绣丛阡陌4K(有声)",
+	"type" : "scene",
+	"version" : 22,
+	"visibility" : "public",
+	"workshopid" : "3016047975",
+	"workshopurl" : "steam://url/CommunityFilePage/3016047975"
+}
