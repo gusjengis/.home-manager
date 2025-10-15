@@ -10,14 +10,12 @@
 
 {
 
-  home.packages =
-    with pkgs;
-    [
-      hyprsunset
-      hypridle
-      dunst
-      linux-wallpaperengine
-    ]
+  home.packages = with pkgs; [
+    hyprsunset
+    hypridle
+    dunst
+    linux-wallpaperengine
+  ];
 
   home.activation.symlinkTmuxConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/dunst
