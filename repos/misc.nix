@@ -34,10 +34,6 @@
     clone_repo https://github.com/zed-industries/zed.git
     clone_repo https://github.com/Trevogre/logoanimation
 
-    cd ~/Documents/zed-forks/
-
-    clone_repo https://github.com/gusjengis/zed.git
-
     mkdir -p ~/.config/secrets/
 
     cd ~/.config/secrets/

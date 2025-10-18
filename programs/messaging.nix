@@ -14,10 +14,10 @@
       wireplumber
       kdePackages.xwaylandvideobridge
       signal-desktop
-      zoom-us
       presenterm
     ]
     ++ lib.optionals PC [
+      zoom-us
       #discord-canary
       #slack
     ];
