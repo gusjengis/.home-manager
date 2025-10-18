@@ -7,21 +7,18 @@ fi
 
 # Wallpaper IDs
 wallpapers=(
-  1130661944
-  2347484937
-  2500069318
-  2994110411
-  2995358277
-  3006959414
-  3007837944
-  3016047975
-  3019470510
-  3029865244
-  3030685386
-  3036895455
-  3077334064
-  3094852179
-  3123321641
+  1130661944 # good, asian window, blue sky
+  2347484937 # super good, green hillside, red house
+  2994110411 # a favorite, field, blue flowers, houses
+  3006959414 # good, river, bridge, village, noticing this one spinning up fans
+  3007837944 # good, flowers, clouds, water, tree on the left
+  3016047975 # a favorite, blue flowers, tracks, house, j truck, eats 6% of cpu (2 cores)
+  3019470510 # a favorite stream in the forest, eats up to 18% cpu (6 cores)
+  3029865244 # good, cozy bed, books, view of city
+  3030685386 # a favorite, some weird artifacts though
+  3036895455 # good, lake in the mountains, starry night
+  3094852179 # good, dock, water, mountain
+  3123321641 # a favorite, garden, stone construction
 )
 
 # Wallpaper command prefix

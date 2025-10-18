@@ -1,13 +1,19 @@
 {
   config,
   pkgs,
+  old,
   lib,
+  PC,
   ...
 }:
 
+let
+  chromiumPkg = if PC then old.chromium else pkgs.chromium;
+in
 {
   programs.chromium = {
     enable = true;
+    package = chromiumPkg;
     commandLineArgs = [
       "--ozone-platform=wayland"
       "--ignore-gpu-blocklist"

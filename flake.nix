@@ -11,12 +11,14 @@
       url = "github:musjj/nixpkgs/plasticscm";
       flake = false;
     };
+    old-nixpkgs.url = "nixpkgs/nixos-24.11";
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      old-nixpkgs,
       stable-nixpkgs,
       home-manager,
       plasticscm-nixpkgs,
@@ -41,6 +43,10 @@
       stable = import stable-nixpkgs {
         inherit system;
       };
+      old = import old-nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
 
       alga = inputs.alga.packages.${system}.default;
       Mac = pkgs.hostPlatform.isAarch64;
@@ -56,6 +62,7 @@
             inherit PC;
             inherit inputs;
             inherit stable;
+            inherit old;
             inherit (pkgs) plasticscm;
           };
           modules = [
