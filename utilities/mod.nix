@@ -21,6 +21,7 @@
     [
       btop
       zip
+      usbutils
     ]
     ++ lib.optionals Mac [ acpi ];
 }
