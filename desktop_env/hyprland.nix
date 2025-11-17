@@ -32,21 +32,22 @@
     ln -sf $HOME/.home-manager/config_files/hypr/hyprsunset.conf $HOME/.config/hypr/hyprsunset.conf
     ln -sf $HOME/.home-manager/config_files/hypr/keybinds.conf $HOME/.config/hypr/keybinds.conf
     ln -sf $HOME/.home-manager/config_files/hypr/shutdown.conf $HOME/.config/hypr/shutdown.conf
-    ln -sf $HOME/.home-manager/config_files/hypr/variables.conf $HOME/.config/hypr/variables.conf
     ln -sf $HOME/.home-manager/config_files/hypr/workspaces.conf $HOME/.config/hypr/workspaces.conf
   '';
 
   home.activation.macHyprSetup = lib.mkIf Mac (
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ln -sf $HOME/.home-manager/config_files/hypr/appearance.mac.conf $HOME/.config/hypr/appearance.conf
-        ln -sf $HOME/.home-manager/config_files/hypr/monitors.mac.conf $HOME/.config/hypr/monitors.conf
+      ln -sf $HOME/.home-manager/config_files/hypr/variables.mac.conf $HOME/.config/hypr/variables.conf
+      ln -sf $HOME/.home-manager/config_files/hypr/monitors.mac.conf $HOME/.config/hypr/monitors.conf
     ''
   );
 
   home.activation.pcHyprSetup = lib.mkIf PC (
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ln -sf $HOME/.home-manager/config_files/hypr/appearance.pc.conf $HOME/.config/hypr/appearance.conf
-        ln -sf $HOME/.home-manager/config_files/hypr/monitors.pc.conf $HOME/.config/hypr/monitors.conf
+      ln -sf $HOME/.home-manager/config_files/hypr/variables.pc.conf $HOME/.config/hypr/variables.conf
+      ln -sf $HOME/.home-manager/config_files/hypr/monitors.pc.conf $HOME/.config/hypr/monitors.conf
     ''
   );
 }

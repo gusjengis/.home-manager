@@ -25,11 +25,11 @@
       vulkan-tools
       mermaid-cli
       stable.zed-editor
-      sherlock-launcher
       code-cursor
     ]
     ++ lib.optionals PC [
       # cudaPackages.nsight_systems
+      protonup-qt
       blender
       vscode
       immersed
