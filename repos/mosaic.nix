@@ -27,6 +27,5 @@
     clone_repo https://github.com/gusjengis/Mosaic-Hub.git
     clone_repo https://github.com/gusjengis/Mosaic-Android.git
     clone_repo https://github.com/gusjengis/Mosaic-Snitch.git
-    clone_repo https://github.com/gusjengis/Mosaic-Docs.git
   '';
 }
