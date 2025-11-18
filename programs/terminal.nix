@@ -16,6 +16,7 @@
         source ~/.config/secrets/api_keys/env_vars
         set +a
       fi
+      hyprland
     '';
     bashrcExtra = ''
       export PATH="$HOME/.cargo/bin:$PATH"
