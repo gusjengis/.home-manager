@@ -14,6 +14,7 @@
     hyprsunset
     hypridle
     dunst
+    libnotify
     linux-wallpaperengine
   ];
 

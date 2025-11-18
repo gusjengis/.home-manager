@@ -21,7 +21,11 @@
     [
       btop
       zip
+      unzip
       usbutils
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+      wget
     ]
     ++ lib.optionals Mac [ acpi ];
 }

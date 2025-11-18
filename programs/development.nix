@@ -29,6 +29,7 @@
     ]
     ++ lib.optionals PC [
       # cudaPackages.nsight_systems
+      dotnetCorePackages.dotnet_9.sdk
       protonup-qt
       blender
       vscode
@@ -36,5 +37,8 @@
       mutter
       arduino
       android-studio
+      zulu8
+      prismlauncher
+      atlauncher
     ];
 }
