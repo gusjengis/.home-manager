@@ -26,6 +26,8 @@
       mermaid-cli
       stable.zed-editor
       code-cursor
+      claude-code
+      supercollider
     ]
     ++ lib.optionals PC [
       # cudaPackages.nsight_systems
