@@ -39,7 +39,7 @@
       mutter
       arduino
       android-studio
-      zulu8
+      zulu17
       prismlauncher
       atlauncher
     ];

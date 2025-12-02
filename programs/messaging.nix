@@ -12,7 +12,7 @@
     [
       gurk-rs
       wireplumber
-      kdePackages.xwaylandvideobridge
+      # kdePackages.xwaylandvideobridge
       signal-desktop
       presenterm
       kdePackages.kdeconnect-kde

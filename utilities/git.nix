@@ -5,8 +5,12 @@
 
   programs.git = {
     enable = true;
-    userName = "gusjengis";
-    userEmail = "anthony.j.green@outlook.com";
-    extraConfig = { credential.helper = "store"; };
+    settings = {
+      credential.helper = "store";
+      user = {
+        name = "gusjengis";
+        email = "anthony.j.green@outlook.com";
+      };
+    };
   };
 }

@@ -3,6 +3,7 @@
   pkgs,
   PC,
   lib,
+  stable,
   ...
 }:
 
@@ -18,5 +19,6 @@
   #   with pkgs;
   #   [
   #   ]
-  #   ++ lib.optionals PC [ bambu-studio ];
+  #   ++ lib.optionals PC [ stable.bambu-studio ];
+
 }

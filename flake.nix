@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    stable-nixpkgs.url = "nixpkgs/nixos-25.05";
+    stable-nixpkgs.url = "nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
@@ -29,7 +29,6 @@
       system = builtins.currentSystem;
 
       exposeInputsOverlay = (final: prev: { inputs = inputs; });
-
       plasticscmOverlay = import ./overlays/plasticscm.nix;
 
       pkgs = import nixpkgs {
@@ -49,8 +48,8 @@
       };
 
       alga = inputs.alga.packages.${system}.default;
-      Mac = pkgs.hostPlatform.isAarch64;
-      PC = pkgs.hostPlatform.isx86_64;
+      Mac = pkgs.stdenv.hostPlatform.isAarch64;
+      PC = pkgs.stdenv.hostPlatform.isx86_64;
     in
     {
       homeConfigurations = {
