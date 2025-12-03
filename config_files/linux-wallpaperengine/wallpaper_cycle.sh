@@ -23,7 +23,7 @@ wallpapers=(
 
 # Wallpaper command prefix
 CMD_PREFIX="env XDG_SESSION_TYPE=wayland linux-wallpaperengine /home/gusjengis/.home-manager/wallpapers/wallpaper_engine/"
-SETTINGS="--assets-dir /home/gusjengis/.home-manager/wallpapers/wallpaper_engine/assets --scaling fill --screen-root HDMI-A-2 --screen-root eDP-1 -v 0"
+SETTINGS="--assets-dir /home/gusjengis/.home-manager/wallpapers/wallpaper_engine/assets --scaling fill --screen-root HDMI-A-1 --screen-root eDP-1 -v 0"
 
 while true; do
   for id in $(shuf -e "${wallpapers[@]}"); do
