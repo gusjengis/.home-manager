@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cockatrice_deck version="1">
-    <lastLoadedTimestamp>Wed Dec 17 04:16:57 2025</lastLoadedTimestamp>
+    <lastLoadedTimestamp>Fri Dec 26 14:44:13 2025</lastLoadedTimestamp>
     <deckname>Landslide</deckname>
     <bannerCard providerId=""></bannerCard>
     <comments></comments>
@@ -83,10 +83,10 @@
         <card number="1" name="Terrasymbiosis"/>
         <card number="1" name="Baloth Prime"/>
         <card number="1" name="Harrow"/>
-        <card number="11" name="Forest"/>
-        <card number="9" name="Island"/>
         <card number="1" name="Exotic Orchard"/>
         <card number="1" name="Arcane Signet"/>
+        <card number="11" name="Forest" setShortName="SLD" collectorNumber="452" uuid="a940a241-4efd-42f7-a670-2c4fed4755bb"/>
+        <card number="9" name="Island" setShortName="SLD" collectorNumber="1469" uuid="839e97b5-c04d-4088-af4e-fa64f4575e51"/>
     </zone>
     <zone name="side">
         <card number="1" name="Tatyova, Benthic Druid"/>
