@@ -39,6 +39,8 @@
       nd = "nix develop --impure";
       ta = "tmux attach || tmux";
       ai = "nvim -c 'lua vim.defer_fn(function()require(\'avante.api\').zen_mode()end, 100)'";
+      xmage = "cd ~/.home-manager/xmage/mage-client && ./startClient.sh";
+      xmage-server = "cd ~/.home-manager/xmage/mage-server && ./startServer.sh";
     };
   };
 

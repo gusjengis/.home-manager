@@ -7,6 +7,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     plasticscm-nixpkgs = {
       url = "github:musjj/nixpkgs/plasticscm";
       flake = false;
@@ -22,6 +25,8 @@
       stable-nixpkgs,
       home-manager,
       plasticscm-nixpkgs,
+      nix-flatpak,
+
       ...
     }@inputs:
     let
@@ -65,11 +70,11 @@
             inherit (pkgs) plasticscm;
           };
           modules = [
+            inputs.nix-flatpak.homeManagerModules.nix-flatpak
             ./home.nix
             /etc/nix-modules/homeManagerModules
           ];
         };
       };
-
     };
 }

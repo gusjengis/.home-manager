@@ -25,7 +25,7 @@
     clone_repo https://github.com/gusjengis/mermaid-class-diagrams.git
     clone_repo https://github.com/gusjengis/lsp-servers.git
     clone_repo https://github.com/gusjengis/lsp-servers-cli.git
-    clone_repo https://github.com/gusjengis/hyprfocus.git
+    clone_repo https://github.com/gusjengis/hyprlog.git
     clone_repo https://github.com/gusjengis/Particle-Physics-Sim.git
     clone_repo https://github.com/gusjengis/Resume.git
     clone_repo https://github.com/agreenweb/timeline.git
@@ -34,6 +34,7 @@
     clone_repo https://github.com/zed-industries/zed.git
     clone_repo https://github.com/Trevogre/logoanimation
     clone_repo https://github.com/gusjengis/WatchFace.git
+    clone_repo https://github.com/gusjengis/CalendarComplication.git
 
     mkdir -p ~/.config/secrets/
 

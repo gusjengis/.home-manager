@@ -28,6 +28,8 @@
       code-cursor
       claude-code
       supercollider
+      lutris
+      cockatrice
     ]
     ++ lib.optionals PC [
       # cudaPackages.nsight_systems
@@ -39,7 +41,7 @@
       mutter
       arduino
       android-studio
-      zulu17
+      zulu8
       prismlauncher
       atlauncher
     ];
