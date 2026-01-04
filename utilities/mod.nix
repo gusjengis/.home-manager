@@ -26,6 +26,7 @@
       xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
       wget
+      nmgui
     ]
     ++ lib.optionals Mac [ acpi ];
 }
