@@ -8,7 +8,8 @@
 }:
 
 let
-  chromiumPkg = if PC then old.chromium else pkgs.chromium;
+  # chromiumPkg = if PC then old.chromium else pkgs.chromium;
+  chromiumPkg = pkgs.chromium;
 in
 {
   programs.chromium = {
