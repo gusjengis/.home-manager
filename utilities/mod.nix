@@ -27,6 +27,7 @@
       xdg-desktop-portal-hyprland
       wget
       nmgui
+      imagemagick
     ]
     ++ lib.optionals Mac [ acpi ];
 }
