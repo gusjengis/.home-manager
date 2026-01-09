@@ -1,0 +1,13 @@
+[Added Associations]
+image/png=qimgv.desktop;
+audio/flac=vlc.desktop;
+image/webp=qimgv.desktop;
+image/gif=qimgv.desktop;
+
+[Default Applications]
+application/pdf=zathura.desktop;
+image/png=qimgv.desktop;
+image/webp=qimgv.desktop;
+image/gif=qimgv.desktop;
+x-scheme-handler/sgnl=signal.desktop
+x-scheme-handler/signalcaptcha=signal.desktop

@@ -18,5 +18,5 @@
     mkdir -p ~/.config/tmux
 
     ln -sf $HOME/.home-manager/config_files/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
-  '';
+    ln -sf $HOME/.home-manager/config_files/mimeapps.list $HOME/.config/mimeapps.list  '';
 }
