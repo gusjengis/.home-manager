@@ -5,9 +5,10 @@
     xfce.thunar
     xfce.tumbler
     xfce.thunar-volman
+    xfce.thunar-archive-plugin
+    file-roller
     gvfs
     qimgv
-    file-roller
     udiskie
   ];
 }

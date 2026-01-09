@@ -16,7 +16,12 @@
 
   home.activation.symlinkHyprlandConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/tmux
+    mkdir -p ~/.config/xfce4
+    mkdir -p ~/.local/share/applications
 
     ln -sf $HOME/.home-manager/config_files/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
-    ln -sf $HOME/.home-manager/config_files/mimeapps.list $HOME/.config/mimeapps.list  '';
+    ln -sf $HOME/.home-manager/config_files/xfce4/helpers.rc $HOME/.config/xfce4/helpers.rc
+    ln -sf $HOME/.home-manager/config_files/mimeapps.list $HOME/.config/mimeapps.list
+    ln -sf $HOME/.home-manager/config_files/local/share/applications/nvim.desktop $HOME/.local/share/applications/nvim.desktop
+  '';
 }
