@@ -28,7 +28,6 @@
       code-cursor
       claude-code
       supercollider
-      lutris
       cockatrice
     ]
     ++ lib.optionals PC [
@@ -44,5 +43,6 @@
       zulu8
       prismlauncher
       atlauncher
+      lutris
     ];
 }
