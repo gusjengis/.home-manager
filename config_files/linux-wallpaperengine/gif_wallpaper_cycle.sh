@@ -25,6 +25,7 @@ while true; do
   # load all wallpapers in the folder and shuffle list
   wallpapers=(
     ~/.home-manager/wallpapers/*.gif
+    ~/.home-manager/wallpapers/*.webp
     ~/.home-manager/wallpapers/*.png
   )
   mapfile -t shuffled < <(shuf -e "${wallpapers[@]}")
