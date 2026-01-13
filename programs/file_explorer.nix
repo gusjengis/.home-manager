@@ -4,10 +4,10 @@
   home.packages = with pkgs; [
     nautilus
     kdePackages.dolphin
-    xfce.thunar
-    xfce.tumbler
-    xfce.thunar-volman
-    xfce.thunar-archive-plugin
+    thunar
+    tumbler
+    thunar-volman
+    thunar-archive-plugin
     file-roller
     gvfs
     qimgv
