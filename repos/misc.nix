@@ -35,6 +35,7 @@
     clone_repo https://github.com/Trevogre/logoanimation
     clone_repo https://github.com/gusjengis/WatchFace.git
     clone_repo https://github.com/gusjengis/CalendarComplication.git
+    clone_repo https://github.com/gusjengis/nixpkgs
 
     mkdir -p ~/.config/secrets/
 

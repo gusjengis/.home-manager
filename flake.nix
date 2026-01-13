@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    hyprlog-nixpkgs.url = "github:gusjengis/nixpkgs";
     stable-nixpkgs.url = "nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,7 +27,7 @@
       home-manager,
       plasticscm-nixpkgs,
       nix-flatpak,
-
+      hyprlog-nixpkgs,
       ...
     }@inputs:
     let
@@ -45,6 +46,10 @@
         config.allowUnfree = true;
       };
       stable = import stable-nixpkgs {
+        inherit system;
+      };
+
+      hyprlog-nixpkgs = import hyprlog-nixpkgs {
         inherit system;
       };
       old = import old-nixpkgs {
@@ -68,6 +73,7 @@
             inherit stable;
             inherit old;
             inherit (pkgs) plasticscm;
+            inherit hyprlog-nixpkgs;
           };
           modules = [
             inputs.nix-flatpak.homeManagerModules.nix-flatpak

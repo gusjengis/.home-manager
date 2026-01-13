@@ -5,6 +5,7 @@
   inputs,
   Mac,
   PC,
+  hyprlog-nixpkgs,
   ...
 }:
 
@@ -16,6 +17,7 @@
     dunst
     libnotify
     linux-wallpaperengine
+    # hyprlog-nixpkgs.hyprlog
   ];
 
   home.activation.symlinkTmuxConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

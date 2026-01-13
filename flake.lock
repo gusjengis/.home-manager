@@ -60,6 +60,21 @@
         "type": "github"
       }
     },
+    "hyprlog-nixpkgs": {
+      "locked": {
+        "lastModified": 1768273627,
+        "narHash": "sha256-aOVTiQbDD2y7AcVHc4wwUT06srjkdbqCHN+OKyI+JXM=",
+        "owner": "gusjengis",
+        "repo": "nixpkgs",
+        "rev": "99f776f8162242d0aeed4402451a59a277b72445",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gusjengis",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1754777568,
@@ -192,6 +207,7 @@
       "inputs": {
         "alga": "alga",
         "home-manager": "home-manager",
+        "hyprlog-nixpkgs": "hyprlog-nixpkgs",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
         "old-nixpkgs": "old-nixpkgs",
