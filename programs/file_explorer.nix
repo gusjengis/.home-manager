@@ -2,6 +2,8 @@
 
 {
   home.packages = with pkgs; [
+    nautilus
+    kdePackages.dolphin
     xfce.thunar
     xfce.tumbler
     xfce.thunar-volman
