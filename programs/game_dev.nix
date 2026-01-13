@@ -18,7 +18,6 @@
       unityhub
       plasticscm
       stable.roslyn-ls
-      verco
       stable.alvr
       cudaPackages.cudatoolkit
       cudaPackages.cuda_nvcc
