@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    hyprlog-nixpkgs.url = "github:gusjengis/nixpkgs";
+    hyprlog-nixpkgs.url = "github:gusjengis/nixpkgs?ref=add-hyprlog";
     stable-nixpkgs.url = "nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -48,8 +48,7 @@
       stable = import stable-nixpkgs {
         inherit system;
       };
-
-      hyprlog-nixpkgs = import hyprlog-nixpkgs {
+      hyprlog-nixpkgs = import inputs.hyprlog-nixpkgs {
         inherit system;
       };
       old = import old-nixpkgs {
