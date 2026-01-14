@@ -24,8 +24,8 @@
       mesa-demos
       vulkan-tools
       mermaid-cli
-      claude-code
       supercollider
+      opencode
       cockatrice
     ]
     ++ lib.optionals PC [
