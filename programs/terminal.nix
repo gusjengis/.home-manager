@@ -66,6 +66,8 @@
 
     ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
     ln -sf $HOME/.home-manager/config_files/ssh/config $HOME/.ssh/config
+    ln -sf $HOME/.config/secrets/ssh/id_ed25519 $HOME/.ssh/id_ed25519
+    ln -sf $HOME/.home-manager/config_files/ssh/id_ed25519.pub $HOME/.ssh/id_ed25519.pub
 
     ln -sf $HOME/.home-manager/config_files/zed/settings.json $HOME/.config/zed/settings.json
     ln -sf $HOME/.home-manager/config_files/zed/keymap.json $HOME/.config/zed/keymap.json
