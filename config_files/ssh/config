@@ -8,3 +8,7 @@ Host mosaic
     User ec2-user
     IdentityFile ~/.config/secrets/ssh/Mosaic-SSH.pem
 
+Host aur.archlinux.org
+  IdentityFile ~/.config/secrets/ssh/AUR-SSH.pem
+  User aur
+
