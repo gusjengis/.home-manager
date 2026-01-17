@@ -35,7 +35,6 @@
     ln -sf $HOME/.home-manager/config_files/hypr/hyprsunset.conf $HOME/.config/hypr/hyprsunset.conf
     ln -sf $HOME/.home-manager/config_files/hypr/keybinds.conf $HOME/.config/hypr/keybinds.conf
     ln -sf $HOME/.home-manager/config_files/hypr/workspaces.conf $HOME/.config/hypr/workspaces.conf
-    ln -sf $HOME/.home-manager/config_files/hypr/hyprlog.conf.conf $HOME/.config/hypr/hyprlog.conf
   '';
 
   home.activation.macHyprSetup = lib.mkIf Mac (

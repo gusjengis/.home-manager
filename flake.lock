@@ -62,11 +62,11 @@
     },
     "hyprlog-nixpkgs": {
       "locked": {
-        "lastModified": 1768370273,
-        "narHash": "sha256-lpfxkI2aZ3+NF2vSRTPvYLaq6pmjpdif6NWZX4+KwmI=",
+        "lastModified": 1768551406,
+        "narHash": "sha256-TGOuJMudS1Wwjlt3kU9x5agO+7vzRGVfQoigfqtFIwg=",
         "owner": "gusjengis",
         "repo": "nixpkgs",
-        "rev": "07b9a03fb23a4bb6d55879b1d06b88de0cf75127",
+        "rev": "3a7431dff7d0aeb9602c17215e77c2f0c76f1b4b",
         "type": "github"
       },
       "original": {

@@ -28,6 +28,7 @@
       wget
       nmgui
       imagemagick
+      ventoy
     ]
     ++ lib.optionals Mac [ acpi ];
 }

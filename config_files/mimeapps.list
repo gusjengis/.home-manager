@@ -42,3 +42,4 @@ inode/x-empty=nvim.desktop;
 application/octet-stream=nvim.desktop;
 application/x-zerosize=nvim.desktop;
 application/x-sharedlib=nvim.desktop
+video/mkv=vlc.desktop;

@@ -16,7 +16,7 @@
     	repo_name=$(basename -s .git "$repo_url")
 
     	if [ ! -d "$repo_name" ]; then
-    	  git clone "$repo_url"
+              git clone "$repo_url" || echo "clone failed: $repo_url"
     	fi
     }
 
@@ -36,6 +36,8 @@
     clone_repo https://github.com/gusjengis/WatchFace.git
     clone_repo https://github.com/gusjengis/CalendarComplication.git
     clone_repo https://github.com/gusjengis/nixpkgs
+
+    clone_repo ssh://aur@aur.archlinux.org/hyprlog.git
 
     mkdir -p ~/.config/secrets/
 
