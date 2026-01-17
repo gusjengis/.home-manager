@@ -11,15 +11,9 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-            if [ -f ~/.config/secrets/api_keys/env_vars ]; then
-              set -a
-              source ~/.config/secrets/api_keys/env_vars
-              set +a
-            fi
-
-            if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
-      	exec Hyprland
-            fi
+        if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
+          exec Hyprland
+        fi
     '';
     bashrcExtra = ''
       export PATH="$HOME/.cargo/bin:$PATH"
@@ -38,9 +32,6 @@
       clean = "nix-collect-garbage -d && sudo nix-collect-garbage -d && nix store optimise && sudo nix store optimise";
       nd = "nix develop --impure";
       ta = "tmux attach || tmux";
-      ai = "nvim -c 'lua vim.defer_fn(function()require(\'avante.api\').zen_mode()end, 100)'";
-      xmage = "cd ~/.home-manager/xmage/mage-client && ./startClient.sh";
-      xmage-server = "cd ~/.home-manager/xmage/mage-server && ./startServer.sh";
     };
   };
 
@@ -61,16 +52,12 @@
 
   home.activation.symlinkKittyConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/kitty
-    mkdir -p ~/.config/zed
     mkdir -p ~/.ssh
 
     ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
     ln -sf $HOME/.home-manager/config_files/ssh/config $HOME/.ssh/config
     ln -sf $HOME/.config/secrets/ssh/id_ed25519 $HOME/.ssh/id_ed25519
     ln -sf $HOME/.home-manager/config_files/ssh/id_ed25519.pub $HOME/.ssh/id_ed25519.pub
-
-    ln -sf $HOME/.home-manager/config_files/zed/settings.json $HOME/.config/zed/settings.json
-    ln -sf $HOME/.home-manager/config_files/zed/keymap.json $HOME/.config/zed/keymap.json
   '';
 
 }

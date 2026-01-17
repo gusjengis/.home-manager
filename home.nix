@@ -13,7 +13,7 @@
     ./programs/mod.nix
     ./utilities/mod.nix
     ./directories/mod.nix
-    ./repos/mod.nix
+    ./repos/repos.nix
     ./nvim/mod.nix
   ];
 
@@ -28,18 +28,9 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  services.flatpak = {
-    enable = true;
-
-    remotes = [
-      {
-        name = "flathub";
-        location = "https://flathub.org/repo/flathub.flatpakrepo";
-      }
-    ];
-
-    packages = [
-      "com.bambulab.BambuStudio"
+  nixpkgs.config = {
+    permittedInsecurePackages = [
+      "mbedtls-2.28.10" # not sure what program needs this
     ];
   };
 }

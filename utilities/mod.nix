@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  Mac,
   lib,
   ...
 }:
@@ -12,8 +11,6 @@
     ./git.nix
     ./screenshots.nix
     ./audio.nix
-    ./disk.nix
-    ./lg_tv.nix
     ./tmux.nix
   ];
   home.packages =
@@ -27,8 +24,6 @@
       xdg-desktop-portal-hyprland
       wget
       nmgui
-      imagemagick
-      ventoy
-    ]
-    ++ lib.optionals Mac [ acpi ];
+      acpi 
+    ];
 }

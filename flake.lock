@@ -1,45 +1,5 @@
 {
   "nodes": {
-    "alga": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "pyproject-build-systems": "pyproject-build-systems",
-        "pyproject-nix": "pyproject-nix",
-        "uv2nix": "uv2nix"
-      },
-      "locked": {
-        "lastModified": 1764597428,
-        "narHash": "sha256-1fmWFw/30RnWez+cES/4m4zbUN38qMgMnpXtWO+cpK8=",
-        "owner": "Tenzer",
-        "repo": "alga",
-        "rev": "7f1bc78de373c96eede981d2f4d175bd131d6fc7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Tenzer",
-        "repo": "alga",
-        "type": "github"
-      }
-    },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -76,38 +36,7 @@
         "type": "github"
       }
     },
-    "nix-flatpak": {
-      "locked": {
-        "lastModified": 1754777568,
-        "narHash": "sha256-0bBqT+3XncgF8F03RFAamw9vdf0VmaDoIJLTGkjfQZs=",
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
-        "rev": "62f636b87ef6050760a8cb325cadb90674d1e23e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1764242076,
-        "narHash": "sha256-sKoIWfnijJ0+9e4wRvIgm/HgE27bzwQxcEmo2J/gNpI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2fad6eac6077f03fe109c4d4eb171cf96791faa4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1768178648,
         "narHash": "sha256-kz/F6mhESPvU1diB7tOM3nLcBfQe7GU7GQCymRlTi/s=",
@@ -122,97 +51,11 @@
         "type": "indirect"
       }
     },
-    "old-nixpkgs": {
-      "locked": {
-        "lastModified": 1751274312,
-        "narHash": "sha256-/bVBlRpECLVzjV19t5KMdMFWSwKLtb5RyXdjz3LJT+g=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "50ab793786d9de88ee30ec4e4c24fb4236fc2674",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-24.11",
-        "type": "indirect"
-      }
-    },
-    "plasticscm-nixpkgs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1763753372,
-        "narHash": "sha256-dHmiuGUtxD5mzYysFI+U5j0V0YNabklDs4v1fGV+Urg=",
-        "owner": "musjj",
-        "repo": "nixpkgs",
-        "rev": "aec2599d8658bea02c091a954cc8264d322481f6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "musjj",
-        "ref": "plasticscm",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "pyproject-build-systems": {
-      "inputs": {
-        "nixpkgs": [
-          "alga",
-          "nixpkgs"
-        ],
-        "pyproject-nix": [
-          "alga",
-          "pyproject-nix"
-        ],
-        "uv2nix": [
-          "alga",
-          "uv2nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1763662255,
-        "narHash": "sha256-4bocaOyLa3AfiS8KrWjZQYu+IAta05u3gYZzZ6zXbT0=",
-        "owner": "pyproject-nix",
-        "repo": "build-system-pkgs",
-        "rev": "042904167604c681a090c07eb6967b4dd4dae88c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pyproject-nix",
-        "repo": "build-system-pkgs",
-        "type": "github"
-      }
-    },
-    "pyproject-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "alga",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764134915,
-        "narHash": "sha256-xaKvtPx6YAnA3HQVp5LwyYG1MaN4LLehpQI8xEdBvBY=",
-        "owner": "pyproject-nix",
-        "repo": "pyproject.nix",
-        "rev": "2c8df1383b32e5443c921f61224b198a2282a657",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pyproject-nix",
-        "repo": "pyproject.nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "alga": "alga",
         "home-manager": "home-manager",
         "hyprlog-nixpkgs": "hyprlog-nixpkgs",
-        "nix-flatpak": "nix-flatpak",
-        "nixpkgs": "nixpkgs_2",
-        "old-nixpkgs": "old-nixpkgs",
-        "plasticscm-nixpkgs": "plasticscm-nixpkgs",
+        "nixpkgs": "nixpkgs",
         "stable-nixpkgs": "stable-nixpkgs"
       }
     },
@@ -229,46 +72,6 @@
         "id": "nixpkgs",
         "ref": "nixos-25.11",
         "type": "indirect"
-      }
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "uv2nix": {
-      "inputs": {
-        "nixpkgs": [
-          "alga",
-          "nixpkgs"
-        ],
-        "pyproject-nix": [
-          "alga",
-          "pyproject-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764546642,
-        "narHash": "sha256-pCzgOjGEZyH7xKmpckdJzWyO0kvTIlaTK+ed/wguv5Y=",
-        "owner": "pyproject-nix",
-        "repo": "uv2nix",
-        "rev": "0c56de7543459a23d0ebb7977fd555ced5d842ae",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pyproject-nix",
-        "repo": "uv2nix",
-        "type": "github"
       }
     }
   },
