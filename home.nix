@@ -17,8 +17,8 @@
     ./nvim/mod.nix
   ];
 
-  home.username = "gusjengis";
-  home.homeDirectory = "/home/gusjengis";
+  home.username = "dragonflylane";
+  home.homeDirectory = "/home/dragonflylane";
 
   home.stateVersion = "25.05";
 

@@ -11,9 +11,9 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-        if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
-          exec Hyprland
-        fi
+      if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
+        exec start-hyprland
+      fi
     '';
     bashrcExtra = ''
       export PATH="$HOME/.cargo/bin:$PATH"
@@ -24,7 +24,7 @@
       export PS1=" \033[1;32m\]\w\[\033[0m "
     '';
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos/";
+      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos#dragonflylane";
       rehome = "home-manager switch --impure --flake ~/.home-manager/";
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";

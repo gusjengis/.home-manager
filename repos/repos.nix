@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.activation.cloneMisc = lib.hm.dag.entryAfter [ "createDocumentsDirs" ] ''

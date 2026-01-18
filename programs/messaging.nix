@@ -6,13 +6,8 @@
 }:
 
 {
-  home.packages =
-    with pkgs;
-    [
-      wireplumber
-    ]
-    ++ lib.optionals PC [
-      zoom-us
-      discord-canary
-    ];
+  home.packages = with pkgs; [
+    wireplumber
+    zoom-us
+  ];
 }

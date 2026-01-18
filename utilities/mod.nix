@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  stable,
   ...
 }:
 
@@ -13,17 +14,16 @@
     ./audio.nix
     ./tmux.nix
   ];
-  home.packages =
-    with pkgs;
-    [
-      btop
-      zip
-      unzip
-      usbutils
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
-      wget
-      nmgui
-      acpi 
-    ];
+  home.packages = with pkgs; [
+    btop
+    zip
+    unzip
+    usbutils
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
+    wget
+    nmgui
+    acpi
+    # keyd
+  ];
 }

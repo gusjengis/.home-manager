@@ -7,13 +7,7 @@
 }:
 
 {
-  home.packages =
-    with pkgs;
-    [
-      stable.nodejs_24
-      zathura
-      # Minecraft!!!
-      zulu8
-      prismlauncher
-    ];
+  home.packages = with pkgs; [
+    zathura
+  ];
 }

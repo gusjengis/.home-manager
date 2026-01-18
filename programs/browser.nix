@@ -12,11 +12,10 @@
     commandLineArgs = [
       "--ozone-platform=wayland"
       "--ignore-gpu-blocklist"
-      "--enable-unsafe-webgpu"
     ];
     extensions = [
       "iobmefdldoplhmonnnkchglfdeepnfhd" # Google Search Keyboard Shortcuts
-      "eimadpbcbfnmbkopoojfekhnkhdbieeh" # Dark Reader
+      # "eimadpbcbfnmbkopoojfekhnkhdbieeh" # Dark Reader
       "jpkfgepcmmchgfbjblnodjhldacghenp" # Pie Adblock
       "ifbmcpbgkhlpfcodhjhdbllhiaomkdej" # Office - Enable Cut, Copy, and Paste
       # "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1Password

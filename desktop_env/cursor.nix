@@ -24,5 +24,5 @@ in
     XCURSOR_SIZE = "${toString CURSOR_SIZE}";
   };
 
-  home.packages = with pkgs; [ wl-kbptr ];
+  # home.packages = with pkgs; [ wl-kbptr ];
 }
