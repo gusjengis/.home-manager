@@ -43,5 +43,6 @@
     mkdir -p ~/.config/eww-which-key
     ln -sf $HOME/.home-manager/config_files/eww-which-key/eww.scss $HOME/.config/eww-which-key/eww.scss
     ln -sf $HOME/.home-manager/config_files/eww-which-key/eww.yuck $HOME/.config/eww-which-key/eww.yuck
+    ln -sf $HOME/.home-manager/wallpapers/ $HOME/Wallpapers
   '';
 }

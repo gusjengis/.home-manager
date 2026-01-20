@@ -12,6 +12,7 @@
     commandLineArgs = [
       "--ozone-platform=wayland"
       "--ignore-gpu-blocklist"
+      "--hide-crash-restore-bubble"
     ];
     extensions = [
       "iobmefdldoplhmonnnkchglfdeepnfhd" # Google Search Keyboard Shortcuts
