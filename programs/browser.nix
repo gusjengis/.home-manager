@@ -17,6 +17,7 @@ in
     commandLineArgs = [
       "--ozone-platform=wayland"
       "--ignore-gpu-blocklist"
+      "--hide-crash-restore-bubble"
       # "--enable-unsafe-webgpu"
     ];
     extensions = [

@@ -18,6 +18,8 @@
     libnotify
     linux-wallpaperengine
     hyprlog-nixpkgs.hyprlog
+    jq
+    eww
   ];
 
   home.activation.symlinkTmuxConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -35,6 +37,13 @@
     ln -sf $HOME/.home-manager/config_files/hypr/hyprsunset.conf $HOME/.config/hypr/hyprsunset.conf
     ln -sf $HOME/.home-manager/config_files/hypr/keybinds.conf $HOME/.config/hypr/keybinds.conf
     ln -sf $HOME/.home-manager/config_files/hypr/workspaces.conf $HOME/.config/hypr/workspaces.conf
+
+    mkdir -p ~/.config/hypr/scripts
+    ln -sf $HOME/.home-manager/config_files/hypr/scripts/which-key.sh $HOME/.config/hypr/scripts/which-key.sh
+    mkdir -p ~/.config/eww-which-key
+    ln -sf $HOME/.home-manager/config_files/eww-which-key/eww.scss $HOME/.config/eww-which-key/eww.scss
+    ln -sf $HOME/.home-manager/config_files/eww-which-key/eww.yuck $HOME/.config/eww-which-key/eww.yuck
+    ln -sf $HOME/.home-manager/wallpapers/ $HOME/Wallpapers
   '';
 
   home.activation.macHyprSetup = lib.mkIf Mac (

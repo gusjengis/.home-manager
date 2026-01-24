@@ -3,7 +3,7 @@ image/png=qimgv.desktop;
 audio/flac=vlc.desktop;
 image/webp=qimgv.desktop;
 image/gif=qimgv.desktop;
-text/html=nvim.desktop;
+text/html=chromium-browser.desktop;
 application/x-sharedlib=nvim.desktop;
 
 [Default Applications]
@@ -43,3 +43,7 @@ application/octet-stream=nvim.desktop;
 application/x-zerosize=nvim.desktop;
 application/x-sharedlib=nvim.desktop
 video/mkv=vlc.desktop;
+x-scheme-handler/http=chromium-browser.desktop
+x-scheme-handler/https=chromium-browser.desktop
+x-scheme-handler/about=chromium-browser.desktop
+x-scheme-handler/unknown=chromium-browser.desktop

@@ -24,9 +24,19 @@ trap 'next_wallpaper' USR1
 while true; do
   # load all wallpapers in the folder and shuffle list
   wallpapers=(
-    ~/.home-manager/wallpapers/*.gif
-    ~/.home-manager/wallpapers/*.webp
+    ~/.home-manager/wallpapers/*.avif
+    ~/.home-manager/wallpapers/*.jpeg
+    ~/.home-manager/wallpapers/*.JPEG
+    ~/.home-manager/wallpapers/*.jpg
     ~/.home-manager/wallpapers/*.png
+    ~/.home-manager/wallpapers/*.gif
+    ~/.home-manager/wallpapers/*.pnm
+    ~/.home-manager/wallpapers/*.tga
+    ~/.home-manager/wallpapers/*.tiff
+    ~/.home-manager/wallpapers/*.webp
+    ~/.home-manager/wallpapers/*.bmp
+    ~/.home-manager/wallpapers/*.farbfeld
+    ~/.home-manager/wallpapers/*.svg 
   )
   mapfile -t shuffled < <(shuf -e "${wallpapers[@]}")
 
