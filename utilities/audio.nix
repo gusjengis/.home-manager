@@ -11,6 +11,7 @@
     with pkgs;
     [
       pavucontrol
+      playerctl
     ]
     ++ lib.optionals PC [ easyeffects ];
 }
