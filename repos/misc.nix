@@ -31,8 +31,6 @@
     clone_repo https://github.com/agreenweb/timeline.git
     clone_repo https://github.com/agreenweb/cronosearch.git
     clone_repo https://github.com/gusjengis/Particle-Life.git
-    clone_repo https://github.com/zed-industries/zed.git
-    clone_repo https://github.com/Trevogre/logoanimation
     clone_repo https://github.com/gusjengis/WatchFace.git
     clone_repo https://github.com/gusjengis/CalendarComplication.git
     clone_repo https://github.com/gusjengis/nixpkgs

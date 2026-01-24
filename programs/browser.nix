@@ -17,7 +17,7 @@ in
     commandLineArgs = [
       "--ozone-platform=wayland"
       "--ignore-gpu-blocklist"
-      "--enable-unsafe-webgpu"
+      # "--enable-unsafe-webgpu"
     ];
     extensions = [
       "iobmefdldoplhmonnnkchglfdeepnfhd" # Google Search Keyboard Shortcuts

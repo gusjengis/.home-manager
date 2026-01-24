@@ -14,7 +14,6 @@
       posting
       docker
       oxker
-      numlockx
       openssl
       rustup
       cloc
@@ -24,22 +23,17 @@
       mesa-demos
       vulkan-tools
       mermaid-cli
-      supercollider
       opencode
-      cockatrice
     ]
     ++ lib.optionals PC [
       dotnetCorePackages.dotnet_9.sdk
       protonup-qt
       blender
       vscode
-      immersed
-      mutter
       arduino
       android-studio
       zulu8
       prismlauncher
       atlauncher
-      lutris
     ];
 }

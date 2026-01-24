@@ -10,7 +10,6 @@
   home.packages =
     with pkgs;
     [
-      gurk-rs
       wireplumber
       # kdePackages.xwaylandvideobridge
       signal-desktop
