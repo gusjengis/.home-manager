@@ -22,8 +22,6 @@
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     wget
-    nmgui
-    acpi
     # keyd
   ];
 }
