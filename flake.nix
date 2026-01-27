@@ -37,7 +37,7 @@
     in
     {
       homeConfigurations = {
-        dragonflylane = home-manager.lib.homeManagerConfiguration {
+        gramcracker = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
             inherit inputs;

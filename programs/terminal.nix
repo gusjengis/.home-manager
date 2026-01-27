@@ -24,7 +24,7 @@
       export PS1=" \033[1;32m\]\w\[\033[0m "
     '';
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos#dragonflylane";
+      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos#gramcracker";
       rehome = "home-manager switch --impure --flake ~/.home-manager/";
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";
