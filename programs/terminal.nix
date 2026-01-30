@@ -48,6 +48,11 @@
     pipes-rs
   ];
 
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
