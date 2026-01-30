@@ -38,6 +38,7 @@
       clean = "nix-collect-garbage -d && sudo nix-collect-garbage -d && nix store optimise && sudo nix store optimise";
       nd = "nix develop --impure";
       ta = "tmux attach || tmux";
+      oc = "opencode";
     };
   };
 
