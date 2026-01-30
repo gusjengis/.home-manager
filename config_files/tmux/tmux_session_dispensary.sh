@@ -2,21 +2,35 @@
 
 DIRS=(
   "$HOME/Documents/Code"
-  "$HOME/Documents/Code/Plinth"
-  "$HOME/Documents/Code/Mosaic"
+  # "$HOME/Documents/Code/Plinth"
+  # "$HOME/Documents/Code/Mosaic"
   "$HOME/Documents/Obsidian"
   "$HOME/wkspaces/"
+)
+
+EXTRA_DIRS=(
+  "$HOME/.config/nvim"
+  "$HOME/.home-manager/"
+  "/etc/nixos"
+  "/etc/nix-modules"
 )
 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(
+  fd_entries=$(
     fd -t d -d 1 . --absolute-path "${DIRS[@]}" \
-    | sed "s|^$HOME/||" \
-    | sk --margin 10% --color="bw"
+    | sed "s|^$HOME/||"
   )
-  [[ $selected ]] && selected="$HOME/$selected"
+  extra_entries=$(
+    printf "%s\n" "${EXTRA_DIRS[@]}" \
+    | sed "s|^$HOME/||"
+  )
+  selected=$(
+    printf "%s\n" "$fd_entries" "$extra_entries" \
+    | sk --color="bw" --tmux center,50%
+  )
+  [[ $selected ]] && [[ ! "$selected" =~ ^/ ]] && selected="$HOME/$selected"
 fi
 
 [[ -z ${selected:-} ]] && exit 0
