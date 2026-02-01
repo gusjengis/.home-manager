@@ -17,7 +17,7 @@
     dunst
     libnotify
     linux-wallpaperengine
-    hyprlog-nixpkgs.hyprlog
+    # hyprlog-nixpkgs.hyprlog
     jq
     eww
   ];
