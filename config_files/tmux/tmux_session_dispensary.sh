@@ -19,7 +19,7 @@ if [[ $# -eq 1 ]]; then
   selected=$1
 else
   fd_entries=$(
-    fd -t d -d 1 . --absolute-path "${DIRS[@]}" \
+    fd -t d -d 1 . --absolute-path "${DIRS[@]}" 2>/dev/null \
     | sed "s|^$HOME/||"
   )
   extra_entries=$(
