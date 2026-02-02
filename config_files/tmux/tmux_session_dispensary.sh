@@ -10,9 +10,11 @@ DIRS=(
 
 EXTRA_DIRS=(
   "$HOME/.config/nvim"
+  "$HOME/.config/secrets"
   "$HOME/.home-manager/"
   "/etc/nixos"
   "/etc/nix-modules"
+
 )
 
 if [[ $# -eq 1 ]]; then

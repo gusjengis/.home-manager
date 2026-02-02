@@ -37,9 +37,8 @@
 
     clone_repo ssh://aur@aur.archlinux.org/hyprlog.git
 
-    mkdir -p ~/.config/secrets/
 
-    cd ~/.config/secrets/
-    clone_repo https://github.com/gusjengis/ssh.git
+    cd ~/.config/
+    clone_repo https://github.com/gusjengis/secrets.git
   '';
 }
