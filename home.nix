@@ -12,8 +12,8 @@
     ./desktop_env/mod.nix
     ./programs/mod.nix
     ./utilities/mod.nix
-    ./directories/mod.nix
-    ./repos/sync_repos.nix
+    ./create_directories.nix
+    ./sync_repos.nix
   ];
 
   home.username = "gusjengis";
