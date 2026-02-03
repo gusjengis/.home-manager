@@ -44,6 +44,7 @@ clone_repo ssh://aur@aur.archlinux.org/hyprlog.git
 
 cd ~/.config/
 
+clone_repo https://github.com/gusjengis/nvim.git
 clone_repo https://github.com/gusjengis/secrets.git
 
 cd ~/Documents/Code/Plinth/

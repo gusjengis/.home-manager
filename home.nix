@@ -14,7 +14,6 @@
     ./utilities/mod.nix
     ./directories/mod.nix
     ./repos/sync_repos.nix
-    ./nvim/mod.nix
   ];
 
   home.username = "gusjengis";
