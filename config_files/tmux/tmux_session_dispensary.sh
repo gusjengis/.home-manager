@@ -2,8 +2,8 @@
 
 DIRS=(
   "$HOME/Documents/Code"
-  # "$HOME/Documents/Code/Plinth"
-  # "$HOME/Documents/Code/Mosaic"
+  "$HOME/Documents/Code/Plinth"
+  "$HOME/Documents/Code/Mosaic"
   "$HOME/Documents/Obsidian"
   "$HOME/wkspaces/"
 )
