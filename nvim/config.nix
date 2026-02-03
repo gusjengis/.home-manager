@@ -1,23 +1,17 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  home.activation.cloneNeovimConfig =
-    lib.hm.dag.entryAfter [ "createDocumentsDirs" ] ''
-      export PATH="${pkgs.git}/bin:$PATH"
+  home.activation.cloneNeovimConfig = lib.hm.dag.entryAfter [ "createDocumentsDirs" ] ''
+    export PATH="${pkgs.git}/bin:$PATH"
+    source "$HOME/.home-manager/scripts/clone-repo.sh"
 
-      clone_repo() {
-      	local repo_url="$1"
-      	local repo_name
+    cd ~/.config/
 
-      	repo_name=$(basename -s .git "$repo_url")
-
-      	if [ ! -d "$repo_name" ]; then
-      	  git clone "$repo_url"
-      	fi
-      }
-
-      cd ~/.config/
-
-      clone_repo https://github.com/gusjengis/nvim.git
-    '';
+    clone_repo https://github.com/gusjengis/nvim.git
+  '';
 }
