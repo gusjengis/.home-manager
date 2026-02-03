@@ -38,6 +38,7 @@ declare -a REPOS=(
     "$HOME/Documents/Code/;ssh://aur@aur.archlinux.org/hyprlog.git"
     "$HOME/.config/;https://github.com/gusjengis/nvim.git"
     "$HOME/.config/;https://github.com/gusjengis/secrets.git"
+    "$HOME/;https://github.com/gusjengis/.home-manager.git"
     "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Core.git"
     "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Util.git"
     "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Web.git"
