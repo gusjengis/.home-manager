@@ -3,64 +3,55 @@ set -euo pipefail
 
 source "$HOME/.home-manager/scripts/clone-repo.sh"
 
-cd ~/Documents/Code/
+export -f sync_repo clone_repo
 
-# Portfolio
+declare -a REPOS=(
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Portfolio.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/CRT.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Graph.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Line_Test.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/MinecraftDemo.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Morse_Code.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/oscilloscope_video.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Paint.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/pLife.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Platformer.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Snowflake.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Synthesizer.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/webGL.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Wireframe.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/WebGPU-Spiral.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Perlin-Noise-Generator.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Game-of-Life.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/mermaid-class-diagrams.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/lsp-servers.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/lsp-servers-cli.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/hyprlog.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Particle-Physics-Sim.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Resume.git"
+    "$HOME/Documents/Code/;https://github.com/agreenweb/timeline.git"
+    "$HOME/Documents/Code/;https://github.com/agreenweb/cronosearch.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/Particle-Life.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/WatchFace.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/CalendarComplication.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/nixpkgs"
+    "$HOME/Documents/Code/;ssh://aur@aur.archlinux.org/hyprlog.git"
+    "$HOME/.config/;https://github.com/gusjengis/nvim.git"
+    "$HOME/.config/;https://github.com/gusjengis/secrets.git"
+    "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Core.git"
+    "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Util.git"
+    "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Web.git"
+    "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Web-Build.git"
+    "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Hello-World.git"
+    "$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Backend.git"
+    "$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Model.git"
+    "$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Hub.git"
+    "$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Android.git"
+    "$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Snitch.git"
+)
 
-clone_repo https://github.com/gusjengis/Portfolio.git
-clone_repo https://github.com/gusjengis/CRT.git
-clone_repo https://github.com/gusjengis/Graph.git
-clone_repo https://github.com/gusjengis/Line_Test.git
-clone_repo https://github.com/gusjengis/MinecraftDemo.git
-clone_repo https://github.com/gusjengis/Morse_Code.git
-clone_repo https://github.com/gusjengis/oscilloscope_video.git
-clone_repo https://github.com/gusjengis/Paint.git
-clone_repo https://github.com/gusjengis/pLife.git
-clone_repo https://github.com/gusjengis/Platformer.git
-clone_repo https://github.com/gusjengis/Snowflake.git
-clone_repo https://github.com/gusjengis/Synthesizer.git
-clone_repo https://github.com/gusjengis/webGL.git
-clone_repo https://github.com/gusjengis/Wireframe.git
-clone_repo https://github.com/gusjengis/WebGPU-Spiral.git
-clone_repo https://github.com/gusjengis/Perlin-Noise-Generator.git
-clone_repo https://github.com/gusjengis/Game-of-Life.git
-
-# Misc
-
-clone_repo https://github.com/gusjengis/mermaid-class-diagrams.git
-clone_repo https://github.com/gusjengis/lsp-servers.git
-clone_repo https://github.com/gusjengis/lsp-servers-cli.git
-clone_repo https://github.com/gusjengis/hyprlog.git
-clone_repo https://github.com/gusjengis/Particle-Physics-Sim.git
-clone_repo https://github.com/gusjengis/Resume.git
-clone_repo https://github.com/agreenweb/timeline.git
-clone_repo https://github.com/agreenweb/cronosearch.git
-clone_repo https://github.com/gusjengis/Particle-Life.git
-clone_repo https://github.com/gusjengis/WatchFace.git
-clone_repo https://github.com/gusjengis/CalendarComplication.git
-clone_repo https://github.com/gusjengis/nixpkgs
-
-clone_repo ssh://aur@aur.archlinux.org/hyprlog.git
-
-cd ~/.config/
-
-clone_repo https://github.com/gusjengis/nvim.git
-clone_repo https://github.com/gusjengis/secrets.git
-
-cd ~/Documents/Code/Plinth/
-
-clone_repo https://github.com/gusjengis/Plinth-Core.git
-clone_repo https://github.com/gusjengis/Plinth-Util.git
-clone_repo https://github.com/gusjengis/Plinth-Web.git
-clone_repo https://github.com/gusjengis/Plinth-Web-Build.git
-clone_repo https://github.com/gusjengis/Plinth-Hello-World.git
-
-cd ~/Documents/Code/Mosaic/
-
-clone_repo https://github.com/gusjengis/Mosaic-Backend.git
-clone_repo https://github.com/gusjengis/Mosaic-Model.git
-clone_repo https://github.com/gusjengis/Mosaic-Hub.git
-clone_repo https://github.com/gusjengis/Mosaic-Android.git
-clone_repo https://github.com/gusjengis/Mosaic-Snitch.git
-
-printf "\r\033[K\n"
+for item in "${REPOS[@]}"; do
+    dir="${item%%;*}"
+    url="${item##*;}"
+    printf "%s\t%s\n" "$dir" "$url"
+done | $HOME/.nix-profile/bin/parallel -j8 -N2 --colsep '\t' sync_repo
