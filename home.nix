@@ -13,7 +13,7 @@
     ./programs/mod.nix
     ./utilities/mod.nix
     ./directories/mod.nix
-    ./repos/mod.nix
+    ./repos/sync_repos.nix
     ./nvim/mod.nix
   ];
 
