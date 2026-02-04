@@ -72,4 +72,6 @@
     ln -sf $HOME/.home-manager/config_files/ssh/id_ed25519.pub $HOME/.ssh/id_ed25519.pub
   '';
 
+  news.display = "silent";
+
 }
