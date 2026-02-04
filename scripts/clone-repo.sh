@@ -55,11 +55,16 @@ clone_repo() {
 sync_repo() {
     local dir="$1"
     local repo_url="$2"
+    local output
+    local repo_name
+
+    repo_name=$(basename -s .git "$repo_url")
 
     mkdir -p "$dir"
 
-    (
-        cd "$dir" 2>/dev/null || { echo "cd failed: $dir"; return 0; }
-        clone_repo "$repo_url"
-    ) | sed 's/^/\x1b[31m/;s/$/\x1b[0m/'
+    output=$((cd "$dir" 2>/dev/null && clone_repo "$repo_url") | sed 's/\x1b\[[0-9;]*m//g')
+
+    if [ -n "$output" ]; then
+        $HOME/.nix-profile/bin/dunstify --urgency=critical "$repo_name: Sync Error" "$output"
+    fi
 }
