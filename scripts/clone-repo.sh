@@ -11,7 +11,6 @@ clone_repo() {
         git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
     else
         if ! git -C "$repo_name" rev-parse --git-dir >/dev/null 2>&1; then
-            echo "$repo_name: not a valid git repository - removing and re-cloning"
             rm -rf "$repo_name"
             git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
             return 0
@@ -22,7 +21,7 @@ clone_repo() {
             cd "$repo_name" 2>/dev/null || { echo "cd failed: $repo_name"; return 0; }
 
             if [ -n "$(git status --porcelain)" ]; then
-                echo "skipping sync for $repo_name: has uncommitted changes"
+                echo "$repo_name: uncommitted changes"
                 return 0
             fi
 
@@ -41,9 +40,9 @@ clone_repo() {
                 git pull --ff-only -q 2>/dev/null || {
                     local pull_result=$?
                     if [ $pull_result -eq 128 ]; then
-                        echo "$repo_name: pull would merge (not fast-forward) - manual resolution needed"
+                        echo "$repo_name: confilct with upsteam"
                     else
-                        echo "pull failed: $repo_name"
+                        echo "$repo_name: pull failed"
                     fi
                     return 0
                 }
@@ -65,6 +64,7 @@ sync_repo() {
     output=$((cd "$dir" 2>/dev/null && clone_repo "$repo_url") | sed 's/\x1b\[[0-9;]*m//g')
 
     if [ -n "$output" ]; then
-        $HOME/.nix-profile/bin/dunstify --urgency=critical "$repo_name: Sync Error" "$output"
+        description=$(echo "$output" | cut -d':' -f2- | sed 's/^ *//')
+        $HOME/.nix-profile/bin/dunstify --urgency=critical "$repo_name" "$description"
     fi
 }
