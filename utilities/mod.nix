@@ -29,7 +29,6 @@
       nmgui
       imagemagick
       ventoy
-      parallel-full
     ]
     ++ lib.optionals Mac [ acpi ];
 }

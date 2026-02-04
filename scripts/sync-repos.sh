@@ -54,5 +54,6 @@ declare -a REPOS=(
 for item in "${REPOS[@]}"; do
     dir="${item%%;*}"
     url="${item##*;}"
-    printf "%s\t%s\n" "$dir" "$url"
-done | $HOME/.nix-profile/bin/parallel -N2 --colsep '\t' sync_repo
+    sync_repo "$dir" "$url" &
+done
+wait
