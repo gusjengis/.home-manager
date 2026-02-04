@@ -66,5 +66,6 @@ sync_repo() {
     if [ -n "$output" ]; then
         description=$(echo "$output" | cut -d':' -f2- | sed 's/^ *//')
         $HOME/.nix-profile/bin/dunstify --urgency=critical "$repo_name" "$description"
+        echo -e "\033[31m$output\033[0m"
     fi
 }
