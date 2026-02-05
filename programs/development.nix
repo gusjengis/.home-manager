@@ -24,6 +24,8 @@
       vulkan-tools
       mermaid-cli
       opencode
+      perf
+      hotspot
     ]
     ++ lib.optionals PC [
       dotnetCorePackages.dotnet_9.sdk
