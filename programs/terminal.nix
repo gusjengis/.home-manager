@@ -39,6 +39,7 @@
       nd = "nix develop --impure";
       ta = "tmux attach || tmux";
       oc = "opencode";
+      sync = "~/.home-manager/scripts/sync-repos.sh";
     };
   };
 
