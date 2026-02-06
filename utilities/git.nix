@@ -12,5 +12,6 @@
         email = "anthony.j.green@outlook.com";
       };
     };
+    lfs.enable = true;
   };
 }

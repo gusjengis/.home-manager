@@ -35,6 +35,7 @@ declare -a REPOS=(
     "$HOME/Documents/Code/;https://github.com/gusjengis/WatchFace.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/CalendarComplication.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/nixpkgs"
+    "$HOME/Documents/Code/;https://github.com/RainspireStudios/Hundo.git"
     "$HOME/Documents/Code/;ssh://aur@aur.archlinux.org/hyprlog.git"
     "$HOME/.config/;https://github.com/gusjengis/nvim.git"
     "$HOME/.config/;https://github.com/gusjengis/secrets.git"
