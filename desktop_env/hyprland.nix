@@ -21,6 +21,9 @@
     # hyprlog-nixpkgs.hyprlog
     jq
     eww
+    wofi
+    waybar
+    font-awesome
   ];
 
   home.activation.macHyprSetup = lib.mkIf Mac (

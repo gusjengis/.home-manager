@@ -77,7 +77,6 @@
           modules = [
             inputs.nix-flatpak.homeManagerModules.nix-flatpak
             ./home.nix
-            /etc/nix-modules/homeManagerModules
           ];
         };
       };
