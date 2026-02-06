@@ -14,6 +14,7 @@
   home.packages = with pkgs; [
     hyprsunset
     hypridle
+    hyprpaper
     dunst
     libnotify
     linux-wallpaperengine
