@@ -47,6 +47,9 @@
 
   home.packages = with pkgs; [
     pipes-rs
+    tmux
+    fd
+    skim
   ];
 
   programs.fzf = {
