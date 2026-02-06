@@ -60,19 +60,5 @@
     nix-direnv.enable = true;
   };
 
-  home.file.".config/pipes-rs/config.toml".source = ~/.home-manager/config_files/pipes-rs/config.toml;
-  home.file.".config/pipes-rs/config.toml".force = true;
-
-  home.activation.symlinkKittyConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    mkdir -p ~/.config/kitty
-    mkdir -p ~/.ssh
-
-    ln -sf $HOME/.home-manager/config_files/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
-    ln -sf $HOME/.home-manager/config_files/ssh/config $HOME/.ssh/config
-    ln -sf $HOME/.config/secrets/ssh/id_ed25519 $HOME/.ssh/id_ed25519
-    ln -sf $HOME/.home-manager/config_files/ssh/id_ed25519.pub $HOME/.ssh/id_ed25519.pub
-  '';
-
   news.display = "silent";
-
 }

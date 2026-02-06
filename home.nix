@@ -14,6 +14,7 @@
     ./utilities/mod.nix
     ./create_directories.nix
     ./sync_repos.nix
+    ./link_files.nix
   ];
 
   home.username = "gusjengis";
