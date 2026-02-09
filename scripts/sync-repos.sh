@@ -6,6 +6,8 @@ source "$HOME/.home-manager/scripts/clone-repo.sh"
 export -f sync_repo clone_repo
 
 declare -a REPOS=(
+    "/etc/;https://github.com/gusjengis/nix-modules.git"
+    "$HOME/;https://github.com/gusjengis/.home-manager.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/Portfolio.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/CRT.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/Graph.git"
@@ -39,7 +41,6 @@ declare -a REPOS=(
     "$HOME/Documents/Code/AUR/;ssh://aur@aur.archlinux.org/hyprlog.git"
     "$HOME/.config/;https://github.com/gusjengis/nvim.git"
     "$HOME/.config/;https://github.com/gusjengis/secrets.git"
-    "$HOME/;https://github.com/gusjengis/.home-manager.git"
     "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Core.git"
     "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Util.git"
     "$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Web.git"
