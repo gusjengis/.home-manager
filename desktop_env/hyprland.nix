@@ -24,6 +24,7 @@
     wofi
     waybar
     font-awesome
+    waypipe
   ];
 
   home.activation.macHyprSetup = lib.mkIf Mac (
