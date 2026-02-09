@@ -12,3 +12,6 @@ Host aur.archlinux.org
   IdentityFile ~/.config/secrets/ssh/AUR-SSH.pem
   User aur
 
+Host *
+  IdentityFile ~/.config/secrets/ssh/shared_ed25519
+
