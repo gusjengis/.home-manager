@@ -12,7 +12,6 @@
     ./programs/mod.nix
     ./utilities/mod.nix
     ./create_directories.nix
-    ./sync_repos.nix
     ./link_files.nix
   ];
 

@@ -58,7 +58,7 @@
       fi
     '';
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nixos/";
+      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/flake.nix";
       rehome = "home-manager switch --impure --flake ~/.home-manager/";
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";
@@ -68,7 +68,7 @@
       ta = "tmux attach || tmux";
       oc = "opencode";
       sync = "~/.home-manager/scripts/sync-repos.sh";
-      update = "sync && rehome && rebuild";
+      update = "~/.home-manager/scripts/sync-repos.sh";
       waypipe = "waypipe --no-gpu --xwls ssh";
     };
   };
