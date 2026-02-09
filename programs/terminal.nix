@@ -18,7 +18,7 @@
             fi
 
             if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
-      	exec Hyprland
+      	exec start-hyprland
             fi
     '';
     bashrcExtra = ''
