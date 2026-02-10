@@ -33,6 +33,10 @@ $accent: #56d364;
   background-color: rgba(255, 255, 255, 0.07);
 }
 
+.row-selected {
+  background-color: rgba(86, 211, 100, 0.10);
+}
+
 .row-offline {
   background-color: rgba(255, 255, 255, 0.02);
   color: $offline;

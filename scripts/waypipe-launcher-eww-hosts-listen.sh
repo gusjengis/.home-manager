@@ -61,6 +61,7 @@ while true; do
   wait || true
 
   {
+    i=0
     for row in "${peers[@]}"; do
       IFS=$'\t' read -r dns online_flag <<<"$row"
       short="${dns%%.*}"
@@ -77,12 +78,15 @@ while true; do
       fi
 
       jq -nc \
+        --argjson idx "$i" \
         --arg ssh "$dns" \
         --arg short "$short" \
         --arg display "$display" \
         --arg latency "$latency" \
         --argjson online "$online_flag" \
-        '{ssh:$ssh, short:$short, display:$display, online:$online, latency:$latency}'
+        '{idx:$idx, ssh:$ssh, short:$short, display:$display, online:$online, latency:$latency}'
+
+      i=$((i + 1))
     done
   } | jq -cs '.'
 

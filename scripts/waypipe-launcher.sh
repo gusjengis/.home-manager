@@ -37,6 +37,9 @@ if ! eww --config "$eww_cfg" ping >/dev/null 2>&1; then
   disown || true
 fi
 
+# Let Hyprland keybinds (up/down/enter) know where to write the selection.
+eww --config "$eww_cfg" update wp_sel_file="$sel_file" cursor=0 >/dev/null 2>&1 || true
+
 # Allow ESC to close the picker using a Hyprland submap (if configured).
 use_hypr_submap=0
 if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]] && command -v hyprctl >/dev/null 2>&1; then

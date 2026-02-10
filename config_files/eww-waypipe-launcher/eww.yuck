@@ -1,10 +1,13 @@
+(defvar wp_sel_file "")
+(defvar cursor 0)
+
 (deflisten hosts
   :initial "[]"
   "bash -lc '$HOME/.home-manager/scripts/waypipe-launcher-eww-hosts-listen.sh'")
 
 (defwidget host-row [h selFile configDir]
   (button
-    :class { h.online ? "row" : "row row-offline" }
+    :class { h.idx == cursor ? (h.online ? "row row-selected" : "row row-selected row-offline") : (h.online ? "row" : "row row-offline") }
     :onclick { h.online ? "bash -lc '$HOME/.home-manager/scripts/waypipe-launcher-eww-select.sh \"${selFile}\" \"${configDir}\" \"${h.ssh}\"'" : "" }
     (box :orientation "h" :space-evenly false :hexpand true
       (label :class "host" :text "${h.display}" :xalign 0 :hexpand true)
