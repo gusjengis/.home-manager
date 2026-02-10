@@ -1,7 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-need() { command -v "$1" >/dev/null 2>&1 || { echo "Missing: $1" >&2; exit 1; }; }
+notify_err() {
+  local msg="$1"
+  local dunstify_bin notify_bin
+  dunstify_bin="${DUNSTIFY_BIN:-}"
+  notify_bin="${NOTIFY_SEND_BIN:-}"
+  if [[ -z "${dunstify_bin:-}" ]]; then dunstify_bin="$(command -v dunstify 2>/dev/null || true)"; fi
+  if [[ -z "${notify_bin:-}" ]]; then notify_bin="$(command -v notify-send 2>/dev/null || true)"; fi
+  if [[ -n "${dunstify_bin:-}" ]]; then
+    "$dunstify_bin" -a "Waypipe Launcher" -u critical -t 8000 "Waypipe Launcher" "$msg" || true
+  elif [[ -n "${notify_bin:-}" ]]; then
+    "$notify_bin" "Waypipe Launcher" "$msg" || true
+  else
+    printf 'Waypipe Launcher: %s\n' "$msg" >&2
+  fi
+}
+
+trap 'notify_err "hosts-listen error at line $LINENO: $BASH_COMMAND"' ERR
+
+log_file="${XDG_RUNTIME_DIR:-/tmp}/waypipe-launcher.log"
+log() {
+  printf '%s %s\n' "$(date -Is 2>/dev/null || date)" "listen: $*" >>"$log_file" 2>/dev/null || true
+}
+
+need() { command -v "$1" >/dev/null 2>&1 || { notify_err "Missing dependency: $1"; exit 1; }; }
 need tailscale
 need jq
 
