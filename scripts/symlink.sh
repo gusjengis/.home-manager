@@ -63,3 +63,20 @@ for item in "${LINKS[@]}"; do
     ln -sf "$source" "$destination" &
 done
 wait
+
+# SSH refuses to use private keys that are readable by group/others.
+# Git does not reliably preserve file permissions for regular files, so if
+# secrets are synced, they can end up as 0644 on checkout. Fix permissions
+# here as a best-effort.
+if [[ -d "$HOME/.config/secrets/ssh" ]]; then
+    chmod 700 "$HOME/.config/secrets" "$HOME/.config/secrets/ssh" 2>/dev/null || true
+
+    shopt -s nullglob
+    for f in "$HOME/.config/secrets/ssh/"*; do
+        [[ -f "$f" ]] || continue
+        case "$f" in
+            *.pub) chmod 644 "$f" 2>/dev/null || true ;;
+            *) chmod 600 "$f" 2>/dev/null || true ;;
+        esac
+    done
+fi
