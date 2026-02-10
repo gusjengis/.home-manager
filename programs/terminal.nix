@@ -68,7 +68,7 @@
       ta = "tmux attach || tmux";
       oc = "opencode";
       sync = "~/.home-manager/scripts/sync-repos.sh";
-      update = "~/.home-manager/scripts/sync-repos.sh";
+      update = "~/.home-manager/scripts/update.sh";
       waypipe = "waypipe --no-gpu --xwls ssh";
     };
   };
