@@ -1,0 +1,28 @@
+(deflisten hosts
+  :initial "[]"
+  "bash -lc '$HOME/.home-manager/scripts/waypipe-launcher-eww-hosts-listen.sh'")
+
+(defwidget host-row [h selFile configDir]
+  (button
+    :class { h.online ? "row" : "row row-offline" }
+    :onclick { h.online ? "bash -lc '$HOME/.home-manager/scripts/waypipe-launcher-eww-select.sh \"${selFile}\" \"${configDir}\" \"${h.ssh}\"'" : "" }
+    (box :orientation "h" :space-evenly false
+      (label :class "host" :text "${h.display}" :xalign 0)
+      (label :class "lat" :text { h.online ? "${h.latency}" : "offline" } :xalign 1))))
+
+(defwindow waypipe-hosts [selFile configDir]
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "30%" :height "40%" :anchor "center")
+  :wm-ignore true
+  :stacking "overlay"
+  :exclusive false
+  :focusable "ondemand"
+  :namespace "Waypipe Launcher"
+  (box :class "container" :orientation "v" :spacing 10
+    (box :orientation "h" :space-evenly false
+      (label :class "title" :text "Remote machine")
+      (box :hexpand true)
+      (button :class "cancel" :onclick "eww --config \"${configDir}\" close waypipe-hosts" (label :text "x")))
+    (box :class "list" :orientation "v" :spacing 6
+      (for h in hosts
+        (host-row :h h :selFile selFile :configDir configDir)))))
