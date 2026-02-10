@@ -12,7 +12,7 @@
 {
 
   home.packages = with pkgs; [
-    hyprsunset
+    # hyprsunset
     hypridle
     hyprpaper
     dunst
