@@ -13,7 +13,8 @@ clone_repo() {
             if ! git -C "$repo_name" rev-parse --git-dir >/dev/null 2>&1; then
                 echo "$repo_name: not a valid git repository - removing and re-cloning"
                 sudo rm -rf "$repo_name"
-                git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
+                sudo git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
+                sudo chown -R $USER:users "$repo_name"
             return 0
         fi
 
