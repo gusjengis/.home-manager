@@ -9,11 +9,13 @@
 
   imports = [
     ./desktop_env/mod.nix
+    ./modules/mod.nix
     ./programs/mod.nix
     ./utilities/mod.nix
     ./create_directories.nix
     ./link_files.nix
-  ];
+  ]
+  ++ lib.optional (builtins.pathExists ./modules.nix) ./modules.nix;
 
   home.username = "gusjengis";
   home.homeDirectory = "/home/gusjengis";

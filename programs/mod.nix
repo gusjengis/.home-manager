@@ -7,7 +7,6 @@
     ./browser.nix
     ./development.nix
     ./file_explorer.nix
-    ./game_dev.nix
     ./image_editing.nix
     ./messaging.nix
     ./notes.nix

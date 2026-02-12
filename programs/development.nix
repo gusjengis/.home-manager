@@ -29,13 +29,7 @@
     ]
     ++ lib.optionals PC [
       dotnetCorePackages.dotnet_9.sdk
-      protonup-qt
-      blender
-      vscode
       arduino
       android-studio
-      zulu8
-      prismlauncher
-      atlauncher
     ];
 }
