@@ -9,7 +9,7 @@
 
   imports = [
     ./desktop_env/mod.nix
-    ./modules/mod.nix
+    ./modules/desktop.nix
     ./programs/mod.nix
     ./utilities/mod.nix
     ./create_directories.nix
