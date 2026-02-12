@@ -11,7 +11,7 @@
 {
   options.gameDev.enable = lib.mkEnableOption "game development tools";
 
-  config = lib.mkIf config.gameDev.enable {
+  config = lib.mkIf (config.gameDev.enable && config.desktopEnv.enable) {
     home.packages =
       with pkgs;
       [

@@ -76,8 +76,9 @@
   systemd.user.sessionVariables.PATH = "$HOME/.cargo/bin:$PATH";
 
   home.packages = with pkgs; [
-    pipes-rs
+    kitty
     tmux
+    pipes-rs
     fd
     skim
     jq

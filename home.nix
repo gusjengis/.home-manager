@@ -5,11 +5,9 @@
   ...
 }:
 {
-  programs.home-manager.enable = true;
-
   imports = [
     ./desktop_env/mod.nix
-    ./modules/desktop.nix
+    ./modules/mod.nix
     ./programs/mod.nix
     ./utilities/mod.nix
     ./create_directories.nix
@@ -17,29 +15,42 @@
   ]
   ++ lib.optional (builtins.pathExists ./modules.nix) ./modules.nix;
 
-  home.username = "gusjengis";
-  home.homeDirectory = "/home/gusjengis";
-
-  home.stateVersion = "25.05";
-
-  home.sessionVariables = {
-    LD_LIBRARY_PATH = /run/opengl-driver/lib;
+  options.desktopEnv.enable = lib.mkEnableOption "desktop environment packages" // {
+    default = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
+  config = lib.mkMerge [
+    {
+      programs.home-manager.enable = true;
 
-  services.flatpak = {
-    enable = true;
+      home.username = "gusjengis";
+      home.homeDirectory = "/home/gusjengis";
 
-    remotes = [
-      {
-        name = "flathub";
-        location = "https://flathub.org/repo/flathub.flatpakrepo";
-      }
-    ];
+      home.stateVersion = "25.05";
 
-    packages = [
-      "com.bambulab.BambuStudio"
-    ];
-  };
+      nixpkgs.config.allowUnfree = true;
+    }
+
+    (lib.mkIf config.desktopEnv.enable {
+      home.sessionVariables = {
+        LD_LIBRARY_PATH = /run/opengl-driver/lib;
+      };
+
+      services.flatpak = {
+        enable = true;
+
+        remotes = [
+          {
+            name = "flathub";
+            location = "https://flathub.org/repo/flathub.flatpakrepo";
+          }
+        ];
+
+        packages = [
+          "com.bambulab.BambuStudio"
+        ];
+      };
+    })
+  ];
+
 }
