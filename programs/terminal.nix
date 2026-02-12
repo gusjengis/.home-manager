@@ -11,15 +11,15 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-            if [ -f ~/.config/secrets/api_keys/env_vars ]; then
-              set -a
-              source ~/.config/secrets/api_keys/env_vars
-              set +a
-            fi
+                  if [ -f ~/.config/secrets/api_keys/env_vars ]; then
+                    set -a
+                    source ~/.config/secrets/api_keys/env_vars
+                    set +a
+                  fi
 
-            if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
-      	exec start-hyprland
-            fi
+                  if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ] && command -v Hyprland >/dev/null 2>&1 && command -v start-hyprland >/dev/null 2>&1; then
+      	      	exec start-hyprland
+                  fi
     '';
     bashrcExtra = ''
       export PATH="$HOME/.cargo/bin:$PATH"
