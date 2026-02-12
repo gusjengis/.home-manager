@@ -67,8 +67,8 @@
       nd = "nix develop --impure";
       ta = "tmux attach || tmux";
       oc = "opencode";
-      sync = "sudo ~/.home-manager/scripts/sync-repos.sh";
-      update = "sudo ~/.home-manager/scripts/update.sh";
+      sync = "sudo -u gusjengis ~/.home-manager/scripts/sync-repos.sh";
+      update = "sudo -u gusjengis ~/.home-manager/scripts/update.sh";
       remote = "waypipe --no-gpu --xwls ssh";
     };
   };
