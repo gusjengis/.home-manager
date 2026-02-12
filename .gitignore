@@ -1,4 +1,4 @@
 xmage/
 plugins/
 db/
-module.nix
+modules.nix
