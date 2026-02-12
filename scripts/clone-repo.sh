@@ -11,7 +11,6 @@ clone_repo() {
         git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
     else
         if ! git -C "$repo_name" rev-parse --git-dir >/dev/null 2>&1; then
-            rm -rf "$repo_name"
             git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
             return 0
         fi
