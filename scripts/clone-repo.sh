@@ -10,8 +10,10 @@ clone_repo() {
     if [ ! -d "$repo_name" ]; then
         git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
     else
-        if ! git -C "$repo_name" rev-parse --git-dir >/dev/null 2>&1; then
-            git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
+            if ! git -C "$repo_name" rev-parse --git-dir >/dev/null 2>&1; then
+                echo "$repo_name: not a valid git repository - removing and re-cloning"
+                rm -rf "$repo_name"
+                git clone "$repo_url" 2>/dev/null || { echo "clone failed: $repo_url"; return 0; }
             return 0
         fi
 
