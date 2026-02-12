@@ -14,8 +14,8 @@
       (box :hexpand true)
       (label :class "lat" :text { h.online ? "${h.latency}" : "offline" } :xalign 1))))
 
-(defwindow waypipe-hosts [selFile configDir]
-  :monitor 0
+(defwindow waypipe-hosts [selFile configDir ?screen]
+  :monitor { screen == "" ? "<primary>" : screen }
   :geometry (geometry :x "0%" :y "0%" :width "30%" :height "40%" :anchor "center")
   :wm-ignore true
   :stacking "overlay"

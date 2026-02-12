@@ -81,7 +81,15 @@ if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]] && command -v hyprctl >/dev/null 
   fi
 fi
 
-eww --config "$eww_cfg" open waypipe-hosts --arg selFile="$sel_file" --arg configDir="$eww_cfg" >/dev/null
+screen_arg=()
+if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]] && command -v hyprctl >/dev/null 2>&1; then
+  focused_monitor="$(hyprctl monitors -j 2>/dev/null | jq -r '.[] | select(.focused == true) | .name' | head -n1)"
+  if [[ -n "${focused_monitor:-}" && "$focused_monitor" != "null" ]]; then
+    screen_arg=(--arg screen="$focused_monitor")
+  fi
+fi
+
+eww --config "$eww_cfg" open waypipe-hosts --arg selFile="$sel_file" --arg configDir="$eww_cfg" "${screen_arg[@]}" >/dev/null
 
 host=""
 while true; do

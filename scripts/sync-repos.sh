@@ -8,6 +8,7 @@ export -f sync_repo clone_repo
 declare -a REPOS=(
     "/etc/;https://github.com/gusjengis/nix-modules.git"
     "$HOME/;https://github.com/gusjengis/.home-manager.git"
+    "$HOME/Documents/Code/;https://github.com/gusjengis/nix-install-script.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/Portfolio.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/CRT.git"
     "$HOME/Documents/Code/;https://github.com/gusjengis/Graph.git"
