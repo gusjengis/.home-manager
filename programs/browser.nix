@@ -8,7 +8,11 @@
 }:
 
 let
-  chromiumPkg = if PC then old.chromium else pkgs.chromium;
+  chromiumPkg =
+    if PC then
+      (old.chromium.override { enableWideVine = true; })
+    else
+      (pkgs.chromium.override { enableWideVine = true; });
 in
 {
   programs.chromium = {
