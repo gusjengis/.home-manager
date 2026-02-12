@@ -3,6 +3,21 @@ set -euo pipefail
 
 source "$HOME/.home-manager/scripts/clone-repo.sh"
 
+if ! command -v git >/dev/null 2>&1; then
+    echo "git is not installed or not on PATH."
+    exit 1
+fi
+
+if ! command -v gh >/dev/null 2>&1; then
+    echo "GitHub CLI (gh) is not installed or not on PATH."
+    exit 1
+fi
+
+if ! gh auth status >/dev/null 2>&1; then
+    echo "GitHub authentication not found. Starting gh auth login..."
+    gh auth login
+fi
+
 export -f sync_repo clone_repo
 
 declare -a REPOS=(
