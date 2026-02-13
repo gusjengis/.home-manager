@@ -14,6 +14,7 @@
     ./link_files.nix
   ]
   ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/modules.nix) /home/gusjengis/.home-manager/modules.nix;
+  ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/local.nix) /home/gusjengis/.home-manager/local.nix;
 
   options.desktopEnv.enable = lib.mkEnableOption "desktop environment packages" // {
     default = true;

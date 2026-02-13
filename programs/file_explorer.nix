@@ -12,7 +12,8 @@
     thunar-archive-plugin
     file-roller
     gvfs
-    qimgv
     udiskie
+    qimgv
+    zathura
   ];
 }

@@ -15,15 +15,18 @@
     ./disk.nix
     ./lg_tv.nix
   ];
-  home.packages = with pkgs; [
-    btop
-    zip
-    unzip
-    usbutils
-    wget
-    imagemagick
-    ventoy
-    acpi
-    jq
-  ];
+  home.packages =
+    with pkgs;
+    [
+      btop
+      zip
+      unzip
+      wget
+      acpi
+    ]
+    ++ lib.optionals config.desktopEnv.enable [
+      imagemagick
+      ventoy
+      usbutils
+    ];
 }

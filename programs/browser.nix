@@ -23,6 +23,7 @@ in
         "--ozone-platform=wayland"
         "--ignore-gpu-blocklist"
         "--hide-crash-restore-bubble"
+        "--disable-features=WaylandWpColorManagerV1"
         # "--enable-unsafe-webgpu"
       ];
       extensions = [

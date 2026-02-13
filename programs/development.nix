@@ -12,13 +12,14 @@
     with pkgs;
     [
       openssl
+      opencode
+    ]
+    ++ lib.optionals config.dev.enable [
+      cloc
       rustup
       stable.nodejs_24
-      cloc
-      opencode
-      zathura
     ]
-    ++ lib.optionals config.desktopEnv.enable [
+    ++ lib.optionals (config.dev.enable && config.desktopEnv.enable) [
       mesa-demos
       vulkan-tools
       mermaid-cli
@@ -29,7 +30,7 @@
       hotspot
       android-tools
     ]
-    ++ lib.optionals (PC && config.desktopEnv.enable) [
+    ++ lib.optionals (PC && config.dev.enable && config.desktopEnv.enable) [
       arduino
       android-studio
     ];

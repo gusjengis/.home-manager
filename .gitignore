@@ -2,3 +2,4 @@ xmage/
 plugins/
 db/
 modules.nix
+local.nix
