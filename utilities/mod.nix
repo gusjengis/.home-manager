@@ -13,7 +13,6 @@
     ./screenshots.nix
     ./audio.nix
     ./disk.nix
-    ./lg_tv.nix
   ];
   home.packages =
     with pkgs;
@@ -22,11 +21,14 @@
       zip
       unzip
       wget
-      acpi
     ]
     ++ lib.optionals config.desktopEnv.enable [
       imagemagick
       ventoy
       usbutils
+    ]
+    ++ lib.optionals config.laptop.enable [
+      acpi
     ];
+
 }
