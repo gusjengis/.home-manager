@@ -19,6 +19,10 @@
     default = true;
   };
 
+  options.dev.enable = lib.mkEnableOption "dev tools and repos" // {
+    default = true;
+  };
+
   config = lib.mkMerge [
     {
       programs.home-manager.enable = true;
@@ -27,6 +31,10 @@
       home.homeDirectory = "/home/gusjengis";
 
       home.stateVersion = "25.05";
+
+      home.sessionVariables = {
+        SYNC_REPO_GROUPS = if config.dev.enable then "core,dev" else "core";
+      };
 
       nixpkgs.config.allowUnfree = true;
     }
