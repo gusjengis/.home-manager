@@ -35,9 +35,11 @@ while true; do
       | map(.value)
       | map({
           dns: ((.DNSName // "") | sub("\\.$";"")),
+          host: (.HostName // ""),
           online: (.Online // false)
         })
       | map(select(.dns != ""))
+      | map(select((.host | ascii_downcase) == "nixos"))
       | sort_by(.dns | ascii_downcase)
       | .[]
       | (.dns + "\t" + (if .online then "true" else "false" end))
