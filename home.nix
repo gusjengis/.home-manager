@@ -13,7 +13,7 @@
     ./create_directories.nix
     ./link_files.nix
   ]
-  ++ lib.optional (builtins.pathExists ./modules.nix) ./modules.nix;
+  ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/modules.nix) /home/gusjengis/.home-manager/modules.nix;
 
   options.desktopEnv.enable = lib.mkEnableOption "desktop environment packages" // {
     default = true;
