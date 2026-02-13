@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+dunstify_bin="$(command -v dunstify || true)"
+
+notify() {
+    if [[ -n "$dunstify_bin" ]]; then
+        "$dunstify_bin" "$@" || true
+    fi
+}
+
 clone_repo() {
     local repo_url="$1"
     local repo_name
@@ -67,7 +75,7 @@ sync_repo() {
 
     if [ -n "$output" ]; then
         description=$(echo "$output" | cut -d':' -f2- | sed 's/^ *//')
-        $HOME/.nix-profile/bin/dunstify --urgency=critical "$repo_name" "$description"
+        notify --urgency=critical "$repo_name" "$description"
         echo -e "\033[31m$output\033[0m"
     fi
 }

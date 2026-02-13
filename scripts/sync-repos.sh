@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_LIST_DIR="$SCRIPT_DIR/repo-lists"
-SYNC_REPO_GROUPS="${SYNC_REPO_GROUPS:-core,dev}"
+SYNC_REPO_GROUPS="${SYNC_REPO_GROUPS:-core}"
 
 source "$SCRIPT_DIR/clone-repo.sh"
 
