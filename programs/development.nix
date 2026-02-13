@@ -11,21 +11,21 @@
   home.packages =
     with pkgs;
     [
-      posting
-      oxker
       openssl
       rustup
       cloc
       stable.nodejs_24
-      stable.typst
       mesa-demos
       vulkan-tools
-      mermaid-cli
       opencode
-      perf
+      zathura
     ]
     ++ lib.optionals config.desktopEnv.enable [
-      zathura
+      mermaid-cli
+      stable.typst
+      posting
+      oxker
+      perf
       hotspot
       android-tools
     ]

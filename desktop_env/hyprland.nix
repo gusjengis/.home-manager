@@ -27,7 +27,6 @@
       font-awesome
       xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
-      nmgui
     ];
 
     home.activation.macHyprSetup = lib.mkIf Mac (

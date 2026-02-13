@@ -8,7 +8,7 @@
 
 {
   imports = [
-    ./bluetooth.nix
+    ./connectivity.nix
     ./git.nix
     ./screenshots.nix
     ./audio.nix
