@@ -13,14 +13,14 @@
     [
       openssl
       rustup
-      cloc
       stable.nodejs_24
-      mesa-demos
-      vulkan-tools
+      cloc
       opencode
       zathura
     ]
     ++ lib.optionals config.desktopEnv.enable [
+      mesa-demos
+      vulkan-tools
       mermaid-cli
       stable.typst
       posting
