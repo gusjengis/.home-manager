@@ -6,8 +6,10 @@
 }:
 
 {
-  home.packages = with pkgs; [
-    obs-studio
-    audacity
-  ];
+  config = lib.mkIf config.desktopEnv.enable {
+    home.packages = with pkgs; [
+      obs-studio
+      audacity
+    ];
+  };
 }

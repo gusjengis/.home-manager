@@ -12,23 +12,24 @@
     with pkgs;
     [
       posting
-      docker
       oxker
       openssl
       rustup
       cloc
       stable.nodejs_24
       stable.typst
-      zathura
       mesa-demos
       vulkan-tools
       mermaid-cli
       opencode
       perf
-      hotspot
     ]
-    ++ lib.optionals PC [
-      dotnetCorePackages.dotnet_9.sdk
+    ++ lib.optionals config.desktopEnv.enable [
+      zathura
+      hotspot
+      android-tools
+    ]
+    ++ lib.optionals (PC && config.desktopEnv.enable) [
       arduino
       android-studio
     ];

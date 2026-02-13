@@ -15,11 +15,4 @@
       "ventoy-1.1.10"
     ];
   };
-
-  # home.packages =
-  #   with pkgs;
-  #   [
-  #   ]
-  #   ++ lib.optionals PC [ stable.bambu-studio ];
-
 }

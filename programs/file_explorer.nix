@@ -6,8 +6,6 @@
 
 {
   home.packages = with pkgs; [
-    nautilus
-    kdePackages.dolphin
     thunar
     tumbler
     thunar-volman

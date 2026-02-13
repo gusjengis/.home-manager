@@ -22,6 +22,7 @@
       ++ lib.optionals PC [
         unityhub
         plasticscm
+        dotnetCorePackages.dotnet_9.sdk
         stable.roslyn-ls
         cudaPackages.cudatoolkit
         cudaPackages.cuda_nvcc

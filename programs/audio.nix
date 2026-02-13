@@ -1,7 +1,14 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    vlc
-  ];
+  config = lib.mkIf config.desktopEnv.enable {
+    home.packages = with pkgs; [
+      vlc
+    ];
+  };
 }

@@ -11,15 +11,20 @@
   programs.bash = {
     enable = true;
     initExtra = ''
-                  if [ -f ~/.config/secrets/api_keys/env_vars ]; then
-                    set -a
-                    source ~/.config/secrets/api_keys/env_vars
-                    set +a
-                  fi
-
-                  if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ] && command -v Hyprland >/dev/null 2>&1 && command -v start-hyprland >/dev/null 2>&1; then
-      	      	exec start-hyprland
-                  fi
+      if [ -f ~/.config/secrets/api_keys/env_vars ]; then
+        set -a
+        source ~/.config/secrets/api_keys/env_vars
+        set +a
+      fi
+    ''
+    + lib.optionalString config.desktopEnv.enable ''
+      if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ] && command -v Hyprland >/dev/null 2>&1; then
+        if command -v start-hyprland >/dev/null 2>&1; then
+          exec start-hyprland
+        else
+          exec Hyprland
+        fi
+      fi
     '';
     bashrcExtra = ''
       export PATH="$HOME/.cargo/bin:$PATH"
@@ -58,7 +63,7 @@
       fi
     '';
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/flake.nix";
+      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/";
       rehome = "home-manager switch --impure --flake ~/.home-manager/";
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";
@@ -75,14 +80,18 @@
 
   systemd.user.sessionVariables.PATH = "$HOME/.cargo/bin:$PATH";
 
-  home.packages = with pkgs; [
-    kitty
-    tmux
-    pipes-rs
-    fd
-    skim
-    jq
-  ];
+  home.packages =
+    with pkgs;
+    [
+      kitty
+      tmux
+      fd
+      skim
+      jq
+    ]
+    ++ lib.optionals config.desktopEnv.enable [
+      pipes-rs
+    ];
 
   programs.fzf = {
     enable = true;

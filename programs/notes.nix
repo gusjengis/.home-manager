@@ -6,5 +6,7 @@
 }:
 
 {
-  home.packages = with pkgs; [ obsidian ];
+  config = lib.mkIf config.desktopEnv.enable {
+    home.packages = with pkgs; [ obsidian ];
+  };
 }

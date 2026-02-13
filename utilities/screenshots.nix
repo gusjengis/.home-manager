@@ -1,5 +1,16 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [ hyprshot grim slurp ];
+  config = lib.mkIf config.desktopEnv.enable {
+    home.packages = with pkgs; [
+      hyprshot
+      grim
+      slurp
+    ];
+  };
 }

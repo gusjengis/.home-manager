@@ -20,12 +20,10 @@
     zip
     unzip
     usbutils
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
     wget
-    nmgui
     imagemagick
     ventoy
     acpi
+    jq
   ];
 }

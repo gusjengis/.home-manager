@@ -7,11 +7,14 @@
 }:
 
 {
-  home.packages =
-    with pkgs;
-    [
-      pavucontrol
-      playerctl
-    ]
-    ++ lib.optionals PC [ easyeffects ];
+
+  config = lib.mkIf config.desktopEnv.enable {
+    home.packages =
+      with pkgs;
+      [
+        pavucontrol
+        playerctl
+      ]
+      ++ lib.optionals PC [ easyeffects ];
+  };
 }

@@ -10,16 +10,15 @@
   home.packages =
     with pkgs;
     [
+    ]
+    ++ lib.optionals config.desktopEnv.enable [
       wireplumber
-      # kdePackages.xwaylandvideobridge
       signal-desktop
-      presenterm
+      scrcpy
       kdePackages.kdeconnect-kde
       kdePackages.kpeople
-      scrcpy
-      android-tools
     ]
-    ++ lib.optionals PC [
+    ++ lib.optionals (PC && config.desktopEnv.enable) [
       zoom-us
       discord-canary
       slack
