@@ -1,18 +1,13 @@
 {
   config,
   pkgs,
-  old,
   lib,
   PC,
   ...
 }:
 
 let
-  chromiumPkg =
-    # if PC then
-    #   (old.chromium.override { enableWideVine = true; })
-    # else
-    (pkgs.chromium.override { enableWideVine = true; });
+  chromiumPkg = (pkgs.chromium.override { enableWideVine = true; });
 in
 {
   config = lib.mkIf config.desktopEnv.enable {

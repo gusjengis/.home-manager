@@ -8,17 +8,13 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
-
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-
-    old-nixpkgs.url = "nixpkgs/nixos-24.11";
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      old-nixpkgs,
       stable-nixpkgs,
       home-manager,
       nix-flatpak,
@@ -44,10 +40,6 @@
       hyprlog-nixpkgs = import inputs.hyprlog-nixpkgs {
         inherit system;
       };
-      old = import old-nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
 
       alga = inputs.alga.packages.${system}.default;
       Mac = pkgs.stdenv.hostPlatform.isAarch64;
@@ -63,7 +55,6 @@
             inherit PC;
             inherit inputs;
             inherit stable;
-            inherit old;
             inherit hyprlog-nixpkgs;
           };
           modules = [
