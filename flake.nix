@@ -11,10 +11,6 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    plasticscm-nixpkgs = {
-      url = "github:musjj/nixpkgs/plasticscm";
-      flake = false;
-    };
     old-nixpkgs.url = "nixpkgs/nixos-24.11";
   };
 
@@ -25,7 +21,6 @@
       old-nixpkgs,
       stable-nixpkgs,
       home-manager,
-      plasticscm-nixpkgs,
       nix-flatpak,
       hyprlog-nixpkgs,
       ...
@@ -35,13 +30,11 @@
       system = builtins.currentSystem;
 
       exposeInputsOverlay = (final: prev: { inputs = inputs; });
-      plasticscmOverlay = import ./overlays/plasticscm.nix;
 
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
           exposeInputsOverlay
-          plasticscmOverlay
         ];
         config.allowUnfree = true;
       };
@@ -71,7 +64,6 @@
             inherit inputs;
             inherit stable;
             inherit old;
-            inherit (pkgs) plasticscm;
             inherit hyprlog-nixpkgs;
           };
           modules = [

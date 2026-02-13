@@ -4,7 +4,6 @@
   stable,
   lib,
   PC,
-  plasticscm,
   ...
 }:
 
@@ -21,7 +20,7 @@
       ]
       ++ lib.optionals PC [
         unityhub
-        plasticscm
+        plasticscm-client-complete
         dotnetCorePackages.dotnet_9.sdk
         stable.roslyn-ls
         cudaPackages.cudatoolkit

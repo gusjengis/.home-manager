@@ -137,23 +137,6 @@
         "type": "indirect"
       }
     },
-    "plasticscm-nixpkgs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1763753372,
-        "narHash": "sha256-dHmiuGUtxD5mzYysFI+U5j0V0YNabklDs4v1fGV+Urg=",
-        "owner": "musjj",
-        "repo": "nixpkgs",
-        "rev": "aec2599d8658bea02c091a954cc8264d322481f6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "musjj",
-        "ref": "plasticscm",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -212,7 +195,6 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
         "old-nixpkgs": "old-nixpkgs",
-        "plasticscm-nixpkgs": "plasticscm-nixpkgs",
         "stable-nixpkgs": "stable-nixpkgs"
       }
     },
