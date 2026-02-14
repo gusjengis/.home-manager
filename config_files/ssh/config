@@ -13,5 +13,9 @@ Host aur.archlinux.org
   User aur
 
 Host *
-  IdentityFile ~/.config/secrets/ssh/shared_ed25519
-
+  IdentityFile ~/.config/secrets/ssh/fleet_ed25519
+  IdentitiesOnly yes
+  PreferredAuthentications publickey
+  PasswordAuthentication no
+  KbdInteractiveAuthentication no
+  BatchMode yes
