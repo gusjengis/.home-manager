@@ -8,7 +8,9 @@
 }:
 
 {
-  options.gameDev.enable = lib.mkEnableOption "game development tools";
+  options.gameDev.enable = lib.mkEnableOption "game development tools" // {
+    default = false;
+  };
 
   config = lib.mkIf (config.gameDev.enable && config.desktopEnv.enable) {
     home.packages =
