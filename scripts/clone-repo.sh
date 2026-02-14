@@ -75,7 +75,7 @@ sync_repo() {
 
     if [ -n "$output" ]; then
         description=$(echo "$output" | cut -d':' -f2- | sed 's/^ *//')
-        notify --urgency=critical "$repo_name" "$description"
+        notify --urgency=normal "$repo_name" "$description"
         echo -e "\033[31m$output\033[0m"
     fi
 }
