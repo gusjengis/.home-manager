@@ -16,8 +16,6 @@ declare -a LINKS=(
 
     # ssh
     "$HOME/.home-manager/config_files/ssh/config -> $HOME/.ssh/config"
-    "$HOME/.config/secrets/ssh/id_ed25519 -> $HOME/.ssh/id_ed25519"
-    "$HOME/.home-manager/config_files/ssh/id_ed25519.pub -> $HOME/.ssh/id_ed25519.pub"
 
     # kitty
     "$HOME/.home-manager/config_files/kitty/kitty.conf -> $HOME/.config/kitty/kitty.conf"
