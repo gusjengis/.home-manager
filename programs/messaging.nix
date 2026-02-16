@@ -20,7 +20,7 @@
     ]
     ++ lib.optionals (PC && config.desktopEnv.enable) [
       zoom-us
-      discord-canary
+      # discord-canary fuckers are trying to make me update imperatively
       slack
     ];
 }
