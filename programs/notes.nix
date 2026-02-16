@@ -7,6 +7,9 @@
 
 {
   config = lib.mkIf config.desktopEnv.enable {
-    home.packages = with pkgs; [ obsidian ];
+    home.packages = with pkgs; [
+      obsidian
+      _1password-gui
+    ];
   };
 }
