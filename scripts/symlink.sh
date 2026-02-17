@@ -50,9 +50,6 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/hypr/scripts/which-key.sh -> $HOME/.config/hypr/scripts/which-key.sh"
     "$HOME/.home-manager/config_files/eww-which-key/eww.scss -> $HOME/.config/eww-which-key/eww.scss"
     "$HOME/.home-manager/config_files/eww-which-key/eww.yuck -> $HOME/.config/eww-which-key/eww.yuck"
-
-    # wallpapers
-    "$HOME/.home-manager/wallpapers/ -> $HOME/Wallpapers"
 )
 
 for item in "${LINKS[@]}"; do
