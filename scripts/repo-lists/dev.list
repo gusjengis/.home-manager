@@ -30,13 +30,6 @@ $HOME/Documents/Code/;https://github.com/gusjengis/WatchFace.git
 $HOME/Documents/Code/;https://github.com/gusjengis/CalendarComplication.git
 $HOME/Documents/Code/;https://github.com/gusjengis/log_conversion_script.git
 $HOME/Documents/Code/AUR/;ssh://aur@aur.archlinux.org/hyprlog.git
-$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Core.git
-$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Util.git
-$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Web.git
-$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Web-Build.git
-$HOME/Documents/Code/Plinth/;https://github.com/gusjengis/Plinth-Hello-World.git
-$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Backend.git
-$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Model.git
-$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Hub.git
-$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Android.git
-$HOME/Documents/Code/Mosaic/;https://github.com/gusjengis/Mosaic-Snitch.git
+$HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm.git
+$HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm-system.git
+$HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm-home.git
