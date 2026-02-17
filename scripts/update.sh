@@ -14,6 +14,8 @@ notify() {
   fi
 }
 
+notify "update" "starting sync and rebuild checks"
+
 hm_before="$(git -C "$hm_repo" rev-parse HEAD)"
 modules_before="$(git -C "$modules_repo" rev-parse HEAD)"
 
@@ -37,3 +39,8 @@ if [[ "$hm_before" != "$hm_after" ]]; then
     notify "home-manager" "rehome succeeded"
   fi
 fi
+
+if [[ "$modules_before" == "$modules_after" && "$hm_before" == "$hm_after" ]]; then
+  notify "update" "no repository changes found"
+fi
+    notify "update" "update complete"
