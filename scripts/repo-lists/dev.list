@@ -31,5 +31,6 @@ $HOME/Documents/Code/;https://github.com/gusjengis/CalendarComplication.git
 $HOME/Documents/Code/;https://github.com/gusjengis/log_conversion_script.git
 $HOME/Documents/Code/AUR/;ssh://aur@aur.archlinux.org/hyprlog.git
 $HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm.git
-$HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm-system.git
+$HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm-modules.git
 $HOME/Documents/Code/;https://github.com/gusjengis/nix-openclaw-vm-home.git
+

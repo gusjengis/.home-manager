@@ -18,6 +18,7 @@
       cloc
       rustup
       stable.nodejs_24
+      nil
     ]
     ++ lib.optionals (config.dev.enable && config.desktopEnv.enable) [
       mesa-demos

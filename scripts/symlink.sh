@@ -45,6 +45,7 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/hypr/keybinds.conf -> $HOME/.config/hypr/keybinds.conf"
     "$HOME/.home-manager/config_files/hypr/workspaces.conf -> $HOME/.config/hypr/workspaces.conf"
     "$HOME/.home-manager/config_files/hypr/variables.conf -> $HOME/.config/hypr/variables.conf"
+    "$HOME/.home-manager/config_files/hypr/monitors.conf -> $HOME/.config/hypr/monitors.conf"
 
     # which-key
     "$HOME/.home-manager/config_files/hypr/scripts/which-key.sh -> $HOME/.config/hypr/scripts/which-key.sh"
