@@ -5,6 +5,7 @@ image/webp=qimgv.desktop;
 image/gif=qimgv.desktop;
 text/html=chromium-browser.desktop;
 application/x-sharedlib=nvim.desktop;
+image/jpeg=qimgv.desktop;
 
 [Default Applications]
 inode/directory=thunar.desktop;
