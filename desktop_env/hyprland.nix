@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  inputs,
   Mac,
   PC,
   hyprlog-nixpkgs,
