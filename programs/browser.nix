@@ -29,6 +29,7 @@ in
         "eiimnmioipafcokbfikbljfdeojpcgbh" # BlockSite
         "mgngbgbhliflggkamjnpdmegbkidiapm" # Remove YouTube Shorts
         "lcpclaffcdiihapebmfgcmmplphbkjmd" # Block YouTube Feed
+        "khncfooichmfjbepaaaebmommgaepoid" # Unhook
       ];
     };
   };
