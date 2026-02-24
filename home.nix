@@ -49,21 +49,6 @@
       home.sessionVariables = {
         LD_LIBRARY_PATH = /run/opengl-driver/lib;
       };
-
-      services.flatpak = {
-        enable = true;
-
-        remotes = [
-          {
-            name = "flathub";
-            location = "https://flathub.org/repo/flathub.flatpakrepo";
-          }
-        ];
-
-        packages = [
-          "com.bambulab.BambuStudio"
-        ];
-      };
     })
   ];
 
