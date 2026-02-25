@@ -30,6 +30,7 @@
       perf
       hotspot
       android-tools
+      zulu17
     ]
     ++ lib.optionals (PC && config.dev.enable && config.desktopEnv.enable) [
       arduino

@@ -16,7 +16,7 @@
         with pkgs;
         [
           protonup-qt
-          zulu8
+          zulu17
           prismlauncher
           atlauncher
         ]
