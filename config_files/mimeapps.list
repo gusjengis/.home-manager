@@ -6,6 +6,7 @@ image/gif=qimgv.desktop;
 text/html=chromium-browser.desktop;
 application/x-sharedlib=nvim.desktop;
 image/jpeg=qimgv.desktop;
+application/pkcs8=nvim.desktop;
 
 [Default Applications]
 inode/directory=thunar.desktop;
@@ -48,3 +49,4 @@ x-scheme-handler/http=chromium-browser.desktop
 x-scheme-handler/https=chromium-browser.desktop
 x-scheme-handler/about=chromium-browser.desktop
 x-scheme-handler/unknown=chromium-browser.desktop
+application/pkcs8=nvim.desktop
