@@ -13,6 +13,7 @@
     file-roller
     gvfs
     udiskie
+    kdePackages.filelight
     qimgv
     zathura
   ];
