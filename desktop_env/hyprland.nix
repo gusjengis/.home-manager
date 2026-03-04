@@ -11,23 +11,27 @@
 {
 
   config = lib.mkIf config.desktopEnv.enable {
-    home.packages = with pkgs; [
-      # hyprsunset
-      hypridle
-      hyprpaper
-      dunst
-      libnotify
-      linux-wallpaperengine
-      # hyprlog-nixpkgs.hyprlog
-      swww
-      eww
-      wofi
-      waybar
-      font-awesome
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
-      vial
-    ];
+    home.packages =
+      with pkgs;
+      [
+        # hyprsunset
+        hypridle
+        hyprpaper
+        dunst
+        libnotify
+        linux-wallpaperengine
+        # hyprlog-nixpkgs.hyprlog
+        swww
+        eww
+        wofi
+        waybar
+        font-awesome
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-hyprland
+      ]
+      ++ lib.optionals PC [
+        vial
+      ];
 
     home.activation.macHyprSetup = lib.mkIf Mac (
       lib.hm.dag.entryAfter [ "symlink" ] ''
