@@ -26,6 +26,7 @@
       font-awesome
       xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
+      vial
     ];
 
     home.activation.macHyprSetup = lib.mkIf Mac (
