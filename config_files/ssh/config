@@ -1,0 +1,2 @@
+Host *
+  IdentityFile ~/.config/secrets/ssh/fleet_ed25519
