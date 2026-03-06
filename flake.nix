@@ -9,6 +9,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    handy.url = "github:cjpais/Handy?ref=v0.7.8";
   };
 
   outputs =

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   stable,
   PC,
   lib,
@@ -13,6 +14,11 @@
     [
       openssl
       opencode
+    ]
+    ++ lib.optionals config.desktopEnv.enable [
+      inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.default
+      wtype
+      xdotool
     ]
     ++ lib.optionals config.dev.enable [
       cloc
