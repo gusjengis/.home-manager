@@ -6,5 +6,6 @@
   "assistant_metadata_visibility": true,
   "scrollbar_visible": false,
   "animations_enabled": true,
-  "theme": "opencode"
+  "theme": "opencode",
+  "diff_wrap_mode": "word"
 }

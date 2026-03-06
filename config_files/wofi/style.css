@@ -1,71 +1,73 @@
 * {
+  font-family: "Commit Mono";
+  font-size: 14px;
+  font-weight: 600;
   border: none;
   box-shadow: none;
   outline: none;
-  /* padding: 5px; */
 }
 
 window {
-  font-size: 14px;
   background-color: transparent;
-  opacity: 1.0;
-  /* padding: 10px 10px 10px 10px; */
-  /* padding: 5px; */
 }
 
 #outer-box {
-  /* margin: 780px 1765 780px 1765px; */
-  opacity: 1.0;
-  background: rgba(30, 30, 30, 0);
-  border-radius: 5px;
-}
-
-#inner-box {
-  background: rgba(0, 0, 0, 255);
-  margin: 0px;
-  opacity: 1.0;
-}
-
-#entry {
-  padding: 5px 5px;
-  background: rgba(0, 0, 0, 255);
-}
-
-#entry #text {
-  padding: 0px 0px 0px 10px;
-  font-weight: normal;
-  /* color: grey; */
-}
-
-#entry:selected {
-  /* background: rgba(0, 0, 0, 255); */
-  background-color: rgba(100, 100, 100, 255);
-}
-
-#entry:selected #text {
-  padding: 0px 0px 0px 10px;
-  font-weight: normal;
-  color: white;
+  background: rgba(13, 17, 23, 0.82);
+  border: 1px solid rgba(110, 118, 129, 0.45);
+  border-radius: 14px;
+  padding: 11px;
+  box-shadow: 0 10px 30px rgba(1, 4, 9, 0.45);
 }
 
 #input {
-  min-height: 0;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-  opacity: 0;
-  background: transparent;
+  background: rgba(22, 27, 34, 0.78);
+  color: #c9d1d9;
+  border: 1px solid rgba(48, 54, 61, 0.9);
+  border-radius: 8px;
+  margin: 0 0 8px 0;
+  padding: 8px 10px;
 }
 
-#image {
-  /* margin-left: 20px; */
-  /* margin-right: 20px; */
+#input:focus {
+  border-color: #58a6ff;
 }
 
 #scroll {
-  border-radius: 5px;
-  /* padding: 5px; */
-  margin: 0px;
-  background: rgba(255, 255, 255, 0);
+  margin: 0;
+}
+
+#entry {
+  border-radius: 8px;
+  padding: 6px 8px;
+  margin: 0 0 4px 0;
+  background: rgba(13, 17, 23, 0.16);
+}
+
+#entry:last-child {
+  margin-bottom: 0;
+}
+
+#entry #img {
+  margin-right: 10px;
+}
+
+#entry #text {
+  color: #c9d1d9;
+}
+
+#entry:focus:not(:selected) {
+  background: rgba(33, 38, 45, 0.86);
+}
+
+#entry:selected {
+  background: rgba(31, 111, 235, 0.95);
+}
+
+#entry:selected #text {
+  font-weight: 700;
+  color: #f0f6fc;
+}
+
+#text {
+  color: #8b949e;
 }
