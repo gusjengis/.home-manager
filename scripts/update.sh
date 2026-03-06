@@ -25,7 +25,7 @@ hm_after="$(git -C "$hm_repo" rev-parse HEAD)"
 modules_after="$(git -C "$modules_repo" rev-parse HEAD)"
 
 if [[ "$modules_before" != "$modules_after" ]]; then
-  if ! sudo nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/; then
+  if ! rebuild; then
     notify --urgency=critical "nixos-rebuild" "nix-modules changed, rebuild failed"
   else
     notify "nixos-rebuild" "rebuild succeeded"
@@ -33,7 +33,7 @@ if [[ "$modules_before" != "$modules_after" ]]; then
 fi
 
 if [[ "$hm_before" != "$hm_after" ]]; then
-  if ! home-manager switch --impure --flake ~/.home-manager/; then
+  if ! rehome; then
     notify --urgency=critical "home-manager" "home-manager changed, switch failed"
   else
     notify "home-manager" "rehome succeeded"

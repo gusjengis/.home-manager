@@ -4,7 +4,21 @@
   lib,
   ...
 }:
+let
+  rebuildCmd = pkgs.writeShellApplication {
+    name = "rebuild";
+    text = ''
+      exec /run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/ "$@"
+    '';
+  };
 
+  rehomeCmd = pkgs.writeShellApplication {
+    name = "rehome";
+    text = ''
+      exec home-manager switch --impure --flake "$HOME/.home-manager/" "$@"
+    '';
+  };
+in
 {
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
 
@@ -63,8 +77,6 @@
       fi
     '';
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/";
-      rehome = "home-manager switch --impure --flake ~/.home-manager/";
       pipes = "pipes-rs";
       venv = ". .venv/bin/activate";
       vim = "nvim";
@@ -83,6 +95,8 @@
   home.packages =
     with pkgs;
     [
+      rebuildCmd
+      rehomeCmd
       kitty
       tmux
       fd
