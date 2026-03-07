@@ -1,20 +1,77 @@
 {
   "layer": "bottom",
+  "exclusive": false,
   "position": "top",
-  "margin-top": 13,
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": [],
-  "modules-right": ["clock"],
+  "height": 38,
+  "margin-top": 10,
+  "margin-left": 14,
+  "margin-right": 14,
 
-  "clock": {
-    "format": "{:%I:%M %p}"
-  },
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "custom/media"
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "cpu",
+    "memory",
+    "clock",
+    "tray"
+  ],
 
   "hyprland/workspaces": {
-    "format": "{icon}",
+    "format": "{name}",
     "on-click": "activate",
-
-    "sort-by-number": true
+    "sort-by-number": true,
+    "show-special": true
   },
 
+  "custom/media": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/current-media.sh",
+    "return-type": "json",
+    "interval": 1,
+    "max-length": 80,
+    "on-click": "bash ~/.home-manager/config_files/hypr/scripts/open-media-source.sh",
+    "on-click-middle": "bash ~/.home-manager/config_files/hypr/scripts/media-menu.sh",
+    "on-click-right": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+  },
+
+  "network": {
+    "interval": 3,
+    "format-wifi": "WIFI {signalStrength}%",
+    "format-ethernet": "LAN",
+    "format-linked": "LINK",
+    "format-disconnected": "OFFLINE",
+    "tooltip-format": "{ifname} | {ipaddr}"
+  },
+
+  "pulseaudio": {
+    "format": "VOL {volume}%",
+    "format-muted": "MUTED",
+    "on-click": "pavucontrol"
+  },
+
+  "cpu": {
+    "interval": 2,
+    "format": "CPU {usage}%"
+  },
+
+  "memory": {
+    "interval": 5,
+    "format": "RAM {}%"
+  },
+
+  "clock": {
+    "format": "{:%a %b %d  %I:%M %p}",
+    "tooltip-format": "{:%Y-%m-%d %H:%M:%S}"
+  },
+
+  "tray": {
+    "spacing": 10
+  }
 }

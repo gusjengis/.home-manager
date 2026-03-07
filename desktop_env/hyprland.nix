@@ -38,6 +38,9 @@
       @define-color accent_soft rgba(88, 166, 255, 0.22);
     '';
 
+    home.file.".config/waybar/config.json".source = ../config_files/waybar/config.json;
+    home.file.".config/waybar/style.css".source = ../config_files/waybar/style.css;
+
     home.activation.macHyprSetup = lib.mkIf Mac (
       lib.hm.dag.entryAfter [ "symlink" ] ''
         ln -sf $HOME/.home-manager/config_files/hypr/appearance.mac.conf $HOME/.config/hypr/appearance.conf

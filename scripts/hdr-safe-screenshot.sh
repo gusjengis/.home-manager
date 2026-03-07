@@ -38,48 +38,72 @@ infer_bitdepth() {
   fi
 }
 
-build_monitor_rule() {
+get_monitor_layout_tsv() {
   local monitor="$1"
-  local cm="$2"
-  local bitdepth="$3"
-
-  local fields width height refresh x y scale transform sdrbrightness sdrsaturation sdrmin sdrmax
-  fields="$(
-    hyprctl -j monitors | jq -r --arg monitor "$monitor" '
-      first(.[] | select(.name == $monitor))
-      | [
-          (.width | tostring),
-          (.height | tostring),
-          (.refreshRate | tostring),
-          (.x | tostring),
-          (.y | tostring),
-          (.scale | tostring),
-          (.transform | tostring),
-          (.sdrBrightness | tostring),
-          (.sdrSaturation | tostring),
-          (.sdrMinLuminance | tostring),
-          (.sdrMaxLuminance | tostring)
-        ]
-      | @tsv
-    '
-  )"
-
-  IFS=$'\t' read -r width height refresh x y scale transform sdrbrightness sdrsaturation sdrmin sdrmax <<<"$fields"
-
-  local refresh_fmt
-  refresh_fmt="$(printf '%.2f' "$refresh")"
-
-  printf '%s,%sx%s@%s,%sx%s,%s,transform,%s,bitdepth,%s,cm,%s,sdrbrightness,%s,sdrsaturation,%s,sdr_min_luminance,%s,sdr_max_luminance,%s' \
-    "$monitor" "$width" "$height" "$refresh_fmt" "$x" "$y" "$scale" "$transform" "$bitdepth" "$cm" "$sdrbrightness" "$sdrsaturation" "$sdrmin" "$sdrmax"
+  hyprctl -j monitors | jq -r --arg monitor "$monitor" '
+    first(.[] | select(.name == $monitor))
+    | [
+        (.width | tostring),
+        (.height | tostring),
+        (.refreshRate | tostring),
+        (.x | tostring),
+        (.y | tostring),
+        (.scale | tostring),
+        (.transform | tostring)
+      ]
+    | @tsv
+  '
 }
 
-switch_monitor_cm() {
+write_monitorv2_override() {
+  local file="$1"
+  local monitor="$2"
+  local width="$3"
+  local height="$4"
+  local refresh="$5"
+  local x="$6"
+  local y="$7"
+  local scale="$8"
+  local transform="$9"
+  local cm="${10}"
+  local bitdepth="${11}"
+  local sdrbrightness="${12}"
+  local sdrmin="${13}"
+
+  cat >"$file" <<EOF
+monitorv2 {
+ output = $monitor
+ mode = ${width}x${height}@${refresh}
+ scale = $scale
+ transform = $transform
+ position = ${x}x${y}
+ bitdepth = $bitdepth
+ cm = $cm
+ sdrbrightness = $sdrbrightness
+ sdr_min_luminance = $sdrmin
+}
+EOF
+}
+
+source_monitor_override() {
+  local file="$1"
+  hyprctl keyword source "$file" >/dev/null
+}
+
+wait_for_cm() {
   local monitor="$1"
-  local cm="$2"
-  local bitdepth="$3"
-  local rule
-  rule="$(build_monitor_rule "$monitor" "$cm" "$bitdepth")"
-  hyprctl keyword monitor "$rule" >/dev/null
+  local expected="$2"
+  local attempts="$3"
+  local i current
+
+  for ((i = 0; i < attempts; i++)); do
+    current="$(get_monitor_field "$monitor" "colorManagementPreset")"
+    if [[ "$current" == "$expected" || "$current" == "$expected"* ]]; then
+      return 0
+    fi
+  done
+
+  return 1
 }
 
 geometry=""
@@ -133,19 +157,55 @@ fi
 
 original_cm="$(get_monitor_field "$target_monitor" "colorManagementPreset")"
 original_bitdepth="$(infer_bitdepth "$target_monitor")"
+original_sdrbrightness="$(get_monitor_field "$target_monitor" "sdrBrightness")"
+original_sdrmin="$(get_monitor_field "$target_monitor" "sdrMinLuminance")"
+original_cm="${original_cm:-srgb}"
+original_sdrbrightness="${original_sdrbrightness:-1.0}"
+original_sdrmin="${original_sdrmin:-0.0}"
 did_switch=0
+tmpdir=""
+restore_override_file=""
+capture_sdrbrightness="${HDR_SAFE_SCREENSHOT_SDR_BRIGHTNESS:-1.0}"
+capture_sdrmin="${HDR_SAFE_SCREENSHOT_SDR_MIN_LUMINANCE:-0.0}"
+capture_bitdepth="${HDR_SAFE_SCREENSHOT_CAPTURE_BITDEPTH:-8}"
+capture_cm="${HDR_SAFE_SCREENSHOT_CAPTURE_CM:-srgb}"
+switch_verify_attempts="${HDR_SAFE_SCREENSHOT_SWITCH_VERIFY_ATTEMPTS:-1}"
+
+layout_fields="$(get_monitor_layout_tsv "$target_monitor")"
+IFS=$'\t' read -r monitor_width monitor_height monitor_refresh monitor_x monitor_y monitor_scale monitor_transform <<<"$layout_fields"
+
+if [[ -z "$monitor_width" || -z "$monitor_height" || -z "$monitor_refresh" ]]; then
+  printf 'Unable to read monitor geometry for %s\n' "$target_monitor" >&2
+  exit 1
+fi
+
+refresh_fmt="$(printf '%.2f' "$monitor_refresh")"
+
+tmpdir="$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/hdr-safe-screenshot.XXXXXX")"
+capture_override_file="$tmpdir/capture-monitorv2.conf"
+restore_override_file="$tmpdir/restore-monitorv2.conf"
+
+write_monitorv2_override "$capture_override_file" "$target_monitor" "$monitor_width" "$monitor_height" "$refresh_fmt" "$monitor_x" "$monitor_y" "$monitor_scale" "$monitor_transform" "$capture_cm" "$capture_bitdepth" "$capture_sdrbrightness" "$capture_sdrmin"
+write_monitorv2_override "$restore_override_file" "$target_monitor" "$monitor_width" "$monitor_height" "$refresh_fmt" "$monitor_x" "$monitor_y" "$monitor_scale" "$monitor_transform" "$original_cm" "$original_bitdepth" "$original_sdrbrightness" "$original_sdrmin"
 
 restore_hdr_state() {
   if [[ "$did_switch" -eq 1 ]]; then
-    switch_monitor_cm "$target_monitor" "$original_cm" "$original_bitdepth" || true
+    source_monitor_override "$restore_override_file" || true
+  fi
+  if [[ -n "$tmpdir" ]]; then
+    rm -rf "$tmpdir" || true
   fi
 }
 
-if [[ "$original_cm" == hdr* ]]; then
-  did_switch=1
-  trap restore_hdr_state EXIT INT TERM
-  switch_monitor_cm "$target_monitor" "srgb" "8"
-  sleep 0.08
+did_switch=1
+trap restore_hdr_state EXIT INT TERM
+if ! source_monitor_override "$capture_override_file"; then
+  printf 'Failed to apply capture monitorv2 override\n' >&2
+fi
+
+if ! wait_for_cm "$target_monitor" "$capture_cm" "$switch_verify_attempts"; then
+  printf 'HDR->SDR switch did not confirm, re-applying monitorv2 override\n' >&2
+  source_monitor_override "$capture_override_file" || true
 fi
 
 timestamp="$(date '+%Y-%m-%d %H-%M-%S')"

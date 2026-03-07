@@ -10,6 +10,7 @@ mkdir -p "$cache_dir"
 mkdir -p "$accent_cache_dir"
 
 default_accent="#58a6ff"
+css_changed=0
 
 write_css() {
   local accent="$1"
@@ -17,11 +18,26 @@ write_css() {
   local r=$((16#${hex:0:2}))
   local g=$((16#${hex:2:2}))
   local b=$((16#${hex:4:2}))
+  local css
 
-  cat > "$out_file" <<EOF
+  css="$(cat <<EOF
 @define-color accent ${accent};
 @define-color accent_soft rgba(${r}, ${g}, ${b}, 0.22);
 EOF
+)"
+
+  if [[ -f "$out_file" ]] && [[ "$(<"$out_file")" == "$css" ]]; then
+    return 0
+  fi
+
+  printf '%s\n' "$css" > "$out_file"
+  css_changed=1
+}
+
+reload_waybar_if_changed() {
+  if (( css_changed )); then
+    pkill -SIGUSR2 waybar 2>/dev/null || true
+  fi
 }
 
 cache_key_for_image() {
@@ -34,6 +50,7 @@ cache_key_for_image() {
 
 if [[ -z "$img_path" || ! -f "$img_path" ]]; then
   write_css "$default_accent"
+  reload_waybar_if_changed
   exit 0
 fi
 
@@ -44,26 +61,26 @@ if [[ -s "$cache_file" ]]; then
   cached_accent="$(<"$cache_file")"
   if [[ "$cached_accent" =~ ^#[0-9A-Fa-f]{6}$ ]]; then
     write_css "$cached_accent"
+    reload_waybar_if_changed
     exit 0
   fi
 fi
 
-declare -a github_accents=(
-  "#58a6ff"
-  "#3fb950"
-  "#d29922"
-  "#ff7b72"
-  "#bc8cff"
-  "#39c5cf"
-)
-
 mapfile -t extracted < <(
-  timeout 3s wallust run -q -s -T -N --backend kmeans --print-scheme "$img_path" 2>/dev/null \
+  timeout 2s wallust run -q -s -T -N --backend thumb --print-scheme "$img_path" 2>/dev/null \
     | sed -n 's/^#\([0-9A-Fa-f]\{6\}\)$/#\1/p'
 )
 
 if [[ ${#extracted[@]} -eq 0 ]]; then
+  mapfile -t extracted < <(
+    timeout 2s wallust run -q -s -T -N --backend fastresize --print-scheme "$img_path" 2>/dev/null \
+      | sed -n 's/^#\([0-9A-Fa-f]\{6\}\)$/#\1/p'
+  )
+fi
+
+if [[ ${#extracted[@]} -eq 0 ]]; then
   write_css "$default_accent"
+  reload_waybar_if_changed
   exit 0
 fi
 
@@ -99,30 +116,8 @@ for c in "${extracted[@]}"; do
   fi
 done
 
-hex_dist() {
-  local a="${1#\#}"
-  local b="${2#\#}"
-  local ar=$((16#${a:0:2}))
-  local ag=$((16#${a:2:2}))
-  local ab=$((16#${a:4:2}))
-  local br=$((16#${b:0:2}))
-  local bg=$((16#${b:2:2}))
-  local bb=$((16#${b:4:2}))
-  local dr=$((ar - br))
-  local dg=$((ag - bg))
-  local db=$((ab - bb))
-  printf '%d\n' $((dr * dr + dg * dg + db * db))
-}
-
-best_accent="$default_accent"
-best_dist=999999999
-for a in "${github_accents[@]}"; do
-  d="$(hex_dist "$best_src" "$a")"
-  if (( d < best_dist )); then
-    best_dist=$d
-    best_accent="$a"
-  fi
-done
+best_accent="$best_src"
 
 write_css "$best_accent"
 printf '%s\n' "$best_accent" > "$cache_file"
+reload_waybar_if_changed

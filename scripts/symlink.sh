@@ -31,10 +31,6 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/wofi/config -> $HOME/.config/wofi/config"
     "$HOME/.home-manager/config_files/wofi/style.css -> $HOME/.config/wofi/style.css"
 
-    # waybar
-    "$HOME/.home-manager/config_files/waybar/style.css -> $HOME/.config/waybar/style.css"
-    "$HOME/.home-manager/config_files/waybar/config.json -> $HOME/.config/waybar/config.json"
-
     # hyprland
     "$HOME/.home-manager/config_files/hypr/autostart.conf -> $HOME/.config/hypr/autostart.conf"
     "$HOME/.home-manager/config_files/hypr/hyprlog.conf -> $HOME/.config/hypr/hyprlog.conf"
