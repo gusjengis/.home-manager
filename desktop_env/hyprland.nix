@@ -24,7 +24,6 @@
         swww
         eww
         wofi
-        waybar
         font-awesome
         wallust
         xdg-desktop-portal-gtk
