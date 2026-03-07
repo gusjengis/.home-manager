@@ -9,6 +9,7 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/xfce4/helpers.rc -> $HOME/.config/xfce4/helpers.rc"
     "$HOME/.home-manager/config_files/mimeapps.list -> $HOME/.config/mimeapps.list"
     "$HOME/.home-manager/config_files/local/share/applications/nvim.desktop -> $HOME/.local/share/applications/nvim.desktop"
+    "$HOME/.home-manager/config_files/local/share/applications/btop.desktop -> $HOME/.local/share/applications/btop.desktop"
 
     # opencode
     "$HOME/.home-manager/config_files/opencode/model.json -> $HOME/.local/state/opencode/model.json"
