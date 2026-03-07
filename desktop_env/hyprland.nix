@@ -26,12 +26,18 @@
         wofi
         waybar
         font-awesome
+        wallust
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
       ]
       ++ lib.optionals PC [
         vial
       ];
+
+    home.file.".cache/theme/wofi-accent.css".text = ''
+      @define-color accent #58a6ff;
+      @define-color accent_soft rgba(88, 166, 255, 0.22);
+    '';
 
     home.activation.macHyprSetup = lib.mkIf Mac (
       lib.hm.dag.entryAfter [ "symlink" ] ''
