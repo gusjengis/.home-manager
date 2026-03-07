@@ -70,20 +70,24 @@ window#waybar {
 }
 
 #custom-bluetooth {
-  font-size: 17px;
+  font-size: 20px;
   min-width: 20px;
   padding: 0 12px;
 }
 
 #custom-wifi {
   font-size: 17px;
-  min-width: 20px;
-  padding: 0 12px;
-  font-family: "Font Awesome 6 Free Solid", "Font Awesome 6 Free", "JetBrainsMono Nerd Font", monospace;
+  min-width: 1.2em;
+  padding: 0px 14px 0px 7px;
+  font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+}
+
+#custom-wifi.disconnected {
+  padding: 0px 11px 0px 8px;
 }
 
 #custom-wifi label {
-  padding-right: 3px;
+  margin: 0;
 }
 
 #custom-media.playing {
