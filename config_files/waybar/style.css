@@ -26,11 +26,10 @@ window#waybar {
 #custom-clock,
 #tray {
   background: linear-gradient(180deg, rgba(17, 23, 32, 0.95) 0%, rgba(11, 15, 22, 0.95) 100%);
-  border: 1px solid @accent_soft;
   border-radius: 12px;
-  box-shadow: 0 0 0 1px rgba(12, 19, 28, 0.65);
-  margin-top: 2px;
-  margin-bottom: 2px;
+  box-shadow: inset 0 0 0 1px @accent_soft, 0 0 0 1px rgba(12, 19, 28, 0.65);
+  margin-top: 3px;
+  margin-bottom: 3px;
   padding: 0 12px;
 }
 
@@ -72,12 +71,19 @@ window#waybar {
 
 #custom-bluetooth {
   font-size: 17px;
-  padding: 0 14px 0 12px;
+  min-width: 20px;
+  padding: 0 12px;
 }
 
 #custom-wifi {
   font-size: 17px;
-  padding: 0 16px 0 8px;
+  min-width: 20px;
+  padding: 0 12px;
+  font-family: "Font Awesome 6 Free Solid", "Font Awesome 6 Free", "JetBrainsMono Nerd Font", monospace;
+}
+
+#custom-wifi label {
+  padding-right: 3px;
 }
 
 #custom-media.playing {
@@ -105,7 +111,7 @@ window#waybar {
 #custom-wifi.disconnected,
 #pulseaudio.muted {
   color: #ffb4a3;
-  border-color: rgba(244, 139, 105, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(244, 139, 105, 0.45), 0 0 0 1px rgba(12, 19, 28, 0.65);
 }
 
 #tray {

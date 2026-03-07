@@ -12,41 +12,21 @@ if [[ -d "$hypr_dir" ]]; then
   fi
 fi
 
-if command -v blueman-manager >/dev/null 2>&1; then
-  if command -v hyprctl >/dev/null 2>&1 && [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
-    nohup blueman-manager >/dev/null 2>&1 &
-    (
-      sleep 0.6
-
-      monitor_json="$(hyprctl -j monitors 2>/dev/null || true)"
-      target_x="3386"
-      target_y="56"
-      target_w="420"
-      target_h="520"
-
-      if [[ -n "$monitor_json" ]]; then
-        monitor_values="$(printf '%s' "$monitor_json" | jq -r '.[] | select(.focused == true) | "\(.x) \(.y) \(.width)"' | head -n 1)"
-        if [[ -n "$monitor_values" ]]; then
-          read -r monitor_x monitor_y monitor_width <<< "$monitor_values"
-          target_x="$((monitor_x + monitor_width - target_w - 34))"
-          target_y="$((monitor_y + 56))"
-        fi
-      fi
-
-      for _ in $(seq 1 30); do
-        client_address="$(hyprctl -j clients 2>/dev/null | jq -r '.[] | select(.class == ".blueman-manager-wrapped") | .address' | head -n 1)"
-        if [[ -n "$client_address" && "$client_address" != "null" ]]; then
-          hyprctl dispatch setfloating "address:$client_address" >/dev/null 2>&1 || true
-          hyprctl dispatch resizewindowpixel "exact $target_w $target_h,address:$client_address" >/dev/null 2>&1 || true
-          hyprctl dispatch movewindowpixel "exact $target_x $target_y,address:$client_address" >/dev/null 2>&1 || true
-          exit 0
-        fi
-        sleep 0.1
-      done
-    ) >/dev/null 2>&1 &
-  else
-    nohup blueman-manager >/dev/null 2>&1 &
+if command -v hyprctl >/dev/null 2>&1 && [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
+  existing_address="$(hyprctl -j clients 2>/dev/null | jq -r '.[] | select(.class == ".blueman-manager-wrapped") | .address' | head -n 1)"
+  if [[ -n "$existing_address" && "$existing_address" != "null" ]]; then
+    hyprctl dispatch closewindow "address:$existing_address" >/dev/null 2>&1 || true
+    exit 0
   fi
+
+  wifi_address="$(hyprctl -j clients 2>/dev/null | jq -r '.[] | select(.class == "wifi-popup") | .address' | head -n 1)"
+  if [[ -n "$wifi_address" && "$wifi_address" != "null" ]]; then
+    hyprctl dispatch closewindow "address:$wifi_address" >/dev/null 2>&1 || true
+  fi
+fi
+
+if command -v blueman-manager >/dev/null 2>&1; then
+  nohup blueman-manager >/dev/null 2>&1 &
   exit 0
 fi
 
