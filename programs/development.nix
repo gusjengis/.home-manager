@@ -13,7 +13,7 @@
     with pkgs;
     [
       openssl
-      opencode
+      inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     ]
     ++ lib.optionals config.desktopEnv.enable [
       inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.default

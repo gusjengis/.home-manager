@@ -3,9 +3,9 @@
   "exclusive": false,
   "position": "top",
   "height": 38,
-  "margin-top": 10,
-  "margin-left": 14,
-  "margin-right": 14,
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
 
   "modules-left": [
     "hyprland/workspaces"
@@ -14,9 +14,9 @@
     "custom/media"
   ],
   "modules-right": [
+    "custom/wifi",
     "custom/bluetooth",
-    "pulseaudio",
-    "clock",
+    "custom/clock",
     "tray"
   ],
 
@@ -47,15 +47,19 @@
     "tooltip": true
   },
 
-  "pulseaudio": {
-    "format": "VOL {volume}%",
-    "format-muted": "MUTED",
-    "on-click": "pavucontrol"
+  "custom/wifi": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/waybar-wifi.sh",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "bash ~/.home-manager/config_files/hypr/scripts/open-network-manager.sh",
+    "tooltip": true
   },
 
-  "clock": {
-    "format": "{:%a %b %d  %I:%M %p}",
-    "tooltip-format": "{:%Y-%m-%d %H:%M:%S}"
+  "custom/clock": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/waybar-clock.sh",
+    "return-type": "json",
+    "interval": 1,
+    "tooltip": true
   },
 
   "tray": {

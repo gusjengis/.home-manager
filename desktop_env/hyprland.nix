@@ -25,6 +25,7 @@
         eww
         wofi
         font-awesome
+        nmgui
         wallust
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
@@ -33,9 +34,17 @@
         vial
       ];
 
-    home.file.".cache/theme/wofi-accent.css".text = ''
+    home.activation.ensureAccentCacheFile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            mkdir -p "$HOME/.cache/theme"
+            if [ -L "$HOME/.cache/theme/wofi-accent.css" ]; then
+              rm -f "$HOME/.cache/theme/wofi-accent.css"
+            fi
+            if [ ! -f "$HOME/.cache/theme/wofi-accent.css" ]; then
+              cat > "$HOME/.cache/theme/wofi-accent.css" <<'EOF'
       @define-color accent #58a6ff;
       @define-color accent_soft rgba(88, 166, 255, 0.22);
+      EOF
+            fi
     '';
 
     home.file.".config/waybar/config.json".source = ../config_files/waybar/config.json;

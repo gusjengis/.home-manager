@@ -13,24 +13,16 @@ json_escape() {
 
 players="$(playerctl -l 2>/dev/null || true)"
 if [[ -z "$players" ]]; then
-  printf '{"text":"No media","class":"idle","tooltip":"No active players"}\n'
   exit 0
 fi
 
 selected_player=""
 selected_status=""
-fallback_player=""
-fallback_status=""
 
 while IFS= read -r player; do
   [[ -z "$player" ]] && continue
   status="$(playerctl -p "$player" status 2>/dev/null || true)"
   [[ -z "$status" ]] && continue
-
-  if [[ -z "$fallback_player" ]]; then
-    fallback_player="$player"
-    fallback_status="$status"
-  fi
 
   if [[ "$status" == "Playing" ]]; then
     selected_player="$player"
@@ -40,12 +32,6 @@ while IFS= read -r player; do
 done <<< "$players"
 
 if [[ -z "$selected_player" ]]; then
-  selected_player="$fallback_player"
-  selected_status="$fallback_status"
-fi
-
-if [[ -z "$selected_player" ]]; then
-  printf '{"text":"No media","class":"idle","tooltip":"No active players"}\n'
   exit 0
 fi
 

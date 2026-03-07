@@ -1,9 +1,9 @@
 @import url("file:///home/gusjengis/.cache/theme/wofi-accent.css");
 
 * {
-  font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
   border: none;
   box-shadow: none;
   outline: none;
@@ -77,6 +77,11 @@ window {
 
 #entry:focus:not(:selected) {
   background: rgba(13, 17, 23, 0.18);
+  border-color: @accent_soft;
+}
+
+#entry:focus:not(:selected) #text {
+  color: @accent;
 }
 
 #entry:selected {
@@ -85,12 +90,8 @@ window {
   box-shadow: none;
 }
 
-#input:focus ~ #scroll #entry:selected {
-  border-color: @accent_soft;
-}
-
 #entry:selected #text {
-  font-weight: 700;
+  font-weight: 600;
   color: @accent;
 }
 

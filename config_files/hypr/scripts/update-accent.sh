@@ -40,6 +40,55 @@ reload_waybar_if_changed() {
   fi
 }
 
+clamp_luminance() {
+  local color="$1"
+  local min_luma=140
+  local max_luma=200
+
+  awk -v color="$color" -v min="$min_luma" -v max="$max_luma" '
+    function clamp(v) {
+      if (v < 0) return 0
+      if (v > 255) return 255
+      return int(v + 0.5)
+    }
+    BEGIN {
+      hex = substr(color, 2)
+      r = strtonum("0x" substr(hex, 1, 2))
+      g = strtonum("0x" substr(hex, 3, 2))
+      b = strtonum("0x" substr(hex, 5, 2))
+
+      luma = int((30 * r + 59 * g + 11 * b) / 100)
+      if (luma >= min && luma <= max) {
+        printf "#%02X%02X%02X\n", r, g, b
+        exit
+      }
+
+      target = (luma < min) ? min : max
+
+      if (luma == 0) {
+        r = target
+        g = target
+        b = target
+      } else {
+        scale = target / luma
+        r = clamp(r * scale)
+        g = clamp(g * scale)
+        b = clamp(b * scale)
+
+        adjusted = int((30 * r + 59 * g + 11 * b) / 100)
+        if (adjusted < min || adjusted > max) {
+          delta = target - adjusted
+          r = clamp(r + delta)
+          g = clamp(g + delta)
+          b = clamp(b + delta)
+        }
+      }
+
+      printf "#%02X%02X%02X\n", r, g, b
+    }
+  '
+}
+
 cache_key_for_image() {
   local path="$1"
   local sig
@@ -60,7 +109,11 @@ cache_file="$accent_cache_dir/$cache_key"
 if [[ -s "$cache_file" ]]; then
   cached_accent="$(<"$cache_file")"
   if [[ "$cached_accent" =~ ^#[0-9A-Fa-f]{6}$ ]]; then
-    write_css "$cached_accent"
+    best_accent="$(clamp_luminance "$cached_accent")"
+    write_css "$best_accent"
+    if [[ "$best_accent" != "$cached_accent" ]]; then
+      printf '%s\n' "$best_accent" > "$cache_file"
+    fi
     reload_waybar_if_changed
     exit 0
   fi
@@ -116,7 +169,7 @@ for c in "${extracted[@]}"; do
   fi
 done
 
-best_accent="$best_src"
+best_accent="$(clamp_luminance "$best_src")"
 
 write_css "$best_accent"
 printf '%s\n' "$best_accent" > "$cache_file"

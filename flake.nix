@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    opencode.url = "github:sst/opencode?ref=v1.2.20";
     hyprlog-nixpkgs.url = "github:gusjengis/nixpkgs?ref=add-hyprlog";
     stable-nixpkgs.url = "nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";

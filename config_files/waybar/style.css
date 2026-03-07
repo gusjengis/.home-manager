@@ -16,11 +16,14 @@ window#waybar {
 
 #workspaces,
 #custom-media,
+#custom-wifi,
+#custom-bluetooth,
 #network,
 #pulseaudio,
 #cpu,
 #memory,
 #clock,
+#custom-clock,
 #tray {
   background: linear-gradient(180deg, rgba(17, 23, 32, 0.95) 0%, rgba(11, 15, 22, 0.95) 100%);
   border: 1px solid @accent_soft;
@@ -67,6 +70,16 @@ window#waybar {
   padding: 0 16px;
 }
 
+#custom-bluetooth {
+  font-size: 17px;
+  padding: 0 14px 0 12px;
+}
+
+#custom-wifi {
+  font-size: 17px;
+  padding: 0 16px 0 8px;
+}
+
 #custom-media.playing {
   color: #dff6ff;
 }
@@ -76,16 +89,20 @@ window#waybar {
 }
 
 #network,
+#custom-wifi,
+#custom-bluetooth,
 #pulseaudio,
 #cpu,
 #memory,
 #clock,
+#custom-clock,
 #tray {
   color: #d6e7fa;
   margin-left: 8px;
 }
 
 #network.disconnected,
+#custom-wifi.disconnected,
 #pulseaudio.muted {
   color: #ffb4a3;
   border-color: rgba(244, 139, 105, 0.45);
