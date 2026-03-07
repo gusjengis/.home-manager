@@ -14,10 +14,8 @@
     "custom/media"
   ],
   "modules-right": [
-    "network",
+    "custom/bluetooth",
     "pulseaudio",
-    "cpu",
-    "memory",
     "clock",
     "tray"
   ],
@@ -41,29 +39,18 @@
     "on-scroll-down": "playerctl previous"
   },
 
-  "network": {
+  "custom/bluetooth": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/waybar-bluetooth.sh",
+    "return-type": "json",
     "interval": 3,
-    "format-wifi": "WIFI {signalStrength}%",
-    "format-ethernet": "LAN",
-    "format-linked": "LINK",
-    "format-disconnected": "OFFLINE",
-    "tooltip-format": "{ifname} | {ipaddr}"
+    "on-click": "bash ~/.home-manager/config_files/hypr/scripts/open-bluetooth-manager.sh",
+    "tooltip": true
   },
 
   "pulseaudio": {
     "format": "VOL {volume}%",
     "format-muted": "MUTED",
     "on-click": "pavucontrol"
-  },
-
-  "cpu": {
-    "interval": 2,
-    "format": "CPU {usage}%"
-  },
-
-  "memory": {
-    "interval": 5,
-    "format": "RAM {}%"
   },
 
   "clock": {
