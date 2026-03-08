@@ -1,0 +1,54 @@
+{
+  "layer": "bottom",
+  "exclusive": false,
+  "position": "top",
+  "height": 42,
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
+
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [],
+  "modules-right": [
+    "custom/wifi",
+    "custom/bluetooth",
+    "custom/clock",
+    "tray"
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-number": true,
+    "show-special": true
+  },
+
+  "custom/bluetooth": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/waybar-bluetooth.sh",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "bash ~/.home-manager/config_files/hypr/scripts/open-bluetooth-manager.sh",
+    "tooltip": true
+  },
+
+  "custom/wifi": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/waybar-wifi.sh",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "bash ~/.home-manager/config_files/hypr/scripts/open-network-manager.sh",
+    "tooltip": true
+  },
+
+  "custom/clock": {
+    "exec": "bash ~/.home-manager/config_files/hypr/scripts/waybar-clock.sh",
+    "return-type": "json",
+    "interval": 1,
+    "tooltip": true
+  },
+
+  "tray": {
+    "spacing": 10
+  }
+}

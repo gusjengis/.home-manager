@@ -1,0 +1,13 @@
+(defvar calendar_timeline_path "")
+(defvar calendar_timeline_tooltip "Loading calendar timeline...")
+
+(defwindow calendar-timeline [?screen]
+  :monitor { screen == "" ? 0 : screen }
+  :geometry (geometry :x "0%" :y "7px" :width "1000px" :height "42px" :anchor "top center")
+  :stacking "fg"
+  :exclusive false
+  :focusable "none"
+  :wm-ignore true
+  :namespace "Calendar Timeline"
+  (box :class "calendar-shell" :tooltip calendar_timeline_tooltip
+    (image :path calendar_timeline_path :image-width 960 :image-height 22)))

@@ -54,6 +54,10 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/eww-which-key/eww.scss -> $HOME/.config/eww-which-key/eww.scss"
     "$HOME/.home-manager/config_files/eww-which-key/eww.yuck -> $HOME/.config/eww-which-key/eww.yuck"
 
+    # eww calendar
+    "$HOME/.home-manager/config_files/eww-calendar/eww.scss -> $HOME/.config/eww-calendar/eww.scss"
+    "$HOME/.home-manager/config_files/eww-calendar/eww.yuck -> $HOME/.config/eww-calendar/eww.yuck"
+
     # niri
     "$HOME/.home-manager/config_files/niri/config.kdl -> $HOME/.config/niri/config.kdl"
 )
