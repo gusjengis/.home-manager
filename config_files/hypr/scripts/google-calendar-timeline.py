@@ -13,6 +13,7 @@ from googleapiclient.discovery import build
 
 
 DEFAULT_KEY_PATH = Path.home() / ".config/secrets/api_keys/google-calendar-service-account.json"
+DEFAULT_CALENDAR_IDS_PATH = Path.home() / ".config/secrets/api_keys/google-calendar-calendar-ids.json"
 DEFAULT_CACHE_DIR = Path.home() / ".cache/eww-calendar"
 DEFAULT_WIDTH = 960
 DEFAULT_HEIGHT = 22
@@ -27,6 +28,7 @@ class EventBlock:
     end: datetime
     color: str
     all_day: bool
+    has_custom_color: bool
 
 
 def local_timezone() -> ZoneInfo | tzinfo:
@@ -71,6 +73,37 @@ def sanitize_color(color: str | None) -> str:
     return "#5f6368"
 
 
+def hex_to_rgb(color: str) -> tuple[int, int, int]:
+    color = sanitize_color(color)
+    return int(color[1:3], 16), int(color[3:5], 16), int(color[5:7], 16)
+
+
+def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
+    r, g, b = rgb
+    return f"#{r:02x}{g:02x}{b:02x}"
+
+
+def mix_colors(base: str, target: str, ratio: float) -> str:
+    ratio = max(0.0, min(1.0, ratio))
+    br, bg, bb = hex_to_rgb(base)
+    tr, tg, tb = hex_to_rgb(target)
+    return rgb_to_hex(
+        (
+            round(br + (tr - br) * ratio),
+            round(bg + (tg - bg) * ratio),
+            round(bb + (tb - bb) * ratio),
+        )
+    )
+
+
+def brighten_for_dark_bg(color: str) -> str:
+    r, g, b = hex_to_rgb(color)
+    luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
+    if luminance < 0.52:
+        return mix_colors(color, "#ffffff", 0.28)
+    return color
+
+
 def fmt_time(value: datetime, all_day: bool) -> str:
     if all_day:
         return "all day"
@@ -87,6 +120,52 @@ def build_tooltip(events: list[EventBlock]) -> str:
             f"{fmt_time(event.start, event.all_day)} - {fmt_time(event.end, event.all_day)}  {event.title} [{event.calendar_name}]"
         )
     return "\n".join(lines)
+
+
+def load_configured_calendar_ids() -> list[str]:
+    env_value = os.environ.get("CALENDAR_TIMELINE_CALENDAR_IDS", "").strip()
+    if env_value:
+        return [item.strip() for item in env_value.split(",") if item.strip()]
+
+    ids_path = Path(os.environ.get("CALENDAR_TIMELINE_CALENDAR_IDS_FILE", DEFAULT_CALENDAR_IDS_PATH))
+    if not ids_path.exists():
+        return []
+
+    payload = json.loads(ids_path.read_text(encoding="utf-8"))
+    if isinstance(payload, dict):
+        payload = payload.get("calendar_ids", [])
+
+    if not isinstance(payload, list):
+        raise ValueError(f"Calendar ID config at {ids_path} must be a JSON list or an object with calendar_ids")
+
+    return [str(item).strip() for item in payload if str(item).strip()]
+
+
+def discover_calendars(service: Any) -> list[dict[str, str]]:
+    configured_ids = load_configured_calendar_ids()
+    if configured_ids:
+        calendars = []
+        for calendar_id in configured_ids:
+            calendar = {"id": calendar_id, "summary": calendar_id}
+            try:
+                fetched = service.calendarList().get(calendarId=calendar_id).execute()
+                if isinstance(fetched, dict):
+                    calendar.update(fetched)
+            except Exception:
+                pass
+            calendars.append(calendar)
+        return calendars
+
+    calendars = []
+    page_token = None
+    while True:
+        response = service.calendarList().list(pageToken=page_token, showHidden=False).execute()
+        calendars.extend(response.get("items", []))
+        page_token = response.get("nextPageToken")
+        if not page_token:
+            break
+
+    return calendars
 
 
 def escape_xml(text: str) -> str:
@@ -107,19 +186,31 @@ def render_svg(events: list[EventBlock], width: int, height: int, output_path: P
         render_tz = local_timezone()
     window_start, _ = day_bounds(render_tz)
     bg_radius = height / 2
+    now_seconds = max(0.0, min(float(total_seconds), (datetime.now(render_tz) - window_start).total_seconds()))
+    now_x = now_seconds / total_seconds * width
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         f'<rect x="0" y="0" width="{width}" height="{height}" rx="{bg_radius}" ry="{bg_radius}" fill="#050505" />',
+        f'<rect x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="{bg_radius - 0.5}" ry="{bg_radius - 0.5}" fill="none" stroke="#2f343b" stroke-width="1" />',
     ]
+
+    for hour in range(1, 24):
+        x = hour / 24 * width
+        parts.append(f'<line x1="{x:.3f}" y1="3" x2="{x:.3f}" y2="{height - 3}" stroke="#1c2128" stroke-width="1" />')
 
     for event in events:
         start_seconds = max(0.0, (event.start - window_start).total_seconds())
         end_seconds = min(float(total_seconds), (event.end - window_start).total_seconds())
         x = start_seconds / total_seconds * width
         rect_width = max(1.0, (end_seconds - start_seconds) / total_seconds * width)
+        fill = brighten_for_dark_bg(event.color)
+        stroke = mix_colors(fill, "#ffffff", 0.18)
         parts.append(
-            f'<rect x="{x:.3f}" y="0" width="{rect_width:.3f}" height="{height}" fill="{escape_xml(event.color)}" />'
+            f'<rect x="{x:.3f}" y="1.5" width="{rect_width:.3f}" height="{height - 3}" rx="5" ry="5" fill="{escape_xml(fill)}" stroke="{escape_xml(stroke)}" stroke-width="1" />'
         )
+
+    parts.append(f'<line x1="{now_x:.3f}" y1="0" x2="{now_x:.3f}" y2="{height}" stroke="#fff3bf" stroke-width="2" />')
+    parts.append(f'<circle cx="{now_x:.3f}" cy="{height / 2:.3f}" r="3.2" fill="#fff3bf" />')
 
     parts.append("</svg>")
     output_path.write_text("".join(parts), encoding="utf-8")
@@ -140,15 +231,16 @@ def fetch_events(key_path: Path) -> list[EventBlock]:
 
     colors = service.colors().get().execute()
     event_colors = colors.get("event", {})
+    recurring_color_cache: dict[tuple[str, str], str | None] = {}
 
-    calendars = []
-    page_token = None
-    while True:
-        response = service.calendarList().list(pageToken=page_token, showHidden=False).execute()
-        calendars.extend(response.get("items", []))
-        page_token = response.get("nextPageToken")
-        if not page_token:
-            break
+    calendars = discover_calendars(service)
+
+    if not calendars:
+        raise RuntimeError(
+            "No calendars were discovered for the service account. "
+            "Share calendars with the service account and/or provide calendar IDs in "
+            f"{DEFAULT_CALENDAR_IDS_PATH}"
+        )
 
     events: list[EventBlock] = []
     for calendar in calendars:
@@ -186,6 +278,18 @@ def fetch_events(key_path: Path) -> list[EventBlock]:
                     continue
 
                 color_id = item.get("colorId")
+                if not color_id and item.get("recurringEventId"):
+                    cache_key = (calendar_id, item["recurringEventId"])
+                    if cache_key not in recurring_color_cache:
+                        parent_color_id = None
+                        try:
+                            parent = service.events().get(calendarId=calendar_id, eventId=item["recurringEventId"]).execute()
+                            parent_color_id = parent.get("colorId")
+                        except Exception:
+                            parent_color_id = None
+                        recurring_color_cache[cache_key] = parent_color_id
+                    color_id = recurring_color_cache[cache_key]
+
                 event_color = default_color
                 if color_id:
                     event_color = sanitize_color(event_colors.get(color_id, {}).get("background"))
@@ -200,6 +304,7 @@ def fetch_events(key_path: Path) -> list[EventBlock]:
                         end=clipped_end,
                         color=event_color,
                         all_day=all_day,
+                        has_custom_color=bool(color_id),
                     )
                 )
 

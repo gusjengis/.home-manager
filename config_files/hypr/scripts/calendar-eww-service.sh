@@ -3,7 +3,7 @@ set -euo pipefail
 
 CONFIG_DIR="$HOME/.config/eww-calendar"
 RENDERER="$HOME/.home-manager/config_files/hypr/scripts/google-calendar-timeline.py"
-INTERVAL="${CALENDAR_TIMELINE_INTERVAL_SECONDS:-300}"
+INTERVAL="${CALENDAR_TIMELINE_INTERVAL_SECONDS:-30}"
 
 need() {
   command -v "$1" >/dev/null 2>&1 || {
