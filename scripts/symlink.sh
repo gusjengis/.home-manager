@@ -12,6 +12,7 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/local/share/applications/btop.desktop -> $HOME/.local/share/applications/btop.desktop"
 
     # opencode
+    "$HOME/.home-manager/config_files/opencode/opencode.json -> $HOME/.config/opencode/opencode.json"
     "$HOME/.home-manager/config_files/opencode/model.json -> $HOME/.local/state/opencode/model.json"
     "$HOME/.home-manager/config_files/opencode/kv.json -> $HOME/.local/state/opencode/kv.json"
 

@@ -8,6 +8,52 @@
   ...
 }:
 
+let
+  handyPackage =
+    let
+      baseHandy = inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    in
+    baseHandy.overrideAttrs (
+      old:
+      let
+        bunDeps = pkgs.stdenv.mkDerivation {
+          pname = "handy-bun-deps";
+          inherit (old) version src;
+
+          nativeBuildInputs = [
+            pkgs.bun
+            pkgs.cacert
+          ];
+
+          dontFixup = true;
+
+          buildPhase = ''
+            export HOME=$TMPDIR
+            bun install --frozen-lockfile --no-progress
+          '';
+
+          installPhase = ''
+            mkdir -p $out
+            cp -r node_modules $out/
+          '';
+
+          outputHashAlgo = "sha256";
+          outputHashMode = "recursive";
+          outputHash = "sha256-6SvLw/8UBIHlcIY7jUJKv6DHPooP3aUz+4PvC7UNzv4=";
+        };
+      in
+      {
+        preBuild = ''
+          cp -r ${bunDeps}/node_modules node_modules
+          chmod -R +w node_modules
+          substituteInPlace node_modules/.bin/{tsc,vite} \
+            --replace-fail "/usr/bin/env node" "${lib.getExe pkgs.bun}"
+          export HOME=$TMPDIR
+          bun run build
+        '';
+      }
+    );
+in
 {
   home.packages =
     with pkgs;
@@ -16,7 +62,7 @@
       inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
     ]
     ++ lib.optionals config.desktopEnv.enable [
-      inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.default
+      handyPackage
       wtype
       xdotool
     ]
