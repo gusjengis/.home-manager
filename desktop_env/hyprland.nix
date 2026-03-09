@@ -4,10 +4,170 @@
   lib,
   Mac,
   PC,
+  inputs,
   hyprlog-nixpkgs,
   ...
 }:
 
+let
+  ambxstPackage =
+    let
+      system = pkgs.stdenv.hostPlatform.system;
+      quickshellPkg = inputs.ambxst.inputs.quickshell.packages.${system}.default;
+
+      phosphorIcons = pkgs.stdenvNoCC.mkDerivation rec {
+        pname = "ttf-phosphor-icons";
+        version = "2.1.2";
+
+        src = pkgs.fetchzip {
+          url = "https://github.com/phosphor-icons/web/archive/refs/tags/v${version}.zip";
+          sha256 = "sha256-96ivFjm0cBhqDKNB50klM7D3fevt8X9Zzm82KkJKMtU=";
+          stripRoot = true;
+        };
+
+        dontBuild = true;
+
+        installPhase = ''
+          runHook preInstall
+          install -Dm644 src/*/*.ttf -t $out/share/fonts/truetype
+          install -Dm644 LICENSE -t $out/share/licenses/${pname}
+          runHook postInstall
+        '';
+
+        meta = with pkgs.lib; {
+          description = "A flexible icon family for interfaces, diagrams, presentations";
+          homepage = "https://phosphoricons.com";
+          license = licenses.mit;
+          platforms = platforms.all;
+        };
+      };
+
+      baseEnv =
+        with pkgs;
+        [
+          quickshellPkg
+          mesa
+          libglvnd
+          egl-wayland
+          wayland
+          qt6.qtbase
+          qt6.qtsvg
+          qt6.qttools
+          qt6.qtwayland
+          qt6.qtdeclarative
+          qt6.qtimageformats
+          kdePackages.qtmultimedia
+          kdePackages.qtshadertools
+          kdePackages.syntax-highlighting
+          brightnessctl
+          ddcutil
+          fontconfig
+          glib
+          grim
+          imagemagick
+          jq
+          litellm
+          libnotify
+          matugen
+          python3
+          power-profiles-daemon
+          slurp
+          sqlite
+          upower
+          wl-clip-persist
+          wl-clipboard
+          wlsunset
+          wtype
+          zbar
+          zenity
+          inetutils
+          adw-gtk3
+          mpvpaper
+          ffmpeg
+          x264
+          playerctl
+          pipewire
+          wireplumber
+          kitty
+          tmux
+          fuzzel
+          networkmanagerapplet
+          blueman
+          pwvucontrol
+          easyeffects
+          gradia
+          kdePackages.breeze-icons
+          hicolor-icon-theme
+          roboto
+          roboto-mono
+          league-gothic
+          terminus_font
+          terminus_font_ttf
+          dejavu_fonts
+          liberation_ttf
+          nerd-fonts.symbols-only
+          noto-fonts
+          noto-fonts-color-emoji
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
+          phosphorIcons
+          (tesseract.override {
+            enableLanguages = [
+              "eng"
+              "spa"
+              "lat"
+              "jpn"
+              "chi_sim"
+              "chi_tra"
+              "kor"
+            ];
+          })
+        ]
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [ gpu-screen-recorder ];
+
+      envAmbxst = pkgs.buildEnv {
+        name = "Ambxst-env";
+        paths = baseEnv;
+      };
+
+      fontconfigConf = pkgs.writeTextDir "etc/fonts/conf.d/99-ambxst-fonts.conf" ''
+        <?xml version="1.0"?>
+        <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+        <fontconfig>
+          <dir>${envAmbxst}/share/fonts</dir>
+        </fontconfig>
+      '';
+
+      shellSrc = pkgs.stdenv.mkDerivation {
+        pname = "ambxst-shell";
+        version = lib.removeSuffix "\n" (builtins.readFile "${inputs.ambxst}/version");
+        src = lib.cleanSource inputs.ambxst;
+        dontBuild = true;
+
+        installPhase = ''
+          mkdir -p $out
+          cp -r . $out/
+        '';
+      };
+
+      launcher = pkgs.writeShellScriptBin "ambxst" ''
+        export AMBXST_QS="${quickshellPkg}/bin/qs"
+        export PATH="${envAmbxst}/bin:$PATH"
+        export QML2_IMPORT_PATH="${envAmbxst}/lib/qt-6/qml:$QML2_IMPORT_PATH"
+        export QML_IMPORT_PATH="$QML2_IMPORT_PATH"
+        export FONTCONFIG_PATH="${fontconfigConf}/etc/fonts:''${FONTCONFIG_PATH:-}"
+        exec ${shellSrc}/cli.sh "$@"
+      '';
+    in
+    pkgs.buildEnv {
+      name = "Ambxst";
+      paths = [
+        envAmbxst
+        launcher
+      ];
+      meta.mainProgram = "ambxst";
+    };
+in
 {
 
   config = lib.mkIf config.desktopEnv.enable {
@@ -29,6 +189,7 @@
         wallust
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
+        ambxstPackage
       ]
       ++ lib.optionals PC [
         vial

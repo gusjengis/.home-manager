@@ -16,6 +16,25 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/opencode/model.json -> $HOME/.local/state/opencode/model.json"
     "$HOME/.home-manager/config_files/opencode/kv.json -> $HOME/.local/state/opencode/kv.json"
 
+    # ambxst
+    "$HOME/.home-manager/config_files/ambxst/binds.json -> $HOME/.config/ambxst/binds.json"
+    "$HOME/.home-manager/config_files/ambxst/config/ai.json -> $HOME/.config/ambxst/config/ai.json"
+    "$HOME/.home-manager/config_files/ambxst/config/bar.json -> $HOME/.config/ambxst/config/bar.json"
+    "$HOME/.home-manager/config_files/ambxst/config/desktop.json -> $HOME/.config/ambxst/config/desktop.json"
+    "$HOME/.home-manager/config_files/ambxst/config/dock.json -> $HOME/.config/ambxst/config/dock.json"
+    "$HOME/.home-manager/config_files/ambxst/config/hyprland.json -> $HOME/.config/ambxst/config/hyprland.json"
+    "$HOME/.home-manager/config_files/ambxst/config/lockscreen.json -> $HOME/.config/ambxst/config/lockscreen.json"
+    "$HOME/.home-manager/config_files/ambxst/config/notch.json -> $HOME/.config/ambxst/config/notch.json"
+    "$HOME/.home-manager/config_files/ambxst/config/overview.json -> $HOME/.config/ambxst/config/overview.json"
+    "$HOME/.home-manager/config_files/ambxst/config/performance.json -> $HOME/.config/ambxst/config/performance.json"
+    "$HOME/.home-manager/config_files/ambxst/config/prefix.json -> $HOME/.config/ambxst/config/prefix.json"
+    "$HOME/.home-manager/config_files/ambxst/config/system.json -> $HOME/.config/ambxst/config/system.json"
+    "$HOME/.home-manager/config_files/ambxst/config/theme.json -> $HOME/.config/ambxst/config/theme.json"
+    "$HOME/.home-manager/config_files/ambxst/config/weather.json -> $HOME/.config/ambxst/config/weather.json"
+    "$HOME/.home-manager/config_files/ambxst/config/workspaces.json -> $HOME/.config/ambxst/config/workspaces.json"
+    "$HOME/.home-manager/config_files/ambxst/presets/active_preset -> $HOME/.config/ambxst/presets/active_preset"
+    "$HOME/.home-manager/config_files/local/share/ambxst/pinnedapps.json -> $HOME/.local/share/ambxst/pinnedapps.json"
+
     # ssh
     "$HOME/.home-manager/config_files/ssh/config -> $HOME/.ssh/config"
     "$HOME/.home-manager/config_files/ssh/authorized_keys -> $HOME/.ssh/authorized_keys"

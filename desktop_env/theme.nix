@@ -7,9 +7,12 @@
 
 let
   gtkThemeName = "Adwaita-dark";
+  iconThemeName = "Papirus-Dark";
   kvantumTheme = "KvAdaptaDark";
 in
 {
+  home.packages = [ pkgs.papirus-icon-theme ];
+
   ###### Environment hints (kept minimal but practical)
   home.sessionVariables = {
     # Prefer NOT to force GTK_THEME globally, but if you want “no excuses”:
@@ -34,6 +37,11 @@ in
       package = pkgs.gnome-themes-extra;
     };
 
+    iconTheme = {
+      name = iconThemeName;
+      package = pkgs.papirus-icon-theme;
+    };
+
     gtk3.extraConfig = {
       "gtk-application-prefer-dark-theme" = 1;
     };
@@ -52,6 +60,7 @@ in
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
         gtk-theme = gtkThemeName;
+        icon-theme = iconThemeName;
       };
 
       # Optional: if you want dark-ish file chooser / dialogs in some GNOME-ish apps
