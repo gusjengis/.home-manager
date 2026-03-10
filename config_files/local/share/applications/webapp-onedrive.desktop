@@ -7,6 +7,6 @@ Exec=chromium --app=https://onedrive.live.com/?view=1
 Icon=webapp-onedrive
 Terminal=false
 Categories=Network;FileTransfer;
-Keywords=onedrive;cloud-storage;
+Keywords=onedrive;cloud-storage;chrome-onedrive.live.com__-Default;
 StartupNotify=true
-StartupWMClass=chromium-browser
+StartupWMClass=chrome-onedrive.live.com__-Default

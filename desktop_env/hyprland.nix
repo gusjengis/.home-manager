@@ -179,7 +179,7 @@ in
         font-awesome
         nerd-fonts.iosevka
         nerd-fonts.symbols-only
-        nmgui
+        # nmgui
         wallust
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland

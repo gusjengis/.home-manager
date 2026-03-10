@@ -106,6 +106,33 @@ link_directory_contents() {
 }
 
 link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
+mkdir -p "$HOME/.local/share/icons/hicolor"
+
+link_hicolor_index_theme() {
+    local destination="$HOME/.local/share/icons/hicolor/index.theme"
+    local candidate
+
+    for candidate in \
+        "/run/current-system/sw/share/icons/hicolor/index.theme" \
+        "$HOME/.nix-profile/share/icons/hicolor/index.theme"; do
+        if [[ -f "$candidate" ]]; then
+            ln -sf "$candidate" "$destination"
+            return 0
+        fi
+    done
+
+    shopt -s nullglob
+    for candidate in /nix/store/*-hicolor-icon-theme-*/share/icons/hicolor/index.theme; do
+        if [[ -f "$candidate" ]]; then
+            ln -sf "$candidate" "$destination"
+            shopt -u nullglob
+            return 0
+        fi
+    done
+    shopt -u nullglob
+}
+
+link_hicolor_index_theme
 link_directory_contents "$HOME/.home-manager/config_files/local/share/icons/hicolor/128x128/apps" "$HOME/.local/share/icons/hicolor/128x128/apps" '*.png'
 
 if command -v update-desktop-database >/dev/null 2>&1; then
