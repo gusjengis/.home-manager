@@ -1788,7 +1788,7 @@
                     "flags": ""
                 }
             ],
-            "enabled": true,
+            "enabled": false,
             "keys": [
                 {
                     "key": "SPACE",
@@ -1814,7 +1814,7 @@
                     "flags": ""
                 }
             ],
-            "enabled": true,
+            "enabled": false,
             "keys": [
                 {
                     "key": "SPACE",
@@ -1840,7 +1840,7 @@
                     "flags": ""
                 }
             ],
-            "enabled": true,
+            "enabled": false,
             "keys": [
                 {
                     "key": "SPACE",
@@ -2205,7 +2205,7 @@
                     "flags": ""
                 }
             ],
-            "enabled": true,
+            "enabled": false,
             "keys": [
                 {
                     "key": "M",
