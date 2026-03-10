@@ -31,7 +31,7 @@ let
       ${pkgs.coreutils}/bin/sleep 10
     done
 
-    if command -v dunstify >/dev/null 2>&1; then
+    if command -v notify-send >/dev/null 2>&1; then
       waited=0
       timeout="''${HM_NOTIFY_WAIT_TIMEOUT:-120}"
       while [ "$waited" -lt "$timeout" ]; do

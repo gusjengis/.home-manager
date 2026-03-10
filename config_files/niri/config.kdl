@@ -269,7 +269,7 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
-spawn-at-startup "~/.home-manager/config_files/swww/gif_wallpaper_cycle.sh"
+spawn-at-startup "~/.home-manager/config_files/swww/gif_wallpaper_cycle_mpvpaper.sh"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

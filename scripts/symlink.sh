@@ -8,9 +8,6 @@ declare -a LINKS=(
     # default apps
     "$HOME/.home-manager/config_files/xfce4/helpers.rc -> $HOME/.config/xfce4/helpers.rc"
     "$HOME/.home-manager/config_files/mimeapps.list -> $HOME/.config/mimeapps.list"
-    "$HOME/.home-manager/config_files/local/share/applications/nvim.desktop -> $HOME/.local/share/applications/nvim.desktop"
-    "$HOME/.home-manager/config_files/local/share/applications/btop.desktop -> $HOME/.local/share/applications/btop.desktop"
-
     # opencode
     "$HOME/.home-manager/config_files/opencode/opencode.json -> $HOME/.config/opencode/opencode.json"
     "$HOME/.home-manager/config_files/opencode/model.json -> $HOME/.local/state/opencode/model.json"
@@ -89,6 +86,27 @@ for item in "${LINKS[@]}"; do
     ln -sf "$source" "$destination" &
 done
 wait
+
+link_directory_contents() {
+    local source_dir="$1"
+    local destination_dir="$2"
+    local pattern="$3"
+    local source_path destination_path
+
+    mkdir -p "$destination_dir"
+
+    shopt -s nullglob
+    for source_path in "$source_dir"/$pattern; do
+        [[ -f "$source_path" ]] || continue
+        destination_path="$destination_dir/$(basename "$source_path")"
+        ln -sf "$source_path" "$destination_path" &
+    done
+    wait
+    shopt -u nullglob
+}
+
+link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
+link_directory_contents "$HOME/.home-manager/config_files/local/share/icons/hicolor/128x128/apps" "$HOME/.local/share/icons/hicolor/128x128/apps" '*.png'
 
 # SSH refuses to use private keys that are readable by group/others.
 # Git does not reliably preserve file permissions for regular files, so if

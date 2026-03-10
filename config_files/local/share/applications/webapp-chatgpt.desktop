@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ChatGPT
+Comment=Open ChatGPT as a web app
+Exec=chromium --app=https://chat.openai.com
+Icon=webapp-chatgpt
+Terminal=false
+Categories=Network;WebBrowser;
+StartupNotify=true
+StartupWMClass=chrome-chat.openai.com__-Default

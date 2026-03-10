@@ -224,6 +224,6 @@ if command -v wl-copy >/dev/null 2>&1; then
   wl-copy <"$outfile"
 fi
 
-if command -v dunstify >/dev/null 2>&1; then
-  dunstify "Screenshot saved" "$outfile"
+if command -v notify-send >/dev/null 2>&1; then
+  notify-send "Screenshot saved" "$outfile"
 fi

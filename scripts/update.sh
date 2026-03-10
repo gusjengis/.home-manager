@@ -6,11 +6,11 @@ hm_repo="$HOME/.home-manager"
 modules_repo="/etc/nix-modules"
 sync_script="$hm_repo/scripts/sync-repos.sh"
 
-dunstify_bin="$(command -v dunstify || true)"
+notify_send_bin="$(command -v notify-send || true)"
 
 notify() {
-  if [[ -n "$dunstify_bin" ]]; then
-    "$dunstify_bin" "$@" || true
+  if [[ -n "$notify_send_bin" ]]; then
+    "$notify_send_bin" "$@" || true
   fi
 }
 

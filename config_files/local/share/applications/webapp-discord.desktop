@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Discord Web
+Comment=Open Discord as a web app
+Exec=chromium --app=https://discord.com/channels/@me
+Icon=webapp-discord
+Terminal=false
+Categories=Network;InstantMessaging;
+StartupNotify=true
+StartupWMClass=chrome-discord.com__channels_@me-Default

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-dunstify_bin="$(command -v dunstify || true)"
+notify_send_bin="$(command -v notify-send || true)"
 
 notify() {
-    if [[ -n "$dunstify_bin" ]]; then
-        "$dunstify_bin" "$@" || true
+    if [[ -n "$notify_send_bin" ]]; then
+        "$notify_send_bin" "$@" || true
     fi
 }
 

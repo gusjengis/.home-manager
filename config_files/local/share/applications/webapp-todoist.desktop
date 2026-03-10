@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Todoist
+Comment=Open Todoist as a web app
+Exec=chromium --app=https://app.todoist.com/app/upcoming
+Icon=webapp-todoist
+Terminal=false
+Categories=Office;ProjectManagement;
+StartupNotify=true
+StartupWMClass=chrome-app.todoist.com__app_upcoming-Default

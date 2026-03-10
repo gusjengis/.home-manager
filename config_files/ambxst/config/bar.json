@@ -1,6 +1,6 @@
 {
     "position": "top",
-    "launcherIcon": "",
+    "launcherIcon": "/home/gusjengis/.home-manager/config_files/ambxst/apple.png",
     "launcherIconTint": true,
     "launcherIconFullTint": true,
     "launcherIconSize": 18,
@@ -21,7 +21,7 @@
     "showPinButton": true,
     "availableOnFullscreen": false,
     "use12hFormat": false,
-    "containBar": false,
+    "containBar": true,
     "keepBarShadow": false,
     "keepBarBorder": false
 }

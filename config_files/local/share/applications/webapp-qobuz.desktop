@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Qobuz
+Comment=Open Qobuz as a web app
+Exec=chromium --app=https://play.qobuz.com/user/library/favorites/tracks
+Icon=webapp-qobuz
+Terminal=false
+Categories=AudioVideo;Music;
+StartupNotify=true
+StartupWMClass=chrome-play.qobuz.com__user_library_favorites_tracks-Default

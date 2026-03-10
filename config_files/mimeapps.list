@@ -1,5 +1,5 @@
 [Added Associations]
-image/png=qimgv.desktop;
+image/png=gimp.desktop;qimgv.desktop;
 audio/flac=vlc.desktop;
 image/webp=qimgv.desktop;
 image/gif=qimgv.desktop;

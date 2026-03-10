@@ -9,10 +9,8 @@ dbg_notify() {
     return 0
   fi
 
-  if command -v dunstify >/dev/null 2>&1; then
-    dunstify -a "Waypipe Launcher" -u normal -t 2500 "Waypipe Launcher" "$msg" || true
-  elif command -v notify-send >/dev/null 2>&1; then
-    notify-send "Waypipe Launcher" "$msg" || true
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send -a "Waypipe Launcher" -u normal -t 2500 "Waypipe Launcher" "$msg" || true
   else
     printf 'Waypipe Launcher: %s\n' "$msg" >&2
   fi
@@ -24,10 +22,8 @@ dbg_error() {
     return 0
   fi
 
-  if command -v dunstify >/dev/null 2>&1; then
-    dunstify -a "Waypipe Launcher" -u critical -t 8000 "Waypipe Launcher" "$msg" || true
-  elif command -v notify-send >/dev/null 2>&1; then
-    notify-send "Waypipe Launcher" "$msg" || true
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send -a "Waypipe Launcher" -u critical -t 8000 "Waypipe Launcher" "$msg" || true
   else
     printf 'Waypipe Launcher: %s\n' "$msg" >&2
   fi

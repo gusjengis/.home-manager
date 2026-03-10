@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Home Assistant
+Comment=Open Home Assistant as a web app
+Exec=chromium --app=http://t470:8123/
+Icon=webapp-home-assistant
+Terminal=false
+Categories=Network;HomeAutomation;
+StartupNotify=true
+StartupWMClass=chrome-t470__8123_-Default

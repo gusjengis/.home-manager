@@ -2,7 +2,7 @@
     "disks": [
         "/"
     ],
-    "updateServiceEnabled": true,
+    "updateServiceEnabled": false,
     "idle": {
         "general": {
             "lock_cmd": "ambxst lock",
@@ -11,22 +11,17 @@
         },
         "listeners": [
             {
-                "timeout": 150,
-                "onTimeout": "ambxst brightness 10 -s",
-                "onResume": "ambxst brightness -r"
+                "onTimeout": "loginctl lock-session",
+                "timeout": 300
             },
             {
-                "timeout": 300,
-                "onTimeout": "loginctl lock-session"
-            },
-            {
-                "timeout": 330,
+                "onResume": "ambxst screen on",
                 "onTimeout": "ambxst screen off",
-                "onResume": "ambxst screen on"
+                "timeout": 330
             },
             {
-                "timeout": 1800,
-                "onTimeout": "ambxst suspend"
+                "onTimeout": "ambxst suspend",
+                "timeout": 1800
             }
         ]
     },
@@ -40,7 +35,7 @@
         "kor": false
     },
     "pomodoro": {
-        "workTime": 1500,
+        "workTime": 60,
         "restTime": 300,
         "autoStart": false,
         "syncSpotify": false

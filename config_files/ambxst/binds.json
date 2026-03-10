@@ -3,7 +3,7 @@
         "assistant": {
             "argument": "ambxst run assistant",
             "dispatcher": "exec",
-            "key": "A",
+            "key": "~",
             "modifiers": [
                 "SUPER"
             ]
@@ -13,7 +13,8 @@
             "dispatcher": "exec",
             "key": "V",
             "modifiers": [
-                "SUPER"
+                "SUPER",
+                "SHIFT"
             ]
         },
         "dashboard": {
@@ -22,7 +23,8 @@
             "flags": "",
             "key": "D",
             "modifiers": [
-                "SUPER"
+                "SUPER",
+                "SHIFT"
             ]
         },
         "emoji": {
@@ -37,7 +39,7 @@
             "argument": "ambxst run launcher",
             "dispatcher": "exec",
             "flags": "r",
-            "key": "Super_L",
+            "key": "Space",
             "modifiers": [
                 "SUPER"
             ]
@@ -45,7 +47,7 @@
         "notes": {
             "argument": "ambxst run notes",
             "dispatcher": "exec",
-            "key": "N",
+            "key": "~",
             "modifiers": [
                 "SUPER"
             ]
@@ -55,7 +57,7 @@
                 "argument": "ambxst run config",
                 "dispatcher": "exec",
                 "flags": "",
-                "key": "C",
+                "key": "S",
                 "modifiers": [
                     "SUPER",
                     "SHIFT"
@@ -65,7 +67,7 @@
                 "argument": "ambxst run lens",
                 "dispatcher": "exec",
                 "flags": "",
-                "key": "A",
+                "key": "G",
                 "modifiers": [
                     "SUPER",
                     "SHIFT"
@@ -77,7 +79,8 @@
                 "flags": "",
                 "key": "L",
                 "modifiers": [
-                    "SUPER"
+                    "SUPER",
+                    "SHIFT"
                 ]
             },
             "overview": {
@@ -133,7 +136,7 @@
                 "argument": "ambxst run screenshot",
                 "dispatcher": "exec",
                 "flags": "",
-                "key": "S",
+                "key": "~",
                 "modifiers": [
                     "SUPER",
                     "SHIFT"
@@ -143,16 +146,17 @@
                 "argument": "ambxst run tools",
                 "dispatcher": "exec",
                 "flags": "",
-                "key": "S",
+                "key": "T",
                 "modifiers": [
-                    "SUPER"
+                    "SUPER",
+                    "SHIFT"
                 ]
             }
         },
         "tmux": {
             "argument": "ambxst run tmux",
             "dispatcher": "exec",
-            "key": "T",
+            "key": "~",
             "modifiers": [
                 "SUPER"
             ]
@@ -183,9 +187,9 @@
             "enabled": true,
             "keys": [
                 {
-                    "key": "C",
+                    "key": "F4",
                     "modifiers": [
-                        "SUPER"
+                        "ALT"
                     ]
                 }
             ],
@@ -1141,7 +1145,7 @@
                     "flags": ""
                 }
             ],
-            "enabled": true,
+            "enabled": false,
             "keys": [
                 {
                     "key": "V",
@@ -1166,7 +1170,7 @@
                     "flags": ""
                 }
             ],
-            "enabled": true,
+            "enabled": false,
             "keys": [
                 {
                     "key": "V",
@@ -2187,6 +2191,31 @@
                 }
             ],
             "name": "Move Column To Workspace 10"
+        },
+        {
+            "actions": [
+                {
+                    "argument": "",
+                    "compositor": {
+                        "layouts": [
+                        ],
+                        "type": "hyprland"
+                    },
+                    "dispatcher": "a",
+                    "flags": ""
+                }
+            ],
+            "enabled": true,
+            "keys": [
+                {
+                    "key": "M",
+                    "modifiers": [
+                        "SUPER",
+                        "SHIFT"
+                    ]
+                }
+            ],
+            "name": ""
         }
     ],
     "defaultAmbxstBinds": {

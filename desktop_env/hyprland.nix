@@ -10,37 +10,37 @@
 }:
 
 let
+  phosphorIcons = pkgs.stdenvNoCC.mkDerivation rec {
+    pname = "ttf-phosphor-icons";
+    version = "2.1.2";
+
+    src = pkgs.fetchzip {
+      url = "https://github.com/phosphor-icons/web/archive/refs/tags/v${version}.zip";
+      sha256 = "sha256-96ivFjm0cBhqDKNB50klM7D3fevt8X9Zzm82KkJKMtU=";
+      stripRoot = true;
+    };
+
+    dontBuild = true;
+
+    installPhase = ''
+      runHook preInstall
+      install -Dm644 src/*/*.ttf -t $out/share/fonts/truetype
+      install -Dm644 LICENSE -t $out/share/licenses/${pname}
+      runHook postInstall
+    '';
+
+    meta = with pkgs.lib; {
+      description = "A flexible icon family for interfaces, diagrams, presentations";
+      homepage = "https://phosphoricons.com";
+      license = licenses.mit;
+      platforms = platforms.all;
+    };
+  };
+
   ambxstPackage =
     let
       system = pkgs.stdenv.hostPlatform.system;
       quickshellPkg = inputs.ambxst.inputs.quickshell.packages.${system}.default;
-
-      phosphorIcons = pkgs.stdenvNoCC.mkDerivation rec {
-        pname = "ttf-phosphor-icons";
-        version = "2.1.2";
-
-        src = pkgs.fetchzip {
-          url = "https://github.com/phosphor-icons/web/archive/refs/tags/v${version}.zip";
-          sha256 = "sha256-96ivFjm0cBhqDKNB50klM7D3fevt8X9Zzm82KkJKMtU=";
-          stripRoot = true;
-        };
-
-        dontBuild = true;
-
-        installPhase = ''
-          runHook preInstall
-          install -Dm644 src/*/*.ttf -t $out/share/fonts/truetype
-          install -Dm644 LICENSE -t $out/share/licenses/${pname}
-          runHook postInstall
-        '';
-
-        meta = with pkgs.lib; {
-          description = "A flexible icon family for interfaces, diagrams, presentations";
-          homepage = "https://phosphoricons.com";
-          license = licenses.mit;
-          platforms = platforms.all;
-        };
-      };
 
       baseEnv =
         with pkgs;
@@ -105,6 +105,7 @@ let
           terminus_font_ttf
           dejavu_fonts
           liberation_ttf
+          nerd-fonts.iosevka
           nerd-fonts.symbols-only
           noto-fonts
           noto-fonts-color-emoji
@@ -130,14 +131,6 @@ let
         paths = baseEnv;
       };
 
-      fontconfigConf = pkgs.writeTextDir "etc/fonts/conf.d/99-ambxst-fonts.conf" ''
-        <?xml version="1.0"?>
-        <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
-        <fontconfig>
-          <dir>${envAmbxst}/share/fonts</dir>
-        </fontconfig>
-      '';
-
       shellSrc = pkgs.stdenv.mkDerivation {
         pname = "ambxst-shell";
         version = lib.removeSuffix "\n" (builtins.readFile "${inputs.ambxst}/version");
@@ -155,7 +148,6 @@ let
         export PATH="${envAmbxst}/bin:$PATH"
         export QML2_IMPORT_PATH="${envAmbxst}/lib/qt-6/qml:$QML2_IMPORT_PATH"
         export QML_IMPORT_PATH="$QML2_IMPORT_PATH"
-        export FONTCONFIG_PATH="${fontconfigConf}/etc/fonts:''${FONTCONFIG_PATH:-}"
         exec ${shellSrc}/cli.sh "$@"
       '';
     in
@@ -177,7 +169,7 @@ in
         # hyprsunset
         hypridle
         hyprpaper
-        dunst
+        # dunst
         libnotify
         linux-wallpaperengine
         # hyprlog-nixpkgs.hyprlog
@@ -185,12 +177,15 @@ in
         eww
         wofi
         font-awesome
+        nerd-fonts.iosevka
+        nerd-fonts.symbols-only
         nmgui
         wallust
         xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
         ambxstPackage
       ]
+      ++ [ phosphorIcons ]
       ++ lib.optionals PC [
         vial
       ];

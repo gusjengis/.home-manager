@@ -15,7 +15,7 @@ fi
 
 if [ "$capacity" -le 15 ]; then
     if [ ! -f "$STATE_FILE" ]; then
-        $HOME/.nix-profile/bin/dunstify --urgency=critical "Battery Low" "Battery at ${capacity}% - please charge"
+        $HOME/.nix-profile/bin/notify-send --urgency=critical "Battery Low" "Battery at ${capacity}% - please charge"
         touch "$STATE_FILE"
     fi
 else

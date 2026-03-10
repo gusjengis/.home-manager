@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Outlook
+Comment=Open Outlook Mail as a web app
+Exec=chromium --app=https://outlook.live.com/mail/0/
+Icon=webapp-outlook
+Terminal=false
+Categories=Network;Email;
+StartupNotify=true
+StartupWMClass=chrome-outlook.live.com__mail_0_-Default

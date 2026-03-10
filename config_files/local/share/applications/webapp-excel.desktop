@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Excel Web
+Comment=Open Excel Online as a web app
+Exec=chromium --app=https://excel.cloud.microsoft/open/onedrive/?docId=6C5E5C1090A0D9FE%%21533129&driveId=6C5E5C1090A0D9FE
+Icon=webapp-excel
+Terminal=false
+Categories=Office;Spreadsheet;
+StartupNotify=true
+StartupWMClass=chrome-excel.cloud.microsoft__open_onedrive_-Default

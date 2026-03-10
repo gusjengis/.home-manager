@@ -1,10 +1,10 @@
 {
     "activeBorderColor": [
-        "primary"
+        "#595959"
     ],
     "borderAngle": 45,
     "inactiveBorderColor": [
-        "surface"
+        "#202020"
     ],
     "inactiveBorderAngle": 45,
     "borderSize": 2,
@@ -12,8 +12,8 @@
     "syncRoundness": true,
     "syncBorderWidth": false,
     "syncBorderColor": false,
-    "syncShadowOpacity": false,
-    "syncShadowColor": false,
+    "syncShadowOpacity": true,
+    "syncShadowColor": true,
     "gapsIn": 2,
     "gapsOut": 4,
     "layout": "dwindle",
@@ -21,7 +21,7 @@
     "shadowRange": 8,
     "shadowRenderPower": 3,
     "shadowSharp": false,
-    "shadowIgnoreWindow": true,
+    "shadowIgnoreWindow": false,
     "shadowColor": "shadow",
     "shadowColorInactive": "shadow",
     "shadowOpacity": 0.5,

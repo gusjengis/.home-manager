@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Google Calendar
+Comment=Open Google Calendar as a web app
+Exec=chromium --app=https://calendar.google.com/
+Icon=webapp-calendar
+Terminal=false
+Categories=Office;Calendar;
+StartupNotify=true
+StartupWMClass=chrome-calendar.google.com__-Default

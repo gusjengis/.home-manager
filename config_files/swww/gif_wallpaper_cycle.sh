@@ -59,6 +59,7 @@ while true; do
     ~/.home-manager/wallpapers/*.farbfeld
     ~/.home-manager/wallpapers/*.svg 
   )
+
   mapfile -t shuffled < <(shuf -e "${wallpapers[@]}")
 
   for img in "${shuffled[@]}"; do
