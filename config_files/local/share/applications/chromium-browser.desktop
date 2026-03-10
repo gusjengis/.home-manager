@@ -1,0 +1,23 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Chromium
+GenericName=Web Browser
+Comment=Access the Internet
+Exec=chromium %U
+Icon=chromium
+Terminal=false
+StartupNotify=true
+StartupWMClass=chromium-browser
+Categories=Network;WebBrowser;
+Keywords=chromium;chromium-browser;Chromium-browser;chrome;browser;
+MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/chromium;
+Actions=new-window;new-private-window;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=chromium
+
+[Desktop Action new-private-window]
+Name=New Incognito Window
+Exec=chromium --incognito

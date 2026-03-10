@@ -7,5 +7,6 @@ Exec=chromium --app=http://t470:8123/
 Icon=webapp-home-assistant
 Terminal=false
 Categories=Network;HomeAutomation;
+Keywords=home-assistant;smarthome;chrome-t470__8123_-Default;
 StartupNotify=true
 StartupWMClass=chrome-t470__8123_-Default

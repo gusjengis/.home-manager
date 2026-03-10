@@ -7,5 +7,6 @@ Exec=chromium --app=https://calendar.google.com/
 Icon=webapp-calendar
 Terminal=false
 Categories=Office;Calendar;
+Keywords=calendar;google-calendar;chrome-calendar.google.com__-Default;
 StartupNotify=true
 StartupWMClass=chrome-calendar.google.com__-Default

@@ -7,5 +7,6 @@ Exec=chromium --app=https://excel.cloud.microsoft/open/onedrive/?docId=6C5E5C109
 Icon=webapp-excel
 Terminal=false
 Categories=Office;Spreadsheet;
+Keywords=excel;spreadsheet;chrome-excel.cloud.microsoft__open_onedrive_-Default;
 StartupNotify=true
 StartupWMClass=chrome-excel.cloud.microsoft__open_onedrive_-Default

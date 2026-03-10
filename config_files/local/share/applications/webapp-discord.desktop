@@ -7,5 +7,6 @@ Exec=chromium --app=https://discord.com/channels/@me
 Icon=webapp-discord
 Terminal=false
 Categories=Network;InstantMessaging;
+Keywords=discord;chat;chrome-discord.com__channels_@me-Default;
 StartupNotify=true
 StartupWMClass=chrome-discord.com__channels_@me-Default

@@ -7,5 +7,6 @@ Exec=chromium --app=https://app.todoist.com/app/upcoming
 Icon=webapp-todoist
 Terminal=false
 Categories=Office;ProjectManagement;
+Keywords=todoist;todos;chrome-app.todoist.com__app_upcoming-Default;
 StartupNotify=true
 StartupWMClass=chrome-app.todoist.com__app_upcoming-Default

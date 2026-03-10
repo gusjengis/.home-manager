@@ -7,5 +7,6 @@ Exec=chromium --app=https://outlook.live.com/mail/0/
 Icon=webapp-outlook
 Terminal=false
 Categories=Network;Email;
+Keywords=outlook;mail;chrome-outlook.live.com__mail_0_-Default;
 StartupNotify=true
 StartupWMClass=chrome-outlook.live.com__mail_0_-Default

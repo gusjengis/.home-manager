@@ -108,6 +108,14 @@ link_directory_contents() {
 link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
 link_directory_contents "$HOME/.home-manager/config_files/local/share/icons/hicolor/128x128/apps" "$HOME/.local/share/icons/hicolor/128x128/apps" '*.png'
 
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database "$HOME/.local/share/applications" >/dev/null 2>&1 || true
+fi
+
+if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+    gtk-update-icon-cache -f -t "$HOME/.local/share/icons/hicolor" >/dev/null 2>&1 || true
+fi
+
 # SSH refuses to use private keys that are readable by group/others.
 # Git does not reliably preserve file permissions for regular files, so if
 # secrets are synced, they can end up as 0644 on checkout. Fix permissions

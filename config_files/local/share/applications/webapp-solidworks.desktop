@@ -7,5 +7,6 @@ Exec=chromium --new-window https://my.3dexperience.3ds.com/cnb/my-account/subscr
 Icon=webapp-solidworks
 Terminal=false
 Categories=Graphics;Engineering;
+Keywords=solidworks;3dexperience;cad;
 StartupNotify=true
 StartupWMClass=chromium-browser

@@ -7,5 +7,6 @@ Exec=chromium --app=https://web.whatsapp.com/
 Icon=webapp-whatsapp
 Terminal=false
 Categories=Network;InstantMessaging;
+Keywords=whatsapp;chat;chrome-web.whatsapp.com__-Default;
 StartupNotify=true
 StartupWMClass=chrome-web.whatsapp.com__-Default
