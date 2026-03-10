@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 Name=OneDrive
 Comment=Open OneDrive in Chromium
-Exec=chromium --new-window https://onedrive.live.com/?view=1
+Exec=chromium --app=https://onedrive.live.com/?view=1
 Icon=webapp-onedrive
 Terminal=false
 Categories=Network;FileTransfer;
