@@ -1,6 +1,4 @@
 modules.nix
 local.nix
 config_files/hypr/monitors.conf
-wallpapers/
-retired_wallpapers/
-
+result

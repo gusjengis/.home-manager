@@ -69,7 +69,6 @@ let
           litellm
           libnotify
           matugen
-          python3
           power-profiles-daemon
           slurp
           sqlite
@@ -129,6 +128,9 @@ let
       envAmbxst = pkgs.buildEnv {
         name = "Ambxst-env";
         paths = baseEnv;
+        pathsToLink = [
+          "/lib/qt-6/qml"
+        ];
       };
 
       shellSrc = pkgs.stdenv.mkDerivation {
@@ -145,7 +147,7 @@ let
 
       launcher = pkgs.writeShellScriptBin "ambxst" ''
         export AMBXST_QS="${quickshellPkg}/bin/qs"
-        export PATH="${envAmbxst}/bin:$PATH"
+        export PATH="${lib.makeBinPath (baseEnv ++ [ pkgs.python3 ])}:$PATH"
         export QML2_IMPORT_PATH="${envAmbxst}/lib/qt-6/qml:$QML2_IMPORT_PATH"
         export QML_IMPORT_PATH="$QML2_IMPORT_PATH"
         exec ${shellSrc}/cli.sh "$@"
