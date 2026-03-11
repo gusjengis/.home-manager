@@ -12,7 +12,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     handy.url = "github:cjpais/Handy?ref=v0.7.8";
     ambxst = {
-      url = "github:Axenide/Ambxst";
+      url = "github:gusjengis/Ambxst?ref=fix-special-workspaces";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -29,7 +29,7 @@
     }@inputs:
     let
       lib = nixpkgs.lib;
-      system = builtins.currentSystem;
+      system = "x86_64-linux";
 
       exposeInputsOverlay = (final: prev: { inputs = inputs; });
 

@@ -30,15 +30,16 @@
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1771072201,
-        "narHash": "sha256-SONu9NiNr0gaLC6rMt3x5x1L6DwSUuGJesizS7Ej2eo=",
-        "owner": "Axenide",
+        "lastModified": 1771808659,
+        "narHash": "sha256-bf9ENG8C2pB+J6VGFev8AczuEb5Y7VrTxWqL/GBaUFw=",
+        "owner": "gusjengis",
         "repo": "Ambxst",
-        "rev": "59edec9a0430eb2f679697f4a817a1f44ffcfb8b",
+        "rev": "57f1e63759e1fc1fcaa117e5120ae8f905eabca0",
         "type": "github"
       },
       "original": {
-        "owner": "Axenide",
+        "owner": "gusjengis",
+        "ref": "fix-special-workspaces",
         "repo": "Ambxst",
         "type": "github"
       }

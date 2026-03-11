@@ -15,7 +15,10 @@ let
   rehomeCmd = pkgs.writeShellApplication {
     name = "rehome";
     text = ''
-      exec home-manager switch --impure --flake "$HOME/.home-manager/" "$@"
+      hm_repo="$HOME/.home-manager"
+
+      nix flake update ambxst --flake "$hm_repo"
+      exec home-manager switch --impure --flake "$hm_repo/" "$@"
     '';
   };
 in
