@@ -14,4 +14,22 @@ if command -v gtk-launch >/dev/null 2>&1; then
     exec gtk-launch "$desktop_name"
 fi
 
-exec gio launch "$desktop_path"
+if command -v gio >/dev/null 2>&1; then
+    exec gio launch "$desktop_path"
+fi
+
+exec_line=''
+while IFS= read -r line; do
+    if [[ "$line" == Exec=* ]]; then
+        exec_line="${line#Exec=}"
+        break
+    fi
+done < "$desktop_path"
+
+if [[ -n "$exec_line" ]]; then
+    exec_line="${exec_line//%[fFuUdDnNickvm]/}"
+    eval "exec $exec_line"
+fi
+
+printf 'Could not launch %s: no launcher backend or Exec line is available.\n' "$desktop_id" >&2
+exit 127
