@@ -29,6 +29,11 @@
         "#202020"
     ],
     "layout": "dwindle",
+    "manageBorderSize": true,
+    "manageGapsIn": true,
+    "manageGapsOut": false,
+    "manageLayout": true,
+    "manageRounding": true,
     "rounding": 16,
     "shadowColor": "shadow",
     "shadowColorInactive": "shadow",
