@@ -2,7 +2,7 @@
     "oledMode": false,
     "lightMode": false,
     "roundness": 16,
-    "font": "Roboto Condensed",
+    "font": "Roboto",
     "fontSize": 14,
     "monoFont": "Commit Mono",
     "monoFontSize": 14,
