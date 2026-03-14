@@ -5,41 +5,59 @@ set -euo pipefail
 echo $$ > /tmp/wallpaper-script.pid
 
 ambxst_wallpaper_state="${XDG_CACHE_HOME:-$HOME/.cache}/ambxst/wallpapers.json"
+default_wallpaper_dir="$HOME/.home-manager/wallpapers"
+advance_request_file="/tmp/wallpaper-script.advance"
 
-sleep_pid=""
 advance_requested=0
+external_change_detected=0
 
 next_wallpaper() {
   advance_requested=1
+}
 
-  # If we're currently sleeping, wake up immediately so the loop advances
-  if [[ -n "${sleep_pid}" ]] && kill -0 "${sleep_pid}" 2>/dev/null; then
-    kill "${sleep_pid}" 2>/dev/null || true
+check_advance_request() {
+  if [[ -f "$advance_request_file" ]]; then
+    rm -f "$advance_request_file"
+    next_wallpaper
   fi
 }
 
 wait_or_advance() {
   local seconds="$1"
+  local expected_wall="$2"
+  local elapsed=0
 
-  if (( advance_requested )); then
-    advance_requested=0
-    return 0
-  fi
+  external_change_detected=0
 
-  sleep "$seconds" &
-  sleep_pid=$!
+  while (( elapsed < seconds )); do
+    check_advance_request
 
-  wait "$sleep_pid" 2>/dev/null || true
-  sleep_pid=""
+    if (( advance_requested )); then
+      advance_requested=0
+      return 0
+    fi
+
+    current_wall="$(read_state_current_wallpaper)"
+    if [[ "$current_wall" != "$expected_wall" ]]; then
+      external_change_detected=1
+      return 1
+    fi
+
+    sleep 1 || true
+    ((elapsed += 1))
+  done
+
   advance_requested=0
+  return 0
 }
 
 write_ambxst_wallpaper() {
   local img="$1"
+  local wall_path="$2"
 
   mkdir -p "$(dirname "${ambxst_wallpaper_state}")"
 
-  python3 - "$ambxst_wallpaper_state" "$HOME/.home-manager/wallpapers" "$img" <<'PY'
+  python3 - "$ambxst_wallpaper_state" "$wall_path" "$img" <<'PY'
 import json
 import os
 import sys
@@ -76,40 +94,164 @@ cleanup() {
   rm -f /tmp/wallpaper-script.pid
 }
 
-# SIGUSR1 => advance to next wallpaper
-trap 'next_wallpaper' USR1
-trap 'cleanup' EXIT INT TERM
+scan_wallpapers() {
+  python3 - "$ambxst_wallpaper_state" "$default_wallpaper_dir" <<'PY'
+import json
+import os
+import sys
 
-while true; do
-  shopt -s nullglob
+state_path, default_wall_path = sys.argv[1:3]
+extensions = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp",
+    ".tif",
+    ".tiff",
+    ".gif",
+    ".mp4",
+    ".webm",
+    ".mov",
+    ".avi",
+    ".mkv",
+}
 
-  # load all wallpapers in the folder and shuffle list
-  wallpapers=(
-    ~/.home-manager/wallpapers/*.jpeg
-    ~/.home-manager/wallpapers/*.JPEG
-    ~/.home-manager/wallpapers/*.jpg
-    ~/.home-manager/wallpapers/*.png
-    ~/.home-manager/wallpapers/*.gif
-    ~/.home-manager/wallpapers/*.mp4
-    ~/.home-manager/wallpapers/*.webm
-    ~/.home-manager/wallpapers/*.mov
-    ~/.home-manager/wallpapers/*.avi
-    ~/.home-manager/wallpapers/*.mkv
-    ~/.home-manager/wallpapers/*.tif
-    ~/.home-manager/wallpapers/*.tiff
-    ~/.home-manager/wallpapers/*.webp
-  )
+state = {}
+if os.path.exists(state_path):
+    try:
+        with open(state_path, "r", encoding="utf-8") as fh:
+            loaded = json.load(fh)
+        if isinstance(loaded, dict):
+            state = loaded
+    except Exception:
+        state = {}
+
+wall_path = os.path.abspath(os.path.expanduser(state.get("wallPath") or default_wall_path))
+current_wall = os.path.abspath(os.path.expanduser(state.get("currentWall") or ""))
+
+wallpapers = []
+if os.path.isdir(wall_path):
+    for root, dirnames, filenames in os.walk(wall_path):
+        dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
+        for name in sorted(filenames):
+            if name.startswith("."):
+                continue
+            if os.path.splitext(name)[1].lower() in extensions:
+                wallpapers.append(os.path.join(root, name))
+
+resolved_current = current_wall if current_wall in wallpapers else (wallpapers[0] if wallpapers else "")
+
+print(wall_path)
+print(resolved_current)
+for wallpaper in wallpapers:
+    print(wallpaper)
+PY
+}
+
+read_current_wallpaper() {
+  local scanned
+
+  mapfile -t scanned < <(scan_wallpapers)
+  printf '%s\n' "${scanned[1]:-}"
+}
+
+read_state_current_wallpaper() {
+  python3 - "$ambxst_wallpaper_state" <<'PY'
+import json
+import os
+import sys
+
+state_path = sys.argv[1]
+current_wall = ""
+
+if os.path.exists(state_path):
+    try:
+        with open(state_path, "r", encoding="utf-8") as fh:
+            loaded = json.load(fh)
+        if isinstance(loaded, dict):
+            current_wall = loaded.get("currentWall") or ""
+    except Exception:
+        pass
+
+print(os.path.abspath(os.path.expanduser(current_wall)) if current_wall else "")
+PY
+}
+
+select_next_wallpaper() {
+  local scanned
+  local wall_path
+  local current_wall
+  local next_wall=""
+  local wallpapers=()
+  local i
+
+  mapfile -t scanned < <(scan_wallpapers)
+  wall_path="${scanned[0]:-$default_wallpaper_dir}"
+  current_wall="${scanned[1]:-}"
+
+  if (( ${#scanned[@]} > 2 )); then
+    wallpapers=("${scanned[@]:2}")
+  fi
 
   if (( ${#wallpapers[@]} == 0 )); then
-    wait_or_advance 60
+    printf '\n%s\n' "$wall_path"
+    return 0
+  fi
+
+  for i in "${!wallpapers[@]}"; do
+    if [[ "${wallpapers[$i]}" == "$current_wall" ]]; then
+      next_wall="${wallpapers[$(((i + 1) % ${#wallpapers[@]}))]}"
+      break
+    fi
+  done
+
+  if [[ -z "$next_wall" ]]; then
+    next_wall="${wallpapers[0]}"
+  fi
+
+  printf '%s\n%s\n' "$next_wall" "$wall_path"
+}
+
+trap 'cleanup; exit 0' INT TERM
+trap 'cleanup' EXIT
+
+while true; do
+  mapfile -t scanned < <(scan_wallpapers)
+  wall_path="${scanned[0]:-$default_wallpaper_dir}"
+  current_img="${scanned[1]:-}"
+
+  if [[ -z "$current_img" ]]; then
+    mapfile -t selection < <(select_next_wallpaper)
+    img="${selection[0]:-}"
+
+    if [[ -z "$img" ]]; then
+      wait_or_advance 60 ""
+      continue
+    fi
+
+    write_ambxst_wallpaper "$img" "$wall_path"
+    "$HOME/.home-manager/config_files/hypr/scripts/update-accent.sh" "$img" >/dev/null 2>&1 || true
+    current_img="$img"
+  else
+    "$HOME/.home-manager/config_files/hypr/scripts/update-accent.sh" "$current_img" >/dev/null 2>&1 || true
+  fi
+
+  if ! wait_or_advance 300 "$current_img"; then
+    if (( external_change_detected )); then
+      continue
+    fi
+
     continue
   fi
 
-  mapfile -t shuffled < <(shuf -e "${wallpapers[@]}")
+  mapfile -t selection < <(select_next_wallpaper)
+  img="${selection[0]:-}"
+  wall_path="${selection[1]:-$default_wallpaper_dir}"
 
-  for img in "${shuffled[@]}"; do
-    write_ambxst_wallpaper "$img"
-    "$HOME/.home-manager/config_files/hypr/scripts/update-accent.sh" "$img" >/dev/null 2>&1 || true
-    wait_or_advance 300
-  done
+  if [[ -z "$img" ]]; then
+    continue
+  fi
+
+  write_ambxst_wallpaper "$img" "$wall_path"
+  "$HOME/.home-manager/config_files/hypr/scripts/update-accent.sh" "$img" >/dev/null 2>&1 || true
 done
