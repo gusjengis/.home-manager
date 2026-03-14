@@ -1,4 +1,6 @@
 wallpapers/
 xmage/
 plugins/
-
+retired_wallpapers/
+*.png
+*.jpg

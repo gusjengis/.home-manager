@@ -36,7 +36,9 @@ in
     ''
     + lib.optionalString config.desktopEnv.enable ''
       if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ] && command -v Hyprland >/dev/null 2>&1; then
-        if command -v start-hyprland >/dev/null 2>&1; then
+        if command -v ~/Documents/Code/Hyprland/build/Hyprland >/dev/null 2>&1; then
+          exec ~/Documents/Code/Hyprland/build/Hyprland        
+        elif command -v start-hyprland >/dev/null 1>&1; then
           exec start-hyprland
         else
           exec Hyprland
