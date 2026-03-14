@@ -29,7 +29,7 @@
     }@inputs:
     let
       lib = nixpkgs.lib;
-      system = "x86_64-linux";
+      system = if builtins ? currentSystem then builtins.currentSystem else "x86_64-linux";
 
       exposeInputsOverlay = (final: prev: { inputs = inputs; });
 

@@ -19,13 +19,13 @@
     "launcherIconSize": 18,
     "launcherIconTint": true,
     "pillStyle": "default",
-    "pinnedOnStartup": false,
+    "pinnedOnStartup": true,
     "position": "top",
     "screenList": [
     ],
-    "showLayoutButton": false,
+    "showLayoutButton": true,
     "showLayoutSwitchButton": true,
     "showPinButton": true,
-    "showPresetButton": false,
+    "showPresetButton": true,
     "use12hFormat": false
 }
