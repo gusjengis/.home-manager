@@ -4,3 +4,6 @@ plugins/
 retired_wallpapers/
 *.png
 *.jpg
+!local.nix
+!modules.nix
+!config_files/hypr/monitors.conf
