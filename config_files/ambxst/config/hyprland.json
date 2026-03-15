@@ -19,7 +19,7 @@
     "gapsIn": 2,
     "manageGapsIn": true,
     "gapsOut": 4,
-    "manageGapsOut": true,
+    "manageGapsOut": false,
     "manageLayout": true,
     "layout": "dwindle",
     "shadowEnabled": false,

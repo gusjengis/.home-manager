@@ -21,6 +21,7 @@
       zip
       unzip
       wget
+      bat
     ]
     ++ lib.optionals config.desktopEnv.enable [
       imagemagick

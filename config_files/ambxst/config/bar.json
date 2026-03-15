@@ -19,6 +19,8 @@
     "hoverToReveal": true,
     "hoverRegionHeight": 8,
     "showPinButton": true,
+    "showSpecialWorkspaces": true,
+    "specialWorkspacesDisplay": "icons",
     "showPresetButton": false,
     "showLayoutButton": false,
     "availableOnFullscreen": false,
