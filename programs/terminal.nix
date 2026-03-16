@@ -21,6 +21,19 @@ let
       exec home-manager switch --impure --flake "$hm_repo/" "$@"
     '';
   };
+
+  zorkData = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/Adeimantius/Z-Machine/master/Zork%201/DATA/ZORK1.DAT";
+    hash = "sha256-CuWsIp55CU/zaLZmk1ZESvDzXiHYYqG6qlRpiQhcFf0=";
+  };
+
+  zorkCmd = pkgs.writeShellApplication {
+    name = "zork";
+    runtimeInputs = [ pkgs.frotz ];
+    text = ''
+      exec frotz "${zorkData}" "$@"
+    '';
+  };
 in
 {
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
@@ -102,11 +115,13 @@ in
     [
       rebuildCmd
       rehomeCmd
+      zorkCmd
       kitty
       tmux
       fd
       skim
       jq
+      frotz
     ]
     ++ lib.optionals config.desktopEnv.enable [
       pipes-rs

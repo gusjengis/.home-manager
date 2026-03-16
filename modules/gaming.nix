@@ -19,6 +19,7 @@
           zulu17
           prismlauncher
           atlauncher
+          lutris
         ]
       );
   };
