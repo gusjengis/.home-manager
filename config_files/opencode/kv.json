@@ -6,7 +6,7 @@
   "assistant_metadata_visibility": true,
   "scrollbar_visible": false,
   "animations_enabled": true,
-  "theme": "opencode",
+  "theme": "github",
   "diff_wrap_mode": "word",
   "header_visible": true,
   "generic_tool_output_visibility": false,

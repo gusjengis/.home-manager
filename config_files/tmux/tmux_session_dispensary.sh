@@ -40,7 +40,8 @@ fi
 selected_name=$(basename "$selected" | tr . _)
 if ! tmux has-session -t "$selected_name" 2>/dev/null; then
   tmux new-session -ds "$selected_name" -c "$selected" "nvim"
-  tmux new-window -t "$selected_name" -n "opencode" -c "$selected" "opencode"
+  tmux new-window -t "$selected_name" -n "opencode" -c "$selected" "opencode" 
+  tmux new-window -t "$selected_name" -n "lazygit" -c "$selected" "lazygit" 
   tmux select-window -t "$selected_name:1"
 fi
 

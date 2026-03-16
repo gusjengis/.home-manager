@@ -30,11 +30,11 @@
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1773362181,
-        "narHash": "sha256-9QdUauRI097aq+PUK1IKqjwcIg1cX9n1sWeauwkPiYA=",
+        "lastModified": 1773630871,
+        "narHash": "sha256-8E88gfoZJ0gm5Xs06WYno+PAzC9ykW9JrjkpqdaPYR0=",
         "owner": "gusjengis",
         "repo": "Ambxst",
-        "rev": "055df76cf6209f7e08d09f9a4fe93daef2b48876",
+        "rev": "250f71694a12b1c720c484bad0595e7e4e2f58fd",
         "type": "github"
       },
       "original": {
@@ -200,16 +200,16 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1772782174,
-        "narHash": "sha256-FBmF7/uwZYY/qY1252Hz+XhXdE+Qp5axySAy5Jw7XUQ=",
+        "lastModified": 1773628428,
+        "narHash": "sha256-JUlFfILzcUCME3mOxdxDbcCXphNVEfVGIKhwAwtJPl8=",
         "owner": "sst",
         "repo": "opencode",
-        "rev": "6c7d968c4423a0cd6c85099c9377a6066313fa0a",
+        "rev": "4ee426ba549131c4903a71dfb6259200467aca81",
         "type": "github"
       },
       "original": {
         "owner": "sst",
-        "ref": "v1.2.20",
+        "ref": "v1.2.27",
         "repo": "opencode",
         "type": "github"
       }
