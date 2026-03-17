@@ -5,5 +5,6 @@ retired_wallpapers/
 *.png
 *.jpg
 !local.nix
+!scripts/repo-lists/local.list
 !modules.nix
 !config_files/hypr/monitors.conf

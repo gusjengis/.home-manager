@@ -2,3 +2,4 @@ modules.nix
 local.nix
 config_files/hypr/monitors.conf
 result
+scripts/repo-lists/local.list

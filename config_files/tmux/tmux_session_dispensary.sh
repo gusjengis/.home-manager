@@ -17,15 +17,35 @@ EXTRA_DIRS=(
 
 )
 
+IGNORE_DIRS=(
+  "$HOME/wkspaces/Cross The Line/"
+)
+
+filter_ignored_dirs() {
+  local entry
+
+  while IFS= read -r entry; do
+    [[ -z $entry ]] && continue
+
+    if [[ " ${IGNORE_DIRS[*]} " == *" $entry "* ]]; then
+      continue
+    fi
+
+    printf "%s\n" "$entry"
+  done
+}
+
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
   fd_entries=$(
     fd -t d -d 1 . --absolute-path "${DIRS[@]}" 2>/dev/null \
+    | filter_ignored_dirs \
     | sed "s|^$HOME/||"
   )
   extra_entries=$(
     printf "%s\n" "${EXTRA_DIRS[@]}" \
+    | filter_ignored_dirs \
     | sed "s|^$HOME/||"
   )
   selected=$(

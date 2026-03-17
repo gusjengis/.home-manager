@@ -57,12 +57,27 @@ load_repo_group() {
     done < "$group_file"
 }
 
+load_repo_list_file() {
+    local list_file="$1"
+    local line
+
+    [[ -f "$list_file" ]] || return 0
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        [[ "$line" =~ ^[[:space:]]*$ ]] && continue
+        [[ "$line" =~ ^[[:space:]]*# ]] && continue
+        add_repo_entry "$line"
+    done < "$list_file"
+}
+
 IFS=',' read -r -a selected_groups <<< "$SYNC_REPO_GROUPS"
 for group in "${selected_groups[@]}"; do
     group="${group//[[:space:]]/}"
     [[ -z "$group" ]] && continue
     load_repo_group "$group"
 done
+
+load_repo_list_file "$REPO_LIST_DIR/local.list"
 
 for item in "${repos[@]}"; do
     if [[ "$item" != *";"* ]]; then
