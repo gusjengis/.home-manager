@@ -20,6 +20,7 @@
           prismlauncher
           atlauncher
           lutris
+          solitaire-tui
         ]
       );
   };
