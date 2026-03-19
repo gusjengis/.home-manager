@@ -1,6 +1,54 @@
 import { basename, join } from "node:path"
 import { tmpdir } from "node:os"
-import { writeFile, rm } from "node:fs/promises"
+import { access, writeFile, rm } from "node:fs/promises"
+
+const CUSTOM_SOUND_FILE = join(
+  import.meta.dirname,
+  "session-notify.wav",
+)
+
+function hashString(value) {
+  let hash = 2166136261
+
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i)
+    hash = Math.imul(hash, 16777619)
+  }
+
+  return hash >>> 0
+}
+
+function tonesForDirectory(directory, kind) {
+  const seed = hashString(directory)
+  const roots = [220, 246.94, 261.63, 293.66, 329.63, 392, 440, 493.88]
+  const brightPatterns = [
+    [0, 4],
+    [0, 7],
+    [0, 4, 7],
+    [0, 7, 12],
+    [0, 2, 7],
+  ]
+  const darkPatterns = [
+    [0, -3],
+    [0, -5],
+    [0, -3, -7],
+    [0, -5, -12],
+    [0, -2, -7],
+  ]
+
+  const root = roots[seed % roots.length]
+  const patternPool = kind === "error" ? darkPatterns : brightPatterns
+  const pattern = patternPool[(seed >>> 3) % patternPool.length]
+  const baseDurationMs = kind === "error"
+    ? 135 + ((seed >>> 7) % 45)
+    : 95 + ((seed >>> 7) % 55)
+  const strideMs = kind === "error" ? 34 : 22
+
+  return pattern.map((semitones, index) => ({
+    frequency: Number((root * (2 ** (semitones / 12))).toFixed(2)),
+    durationMs: baseDurationMs + index * strideMs,
+  }))
+}
 
 function createPcm16Wav(tones) {
   const sampleRate = 44100
@@ -50,18 +98,22 @@ function createPcm16Wav(tones) {
   return buffer
 }
 
-async function playChime($, kind) {
-  const tones = kind === "error"
-    ? [
-        { frequency: 520, durationMs: 130 },
-        { frequency: 390, durationMs: 190 },
-      ]
-    : [
-        { frequency: 659, durationMs: 110 },
-        { frequency: 880, durationMs: 170 },
-      ]
+async function playChime($, directory, kind) {
+  const tones = tonesForDirectory(directory, kind)
 
   const soundFile = join(tmpdir(), `opencode-${kind}.wav`)
+
+  try {
+    await access(CUSTOM_SOUND_FILE)
+    try {
+      await $`pw-play ${CUSTOM_SOUND_FILE}`
+      return
+    } catch {
+      // Fall through to the generated tone if the custom file cannot play.
+    }
+  } catch {
+    // Fall back to the generated tone when no custom file exists.
+  }
 
   try {
     await writeFile(soundFile, createPcm16Wav(tones))
@@ -105,12 +157,12 @@ export const SessionNotifyPlugin = async ({ $, directory }) => {
 
       if (event.type === "session.error") {
         await sendDesktopNotification($, "OpenCode error", `${projectName}: session failed`, "critical")
-        await playChime($, "error")
+        await playChime($, directory, "error")
         return
       }
 
       await sendDesktopNotification($, "OpenCode finished", `${projectName}: response is ready`, "normal")
-      await playChime($, "done")
+      await playChime($, directory, "done")
     },
   }
 }
