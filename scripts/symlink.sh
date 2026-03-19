@@ -106,6 +106,7 @@ link_directory_contents() {
 }
 
 link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
+link_directory_contents "$HOME/.home-manager/config_files/opencode/plugins" "$HOME/.config/opencode/plugins" '*.js'
 mkdir -p "$HOME/.local/share/icons/hicolor"
 
 link_hicolor_index_theme() {

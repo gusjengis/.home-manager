@@ -3,6 +3,14 @@
 {
   home.packages = with pkgs; [ gh ];
 
+  xdg.configFile."lazygit/config.yml" = {
+    force = true;
+    text = ''
+      os:
+        editPreset: nvim
+    '';
+  };
+
   programs.git = {
     enable = true;
     settings = {
