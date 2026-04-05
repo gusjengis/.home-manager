@@ -13,3 +13,7 @@ If the user asks to download wallpapers, use these preferences:
 - Save new batches with distinct prefixes (for example `wh4_`, `wh5_`) to avoid collisions.
 - Skip duplicates against existing `wh*` files.
 - Validate image dimensions after download and remove anything not exactly 3840x2160.
+
+# Rebuilds
+
+When rebuilding, use the rehome command if available.

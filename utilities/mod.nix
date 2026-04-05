@@ -19,6 +19,7 @@
     [
       btop
       zip
+      p7zip
       unzip
       wget
       bat

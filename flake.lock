@@ -30,11 +30,11 @@
         "quickshell": "quickshell"
       },
       "locked": {
-        "lastModified": 1773688406,
-        "narHash": "sha256-Elojiy5jP81XINZ5E4nENz3O+gsOZvK6/zblfcZLn10=",
+        "lastModified": 1775252526,
+        "narHash": "sha256-ibCuXftNoJpe5nEiWb2ng5Q6tMteKH4pkXOfFXiz7I0=",
         "owner": "gusjengis",
         "repo": "Ambxst",
-        "rev": "f4911d333d432d31a42254d0b987182f88661114",
+        "rev": "31b9c5e7ab14a093d94bd6a2d3b97469a2729667",
         "type": "github"
       },
       "original": {

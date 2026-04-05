@@ -18,5 +18,7 @@
     }
   ],
   "favorite": [],
-  "variant": {}
+  "variant": {
+    "openai/gpt-5.4": "xhigh"
+  }
 }

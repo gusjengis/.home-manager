@@ -4,12 +4,18 @@ set -euo pipefail
 # store pid in a file so hyprland can signal it to change wallpaper
 echo $$ > /tmp/wallpaper-script.pid
 
+log_file="/tmp/gif_wallpaper_cycle_mpvpaper.log"
 ambxst_wallpaper_state="${XDG_CACHE_HOME:-$HOME/.cache}/ambxst/wallpapers.json"
 default_wallpaper_dir="$HOME/.home-manager/wallpapers"
 advance_request_file="/tmp/wallpaper-script.advance"
 
 advance_requested=0
 external_change_detected=0
+cleaned_up=0
+
+log_message() {
+  printf '[%(%F %T)T] %s\n' -1 "$*" >> "$log_file"
+}
 
 next_wallpaper() {
   advance_requested=1
@@ -91,7 +97,20 @@ PY
 }
 
 cleanup() {
+  local exit_code="${1:-0}"
+
+  if (( cleaned_up )); then
+    return
+  fi
+
+  cleaned_up=1
   rm -f /tmp/wallpaper-script.pid
+
+  if (( exit_code == 0 )); then
+    log_message "wallpaper cycle exiting cleanly"
+  else
+    log_message "wallpaper cycle exiting with status ${exit_code}"
+  fi
 }
 
 scan_wallpapers() {
@@ -212,8 +231,11 @@ select_next_wallpaper() {
   printf '%s\n%s\n' "$next_wall" "$wall_path"
 }
 
-trap 'cleanup; exit 0' INT TERM
-trap 'cleanup' EXIT
+trap 'log_message "received termination signal"; cleanup 0; exit 0' INT TERM HUP
+trap 'log_message "command failed at line $LINENO"' ERR
+trap 'cleanup $?' EXIT
+
+log_message "wallpaper cycle started"
 
 while true; do
   mapfile -t scanned < <(scan_wallpapers)
@@ -225,7 +247,10 @@ while true; do
     img="${selection[0]:-}"
 
     if [[ -z "$img" ]]; then
-      wait_or_advance 60 ""
+      if ! wait_or_advance 60 ""; then
+        continue
+      fi
+
       continue
     fi
 

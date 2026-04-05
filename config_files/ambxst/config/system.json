@@ -18,10 +18,6 @@
                 "onResume": "ambxst screen on",
                 "onTimeout": "ambxst screen off",
                 "timeout": 330
-            },
-            {
-                "onTimeout": "ambxst suspend",
-                "timeout": 1800
             }
         ]
     },
@@ -35,8 +31,8 @@
         "kor": false
     },
     "pomodoro": {
-        "workTime": 60,
-        "restTime": 300,
+        "workTime": 3000,
+        "restTime": 3000,
         "autoStart": false,
         "syncSpotify": false
     }
