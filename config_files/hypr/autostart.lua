@@ -1,0 +1,22 @@
+hl.env("PATH", os.getenv("HOME") .. "/.cargo/bin:" .. (os.getenv("PATH") or ""))
+
+local function run_once(command)
+    hl.on("hyprland.start", function()
+        hl.exec_cmd(command)
+    end)
+end
+
+run_once("xset r rate 190 50")
+run_once("start-large-screen-waybar")
+run_once("hyprctl setcursor " .. cursor_theme .. " " .. tostring(cursor_size))
+run_once("hyprsunset")
+run_once("hypridle")
+run_once("hyprlogd snitch")
+run_once("alga power on")
+run_once(os.getenv("HOME") .. "/.home-manager/config_files/swww/ambxst_wallpaper_timer.sh")
+run_once("timeline-hyprfocusd-snitch")
+run_once("kdeconnectd")
+run_once(os.getenv("HOME") .. "/.home-manager/config_files/hypr/scripts/open_chromium.sh")
+run_once(os.getenv("HOME") .. "/.home-manager/scripts/battery-monitor.sh")
+run_once("handy --start-hidden")
+run_once("ambxst")

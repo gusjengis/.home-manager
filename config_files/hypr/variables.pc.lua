@@ -1,0 +1,2 @@
+discord = "discordcanary"
+slack = "slack"

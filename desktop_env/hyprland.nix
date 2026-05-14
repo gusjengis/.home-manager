@@ -209,6 +209,8 @@ in
       lib.hm.dag.entryAfter [ "symlink" ] ''
         ln -sf $HOME/.home-manager/config_files/hypr/appearance.mac.conf $HOME/.config/hypr/appearance.conf
         ln -sf $HOME/.home-manager/config_files/hypr/variables.mac.conf $HOME/.config/hypr/platform-variables.conf
+        ln -sf $HOME/.home-manager/config_files/hypr/appearance.mac.lua $HOME/.config/hypr/appearance.lua
+        ln -sf $HOME/.home-manager/config_files/hypr/variables.mac.lua $HOME/.config/hypr/platform-variables.lua
       ''
     );
 
@@ -216,7 +218,24 @@ in
       lib.hm.dag.entryAfter [ "symlink" ] ''
         ln -sf $HOME/.home-manager/config_files/hypr/appearance.pc.conf $HOME/.config/hypr/appearance.conf
         ln -sf $HOME/.home-manager/config_files/hypr/variables.pc.conf $HOME/.config/hypr/platform-variables.conf
+        ln -sf $HOME/.home-manager/config_files/hypr/appearance.pc.lua $HOME/.config/hypr/appearance.lua
+        ln -sf $HOME/.home-manager/config_files/hypr/variables.pc.lua $HOME/.config/hypr/platform-variables.lua
       ''
     );
+
+    home.activation.hyprLuaSetup = lib.hm.dag.entryAfter [ "symlink" ] ''
+      mkdir -p $HOME/.config/hypr
+      # ln -sf $HOME/.home-manager/config_files/hypr/hyprland.lua $HOME/.config/hypr/hyprland.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/autostart.lua $HOME/.config/hypr/autostart.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/keybinds.lua $HOME/.config/hypr/keybinds.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/monitors.lua $HOME/.config/hypr/monitors.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/workspaces.lua $HOME/.config/hypr/workspaces.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/variables.lua $HOME/.config/hypr/variables.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/hyprfocus.lua $HOME/.config/hypr/hyprfocus.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/hypridle.lua $HOME/.config/hypr/hypridle.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/hyprlog.lua $HOME/.config/hypr/hyprlog.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/hyprpaper.lua $HOME/.config/hypr/hyprpaper.lua
+      ln -sf $HOME/.home-manager/config_files/hypr/hyprsunset.lua $HOME/.config/hypr/hyprsunset.lua
+    '';
   };
 }
