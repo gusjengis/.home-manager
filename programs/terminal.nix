@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   lib,
   ...
 }:
@@ -19,19 +20,6 @@ let
 
       nix flake update ambxst --flake "$hm_repo"
       exec home-manager switch --impure --flake "$hm_repo/" "$@"
-    '';
-  };
-
-  zorkData = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/Adeimantius/Z-Machine/master/Zork%201/DATA/ZORK1.DAT";
-    hash = "sha256-CuWsIp55CU/zaLZmk1ZESvDzXiHYYqG6qlRpiQhcFf0=";
-  };
-
-  zorkCmd = pkgs.writeShellApplication {
-    name = "zork";
-    runtimeInputs = [ pkgs.frotz ];
-    text = ''
-      exec frotz "${zorkData}" "$@"
     '';
   };
 in
@@ -96,6 +84,7 @@ in
     '';
     shellAliases = {
       pipes = "pipes-rs";
+      matrix = "rjmatrix";
       venv = ". .venv/bin/activate";
       vim = "nvim";
       clean = "nix-collect-garbage -d && sudo nix-collect-garbage -d && nix store optimise && sudo nix store optimise";
@@ -115,16 +104,15 @@ in
     [
       rebuildCmd
       rehomeCmd
-      zorkCmd
       kitty
       tmux
       fd
       skim
       jq
-      frotz
     ]
     ++ lib.optionals config.desktopEnv.enable [
       pipes-rs
+      inputs.rmatrix.packages.${pkgs.stdenv.hostPlatform.system}.rjmatrix
     ];
 
   programs.fzf = {

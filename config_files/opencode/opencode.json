@@ -7,5 +7,22 @@
       "/**": "allow",
       "~/**": "allow"
     }
+  },
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://127.0.0.1:1234/v1"
+      },
+      "models": {
+        "google/gemma-4-26b-a4b": {
+          "name": "Gemma 4 26b"
+        },
+        "qwen/qwen3-coder-next": {
+          "name": "Qwen3 Coder Next 6b"
+        }
+      }
+    }
   }
 }

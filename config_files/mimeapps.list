@@ -8,6 +8,8 @@ application/x-sharedlib=nvim.desktop;
 image/jpeg=qimgv.desktop;
 application/pkcs8=nvim.desktop;
 application/pkix-cert=nvim.desktop;
+application/vnd.microsoft.portable-executable=wine-extension-hlp.desktop;
+application/x-msdownload=wine-extension-hlp.desktop;
 
 [Default Applications]
 inode/directory=thunar.desktop;
@@ -52,3 +54,6 @@ x-scheme-handler/about=chromium-browser.desktop
 x-scheme-handler/unknown=chromium-browser.desktop
 application/pkcs8=nvim.desktop
 application/pkix-cert=nvim.desktop
+application/vnd.microsoft.portable-executable=wine-extension-hlp.desktop
+application/x-msdownload=wine-extension-hlp.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop

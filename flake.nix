@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    opencode.url = "github:sst/opencode?ref=v1.2.27";
+    opencode.url = "github:sst/opencode?ref=v1.14.25";
     hyprlog-nixpkgs.url = "github:gusjengis/nixpkgs?ref=add-hyprlog";
     stable-nixpkgs.url = "nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
@@ -11,6 +11,15 @@
     alga.url = "github:Tenzer/alga";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     handy.url = "github:cjpais/Handy?ref=v0.7.8";
+    rmatrix.url = "github:RoastBeefer00/rmatrix";
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    claude-desktop-linux-flake = {
+      url = "github:k3d3/claude-desktop-linux-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ambxst = {
       url = "github:gusjengis/Ambxst?ref=fix-special-workspaces";
       inputs.nixpkgs.follows = "nixpkgs";

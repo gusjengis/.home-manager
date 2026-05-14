@@ -10,5 +10,6 @@
   "diff_wrap_mode": "word",
   "header_visible": true,
   "generic_tool_output_visibility": false,
-  "theme_mode": "dark"
+  "theme_mode": "dark",
+  "skipped_version": "1.14.26"
 }
