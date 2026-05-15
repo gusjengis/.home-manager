@@ -77,6 +77,9 @@ declare -a LINKS=(
 
     # niri
     "$HOME/.home-manager/config_files/niri/config.kdl -> $HOME/.config/niri/config.kdl"
+
+    # zathura
+    "$HOME/.home-manager/config_files/zathura/zathurarc -> $HOME/.config/zathura/zathurarc"
 )
 
 for item in "${LINKS[@]}"; do
