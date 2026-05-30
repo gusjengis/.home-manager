@@ -67,8 +67,11 @@ in
       handyPackage
       wtype
       xdotool
+    ]
+    ++ lib.optionals (PC && config.desktopEnv.enable) [
       lmstudio
     ]
+
     ++ lib.optionals config.dev.enable [
       cloc
       rustup
