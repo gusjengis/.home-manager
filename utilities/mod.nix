@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  Mac,
+  PC,
   lib,
   ...
 }:
@@ -24,6 +24,8 @@
       unzip
       wget
       bat
+    ]
+    ++ lib.optionals PC [
       wineWow64Packages.waylandFull
     ]
     ++ lib.optionals config.desktopEnv.enable [
