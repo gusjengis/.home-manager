@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-notify_send_bin="$(command -v notify-send || true)"
+state_dir="${XDG_RUNTIME_DIR:-/run/user/$UID}/home-manager-notifications"
+log_file="$state_dir/clone-repo.log"
 
 notify() {
-    if [[ -n "$notify_send_bin" ]]; then
-        "$notify_send_bin" "$@" || true
-    fi
+    local urgency="normal"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --urgency=*) urgency="${1#--urgency=}"; shift ;;
+            -u|--urgency) urgency="${2:-normal}"; shift 2 ;;
+            *) break ;;
+        esac
+    done
+
+    mkdir -p "$state_dir"
+    printf '%s\t%s\t%s\t%s\n' "$(date --iso-8601=seconds)" "$urgency" "${1:-clone-repo}" "${2:-}" >>"$log_file"
 }
 
 clone_repo() {
