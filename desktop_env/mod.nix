@@ -5,5 +5,6 @@
     ./hyprland.nix
     ./cursor.nix
     ./theme.nix
+    ./vnc.nix
   ];
 }
