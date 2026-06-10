@@ -5,6 +5,10 @@
       "modelID": "gpt-5.5"
     },
     {
+      "providerID": "opencode",
+      "modelID": "mimo-v2.5-free"
+    },
+    {
       "providerID": "anthropic",
       "modelID": "claude-opus-4-7"
     },
@@ -35,10 +39,6 @@
     {
       "providerID": "openai",
       "modelID": "gpt-5.2-codex"
-    },
-    {
-      "providerID": "opencode",
-      "modelID": "minimax-m2.1-free"
     }
   ],
   "favorite": [],
@@ -48,6 +48,7 @@
     "lmstudio/qwen/qwen3-coder-next": "default",
     "openai/gpt-5.4": "default",
     "openai/gpt-5.5": "default",
-    "anthropic/claude-opus-4-7": "default"
+    "anthropic/claude-opus-4-7": "default",
+    "opencode/mimo-v2.5-free": "high"
   }
 }

@@ -36,7 +36,7 @@ in
       };
     };
 
-    systemd.user.services.wayvnc.Service.ExecStart = lib.mkForce "${config.home.homeDirectory}/.home-manager/scripts/start-wayvnc.sh";
+    # systemd.user.services.wayvnc.Service.ExecStart = lib.mkForce "${config.home.homeDirectory}/.home-manager/scripts/start-wayvnc.sh";
 
     home.packages = with pkgs; [
       remmina
