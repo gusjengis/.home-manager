@@ -50,11 +50,55 @@ state_file="$XDG_RUNTIME_DIR/sunshine-stream-monitors.tsv"
 
 restart_shell() {
     if command -v ambxst >/dev/null 2>&1; then
+        while IFS= read -r env_line; do
+            export "$env_line"
+        done < <(
+            systemctl --user show-environment 2>/dev/null \
+                | grep -E '^(DISPLAY|WAYLAND_DISPLAY|XDG_CURRENT_DESKTOP|XDG_SESSION_TYPE|HYPRLAND_INSTANCE_SIGNATURE|QT_QPA_PLATFORM|QT_WAYLAND_DISABLE_WINDOWDECORATION)='
+        )
+
+        export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+        export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=$XDG_RUNTIME_DIR/bus}"
+        export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-1}"
+        export XDG_SESSION_TYPE="${XDG_SESSION_TYPE:-wayland}"
+        export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-Hyprland}"
+        export QT_QPA_PLATFORM="wayland"
+
         pkill -x qs >/dev/null 2>&1 || true
         pkill -x quickshell >/dev/null 2>&1 || true
-        pkill -f 'ambxst' >/dev/null 2>&1 || true
-        nohup ambxst >/tmp/ambxst-sunshine.log 2>&1 &
-        disown || true
+        pkill -f 'ambxst-shell.*shell.qml' >/dev/null 2>&1 || true
+
+        if command -v systemd-run >/dev/null 2>&1; then
+            systemd-run --user --collect --quiet \
+                --setenv="DISPLAY=${DISPLAY:-}" \
+                --setenv="WAYLAND_DISPLAY=$WAYLAND_DISPLAY" \
+                --setenv="XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" \
+                --setenv="DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS" \
+                --setenv="XDG_CURRENT_DESKTOP=$XDG_CURRENT_DESKTOP" \
+                --setenv="XDG_SESSION_TYPE=$XDG_SESSION_TYPE" \
+                --setenv="HYPRLAND_INSTANCE_SIGNATURE=${HYPRLAND_INSTANCE_SIGNATURE:-}" \
+                --setenv="QT_QPA_PLATFORM=$QT_QPA_PLATFORM" \
+                ambxst >/tmp/ambxst-sunshine.log 2>&1 || true
+        else
+            nohup env \
+                DISPLAY="${DISPLAY:-}" \
+                WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
+                XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
+                DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" \
+                XDG_CURRENT_DESKTOP="$XDG_CURRENT_DESKTOP" \
+                XDG_SESSION_TYPE="$XDG_SESSION_TYPE" \
+                HYPRLAND_INSTANCE_SIGNATURE="${HYPRLAND_INSTANCE_SIGNATURE:-}" \
+                QT_QPA_PLATFORM="$QT_QPA_PLATFORM" \
+                ambxst >/tmp/ambxst-sunshine.log 2>&1 &
+            disown || true
+        fi
+
+        for _ in {1..30}; do
+            if pgrep -x qs >/dev/null 2>&1 || pgrep -x quickshell >/dev/null 2>&1; then
+                return 0
+            fi
+            sleep 0.1
+        done
     fi
 }
 
