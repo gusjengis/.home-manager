@@ -11,6 +11,11 @@ bindd(
 	"Remote App Launcher",
 	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/waypipe-launcher.sh")
 )
+bindd(
+	"SUPER + CTRL + ALT + M",
+	"Moonlight Remote Launcher",
+	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/sunshine-launcher.sh")
+)
 bindd("SUPER + Q", "Launch Terminal", hl.dsp.exec_cmd(terminal))
 bindd("SUPER + B", "Launch Browser", hl.dsp.exec_cmd(browser))
 hl.bind("ALT + F4", hl.dsp.window.close())
@@ -162,6 +167,62 @@ hl.define_submap("waypipe-launcher", function()
 				.. "/.home-manager/scripts/waypipe-launcher-eww-activate.sh "
 				.. home
 				.. "/.home-manager/config_files/eww-waypipe-launcher; hyprctl dispatch submap reset"
+		)
+	)
+end)
+
+hl.define_submap("sunshine-launcher", function()
+	hl.bind(
+		"escape",
+		hl.dsp.exec_cmd(
+			"eww --config "
+				.. home
+				.. "/.home-manager/config_files/eww-sunshine-launcher close sunshine-hosts; hyprctl dispatch submap reset"
+		)
+	)
+	hl.bind(
+		"up",
+		hl.dsp.exec_cmd(
+			home
+				.. "/.home-manager/scripts/sunshine-launcher-eww-move.sh "
+				.. home
+				.. "/.home-manager/config_files/eww-sunshine-launcher up"
+		)
+	)
+	hl.bind(
+		"down",
+		hl.dsp.exec_cmd(
+			home
+				.. "/.home-manager/scripts/sunshine-launcher-eww-move.sh "
+				.. home
+				.. "/.home-manager/config_files/eww-sunshine-launcher down"
+		)
+	)
+	hl.bind(
+		"k",
+		hl.dsp.exec_cmd(
+			home
+				.. "/.home-manager/scripts/sunshine-launcher-eww-move.sh "
+				.. home
+				.. "/.home-manager/config_files/eww-sunshine-launcher up"
+		)
+	)
+	hl.bind(
+		"j",
+		hl.dsp.exec_cmd(
+			home
+				.. "/.home-manager/scripts/sunshine-launcher-eww-move.sh "
+				.. home
+				.. "/.home-manager/config_files/eww-sunshine-launcher down"
+		)
+	)
+	hl.bind(
+		"Return",
+		hl.dsp.exec_cmd(
+			home
+				.. "/.home-manager/scripts/sunshine-launcher-eww-activate.sh "
+				.. home
+				.. "/.home-manager/config_files/eww-sunshine-launcher; hyprctl dispatch submap reset"
 		)
 	)
 end)

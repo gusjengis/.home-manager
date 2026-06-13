@@ -1,0 +1,31 @@
+(defvar sl_sel_file "")
+(defvar cursor 0)
+
+(deflisten hosts
+  :initial "[]"
+  "bash -lc '$HOME/.home-manager/scripts/sunshine-launcher-eww-hosts-listen.sh'")
+
+(defwidget host-row [h selFile configDir]
+  (button
+    :class { h.idx == cursor ? (h.online ? "row row-selected" : "row row-selected row-offline") : (h.online ? "row" : "row row-offline") }
+    :onclick "bash -lc '$HOME/.home-manager/scripts/sunshine-launcher-eww-select.sh \"${selFile}\" \"${configDir}\" \"${h.ssh}\"'"
+    (box :orientation "h" :space-evenly false :hexpand true
+      (label :class "host" :text "${h.display}" :xalign 0 :hexpand true)
+      (box :hexpand true)
+      (label :class "lat" :text { h.online ? "${h.latency}" : "offline" } :xalign 1))))
+
+(defwindow sunshine-hosts [selFile configDir ?screen]
+  :monitor { screen == "" ? "<primary>" : screen }
+  :geometry (geometry :x "0%" :y "0%" :width "30%" :height "40%" :anchor "center")
+  :wm-ignore true
+  :stacking "overlay"
+  :exclusive false
+  :focusable "ondemand"
+  :namespace "Sunshine Launcher"
+  (box :class "container" :orientation "v"
+    (box :class "header" :orientation "h" :space-evenly false
+      (label :class "title" :text "Moonlight" :xalign 0 :hexpand true)
+      (label :class "hint" :text "Enter to stream" :xalign 1))
+    (box :class "list" :orientation "v" :spacing 6
+      (for h in hosts
+        (host-row :h h :selFile selFile :configDir configDir)))))

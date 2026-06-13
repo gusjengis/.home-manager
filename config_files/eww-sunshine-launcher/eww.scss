@@ -1,0 +1,67 @@
+$bg: #08111f;
+$border: rgba(128, 190, 255, 0.28);
+$text: #d7e8ff;
+$muted: #8ba8c7;
+$offline: #5f7184;
+$accent: #7cc7ff;
+
+* {
+  all: unset;
+}
+
+.container {
+  font-family: "Commit Mono";
+  font-size: 14px;
+  background-color: $bg;
+  color: $text;
+  border: 2px solid $border;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.header {
+  padding-bottom: 10px;
+}
+
+.title {
+  color: $accent;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.hint {
+  color: $muted;
+  font-size: 12px;
+}
+
+.list {
+  padding-top: 0px;
+}
+
+.row {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.row:hover {
+  background-color: rgba(124, 199, 255, 0.14);
+}
+
+.row-selected {
+  background-color: rgba(124, 199, 255, 0.14);
+}
+
+.row-offline {
+  background-color: rgba(255, 255, 255, 0.02);
+  color: $offline;
+}
+
+.host {
+  font-size: 14px;
+}
+
+.lat {
+  color: $muted;
+  padding-left: 18px;
+}

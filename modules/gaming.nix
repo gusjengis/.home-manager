@@ -11,7 +11,7 @@
   };
   config = {
     home.packages =
-      (with pkgs; [ moonlight ])
+      (with pkgs; [ moonlight-qt ])
       ++ lib.optionals (config.gaming.enable && config.desktopEnv.enable) (
         with pkgs;
         [

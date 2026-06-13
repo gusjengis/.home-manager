@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH"
+
+debug() { [[ "${SUNSHINE_CONNECT_DEBUG:-0}" == "1" ]]; }
+
+notify_info() {
+    local msg="$1"
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -a "Sunshine Remote" -t 3000 "Sunshine Remote" "$msg" || true
+    elif debug; then
+        printf 'Sunshine Remote: %s\n' "$msg" >&2
+    fi
+}
+
+notify_error() {
+    local msg="$1"
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -a "Sunshine Remote" -u critical -t 8000 "Sunshine Remote" "$msg" || true
+    else
+        printf 'Sunshine Remote: %s\n' "$msg" >&2
+    fi
+}
+
+need() {
+    command -v "$1" >/dev/null 2>&1 || {
+        notify_error "Missing dependency: $1"
+        exit 127
+    }
+}
+
+if [[ "$#" -eq 0 ]]; then
+    exec sunshine-launcher
+fi
+
+host="$1"
+shift || true
+
+need jq
+need moonlight
+need ssh
+
+width="${SUNSHINE_CLIENT_WIDTH:-}"
+height="${SUNSHINE_CLIENT_HEIGHT:-}"
+fps="${SUNSHINE_CLIENT_FPS:-}"
+scale="${SUNSHINE_CLIENT_SCALE:-}"
+
+if [[ -z "$width" || -z "$height" || -z "$fps" || -z "$scale" ]]; then
+    if command -v hyprctl >/dev/null 2>&1; then
+        monitors_json="$(hyprctl monitors -j 2>/dev/null || printf '[]')"
+        monitor_json="$(jq -c 'map(select(.focused == true))[0] // .[0] // {}' <<<"$monitors_json")"
+        width="${width:-$(jq -r '.width // empty' <<<"$monitor_json")}"
+        height="${height:-$(jq -r '.height // empty' <<<"$monitor_json")}"
+        fps="${fps:-$(jq -r '(.refreshRate // 60) | floor' <<<"$monitor_json")}"
+        scale="${scale:-$(jq -r '.scale // 1' <<<"$monitor_json")}"
+    fi
+fi
+
+width="${width:-1920}"
+height="${height:-1080}"
+fps="${fps:-60}"
+scale="${scale:-1}"
+
+if [[ ! "$width" =~ ^[0-9]+$ || ! "$height" =~ ^[0-9]+$ || ! "$fps" =~ ^[0-9]+$ ]]; then
+    notify_error "Invalid client mode: ${width}x${height}@${fps}"
+    exit 64
+fi
+
+if (( fps < 1 )); then
+    fps=60
+fi
+
+bitrate="${SUNSHINE_MOONLIGHT_BITRATE:-}"
+if [[ -z "$bitrate" ]]; then
+    pixels_per_second=$(( width * height * fps ))
+    if (( pixels_per_second >= 800000000 )); then
+        bitrate=120000
+    elif (( pixels_per_second >= 450000000 )); then
+        bitrate=80000
+    elif (( pixels_per_second >= 220000000 )); then
+        bitrate=50000
+    else
+        bitrate=30000
+    fi
+fi
+
+ssh_opts=(
+    -o BatchMode=yes
+    -o StrictHostKeyChecking=accept-new
+    -o ConnectTimeout=5
+    -o ServerAliveInterval=5
+    -o ServerAliveCountMax=1
+)
+
+remote_prepare='set -euo pipefail
+export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH"
+if command -v sunshine-stream-host >/dev/null 2>&1; then
+    exec sunshine-stream-host "$@"
+fi
+if [[ -x "$HOME/.home-manager/scripts/sunshine-stream-host.sh" ]]; then
+    exec bash "$HOME/.home-manager/scripts/sunshine-stream-host.sh" "$@"
+fi
+printf "sunshine-stream-host was not found on remote host\\n" >&2
+exit 127
+'
+
+if debug; then
+    notify_info "Preparing $host at ${width}x${height}@${fps} scale ${scale}"
+fi
+
+if ! ssh "${ssh_opts[@]}" "$host" bash -s -- "$width" "$height" "$fps" "$scale" <<<"$remote_prepare"; then
+    notify_error "Failed to start Sunshine on $host"
+    exit 1
+fi
+
+app="${SUNSHINE_MOONLIGHT_APP:-Desktop}"
+moonlight_args=(
+    stream
+    --resolution "${width}x${height}"
+    --fps "$fps"
+    --bitrate "$bitrate"
+    --display-mode fullscreen
+    --capture-system-keys always
+    --absolute-mouse
+    --quit-after
+    --keep-awake
+)
+
+if [[ -n "${SUNSHINE_MOONLIGHT_CODEC:-}" ]]; then
+    moonlight_args+=(--video-codec "$SUNSHINE_MOONLIGHT_CODEC")
+fi
+
+if [[ "${SUNSHINE_MOONLIGHT_HDR:-0}" == "1" ]]; then
+    moonlight_args+=(--hdr)
+fi
+
+set +e
+moonlight "${moonlight_args[@]}" "$host" "$app"
+rc=$?
+set -e
+
+if (( rc != 0 )); then
+    notify_error "Moonlight failed for $host. If this is the first connection, pair once with: moonlight pair $host"
+fi
+
+exit "$rc"
