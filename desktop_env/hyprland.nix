@@ -40,7 +40,11 @@ let
   ambxstPackage =
     let
       system = pkgs.stdenv.hostPlatform.system;
-      quickshellPkg = inputs.ambxst.inputs.quickshell.packages.${system}.default;
+      quickshellPkg = inputs.ambxst.inputs.quickshell.packages.${system}.default.override {
+        xorg = {
+          libxcb = pkgs.libxcb;
+        };
+      };
 
       baseEnv =
         with pkgs;
