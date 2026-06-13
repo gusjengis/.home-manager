@@ -8,7 +8,7 @@ debug() { [[ "${SUNSHINE_CONNECT_DEBUG:-0}" == "1" ]]; }
 notify_info() {
     local msg="$1"
     if command -v notify-send >/dev/null 2>&1; then
-        notify-send -a "Sunshine Remote" -t 3000 "Sunshine Remote" "$msg" || true
+        notify-send -a "Sunshine Remote" -t 3000 "Sunshine Remote" "$msg" >/dev/null 2>&1 || true
     elif debug; then
         printf 'Sunshine Remote: %s\n' "$msg" >&2
     fi
@@ -17,7 +17,7 @@ notify_info() {
 notify_error() {
     local msg="$1"
     if command -v notify-send >/dev/null 2>&1; then
-        notify-send -a "Sunshine Remote" -u critical -t 8000 "Sunshine Remote" "$msg" || true
+        notify-send -a "Sunshine Remote" -u critical -t 8000 "Sunshine Remote" "$msg" >/dev/null 2>&1 || true
     else
         printf 'Sunshine Remote: %s\n' "$msg" >&2
     fi
@@ -122,14 +122,18 @@ moonlight_args=(
     --bitrate "$bitrate"
     --display-mode fullscreen
     --capture-system-keys always
-    --absolute-mouse
     --quit-after
     --keep-awake
 )
 
-if [[ -n "${SUNSHINE_MOONLIGHT_CODEC:-}" ]]; then
-    moonlight_args+=(--video-codec "$SUNSHINE_MOONLIGHT_CODEC")
+if [[ "${SUNSHINE_MOONLIGHT_ABSOLUTE_MOUSE:-1}" == "1" ]]; then
+    moonlight_args+=(--absolute-mouse)
+else
+    moonlight_args+=(--no-absolute-mouse)
 fi
+
+moonlight_args+=(--video-codec "${SUNSHINE_MOONLIGHT_CODEC:-H.264}")
+moonlight_args+=(--video-decoder "${SUNSHINE_MOONLIGHT_DECODER:-software}")
 
 if [[ "${SUNSHINE_MOONLIGHT_HDR:-0}" == "1" ]]; then
     moonlight_args+=(--hdr)
@@ -139,6 +143,17 @@ set +e
 moonlight "${moonlight_args[@]}" "$host" "$app"
 rc=$?
 set -e
+
+ssh "${ssh_opts[@]}" "$host" bash -s -- "$width" "$height" "$fps" "$scale" <<'REMOTE' >/dev/null 2>&1 || true
+set -euo pipefail
+export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH"
+if command -v sunshine-stream-host >/dev/null 2>&1; then
+    exec sunshine-stream-host --stop
+fi
+if [[ -x "$HOME/.home-manager/scripts/sunshine-stream-host.sh" ]]; then
+    exec bash "$HOME/.home-manager/scripts/sunshine-stream-host.sh" --stop
+fi
+REMOTE
 
 if (( rc != 0 )); then
     notify_error "Moonlight failed for $host. If this is the first connection, pair once with: moonlight pair $host"
