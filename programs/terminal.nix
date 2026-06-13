@@ -18,7 +18,6 @@ let
     text = ''
       hm_repo="$HOME/.home-manager"
 
-      nix flake update ambxst --flake "$hm_repo"
       exec home-manager switch --impure --flake "$hm_repo/" "$@"
     '';
   };
