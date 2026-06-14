@@ -30,6 +30,17 @@ need() {
     }
 }
 
+with_timeout() {
+    local seconds="$1"
+    shift
+
+    if command -v timeout >/dev/null 2>&1; then
+        timeout "$seconds" "$@"
+    else
+        "$@"
+    fi
+}
+
 if [[ "$#" -eq 0 ]]; then
     exec sunshine-launcher
 fi
@@ -153,7 +164,7 @@ load_pairing_env() {
 }
 
 ensure_paired() {
-    if moonlight list "$host" >/dev/null 2>&1; then
+    if with_timeout 10s moonlight list "$host" >/dev/null 2>&1; then
         return 0
     fi
 
@@ -181,8 +192,11 @@ ensure_paired() {
     local payload
     payload="$(jq -cn --arg pin "$pin" --arg name "$client_name" '{pin: $pin, name: $name}')"
 
+    local log_dir="${XDG_STATE_HOME:-$HOME/.local/state}/sunshine-remote"
+    mkdir -p "$log_dir"
+
     local pair_log
-    pair_log="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/sunshine-pair.XXXXXX")"
+    pair_log="$(mktemp "$log_dir/pair-${host}.XXXXXX.log")"
 
     notify_info "Pairing Moonlight with $host"
 
@@ -197,11 +211,13 @@ ensure_paired() {
             break
         fi
 
-        if curl --fail --silent --show-error --insecure \
+        local pin_response
+        pin_response="$(curl --fail --silent --show-error --insecure \
             --user "$api_user:$api_password" \
             --header 'Content-Type: application/json' \
             --data "$payload" \
-            "https://$host:47990/api/pin" >/dev/null 2>&1; then
+            "https://$host:47990/api/pin" 2>/dev/null || true)"
+        if jq -e '.status == true' >/dev/null 2>&1 <<<"$pin_response"; then
             accepted=1
             break
         fi
@@ -224,13 +240,12 @@ ensure_paired() {
     wait "$pair_pid"
     set -e
 
-    rm -f "$pair_log"
-
-    if (( accepted == 1 )) && moonlight list "$host" >/dev/null 2>&1; then
+    if (( accepted == 1 )) && with_timeout 10s moonlight list "$host" >/dev/null 2>&1; then
+        rm -f "$pair_log"
         return 0
     fi
 
-    notify_error "Automatic Moonlight pairing failed for $host"
+    notify_error "Automatic Moonlight pairing failed for $host; see $pair_log"
     return 1
 }
 
