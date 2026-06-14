@@ -10,7 +10,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    handy.url = "github:cjpais/Handy?ref=v0.7.8";
     rmatrix.url = "github:RoastBeefer00/rmatrix";
     claude-code-nix = {
       url = "github:sadjow/claude-code-nix";
@@ -18,7 +17,7 @@
     };
     claude-desktop-linux-flake = {
       url = "github:k3d3/claude-desktop-linux-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "stable-nixpkgs";
     };
     ambxst = {
       url = "github:gusjengis/Ambxst?ref=fix-special-workspaces";

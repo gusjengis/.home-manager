@@ -179,7 +179,7 @@ in
         libnotify
         linux-wallpaperengine
         # hyprlog-nixpkgs.hyprlog
-        swww
+        awww
         eww
         wofi
         font-awesome

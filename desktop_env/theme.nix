@@ -53,6 +53,8 @@ in
       # Some apps consult this directly
       "gtk-theme-name" = gtkThemeName;
     };
+
+    gtk4.theme = config.gtk.theme;
   };
 
   ###### dconf keys that portals + apps actually query

@@ -8,52 +8,6 @@
   ...
 }:
 
-let
-  handyPackage =
-    let
-      baseHandy = inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    in
-    baseHandy.overrideAttrs (
-      old:
-      let
-        bunDeps = pkgs.stdenv.mkDerivation {
-          pname = "handy-bun-deps";
-          inherit (old) version src;
-
-          nativeBuildInputs = [
-            pkgs.bun
-            pkgs.cacert
-          ];
-
-          dontFixup = true;
-
-          buildPhase = ''
-            export HOME=$TMPDIR
-            bun install --frozen-lockfile --no-progress
-          '';
-
-          installPhase = ''
-            mkdir -p $out
-            cp -r node_modules $out/
-          '';
-
-          outputHashAlgo = "sha256";
-          outputHashMode = "recursive";
-          outputHash = "sha256-+hUANv0w3qnK5d2+4JW3XMazLRDhWCbOxUXQyTGta/0=";
-        };
-      in
-      {
-        preBuild = ''
-          cp -r ${bunDeps}/node_modules node_modules
-          chmod -R +w node_modules
-          substituteInPlace node_modules/.bin/{tsc,vite} \
-            --replace-fail "/usr/bin/env node" "${lib.getExe pkgs.bun}"
-          export HOME=$TMPDIR
-          bun run build
-        '';
-      }
-    );
-in
 {
   home.packages =
     with pkgs;
@@ -64,7 +18,7 @@ in
     ]
     ++ lib.optionals config.desktopEnv.enable [
       inputs.claude-desktop-linux-flake.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-with-fhs
-      handyPackage
+      handy
       wtype
       xdotool
     ]
