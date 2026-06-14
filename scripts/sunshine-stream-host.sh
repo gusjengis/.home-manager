@@ -148,6 +148,18 @@ output_exists() {
     hyprctl monitors -j | jq -e --arg output "$output" '.[] | select(.name == $output)' >/dev/null
 }
 
+apply_stream_layout() {
+    hyprctl keyword monitor "${output},${mode},${position},${scale}" >/dev/null
+    while IFS=$'\t' read -r name _mode _saved_position _saved_scale; do
+        [[ -n "${name:-}" ]] || continue
+        hyprctl keyword monitor "${name},disable" >/dev/null || true
+    done <"$state_file"
+
+    hyprctl dispatch focusmonitor "$output" >/dev/null || true
+    hyprctl dispatch workspace "${SUNSHINE_WORKSPACE:-99}" >/dev/null || true
+    hyprctl dispatch focusmonitor "$output" >/dev/null || true
+}
+
 if ! output_exists; then
     hyprctl output create headless "$output" >/dev/null
 fi
@@ -181,16 +193,10 @@ fi
 
 position="${SUNSHINE_OUTPUT_POSITION:-0x0}"
 
-hyprctl keyword monitor "${output},${mode},${position},${scale}" >/dev/null
-while IFS=$'\t' read -r name _mode _saved_position _saved_scale; do
-    [[ -n "${name:-}" ]] || continue
-    hyprctl keyword monitor "${name},disable" >/dev/null || true
-done <"$state_file"
-
-hyprctl dispatch focusmonitor "$output" >/dev/null || true
-hyprctl dispatch workspace "${SUNSHINE_WORKSPACE:-99}" >/dev/null || true
-hyprctl dispatch focusmonitor "$output" >/dev/null || true
+apply_stream_layout
 restart_shell
+sleep 2
+apply_stream_layout
 
 if systemctl --user is-active --quiet sunshine.service; then
     systemctl --user restart sunshine.service
