@@ -27,6 +27,7 @@ in
 
   config = lib.mkIf (config.remoteStreaming.enable && config.desktopEnv.enable) {
     home.packages = with pkgs; [
+      curl
       jq
       libnotify
       moonlight-qt

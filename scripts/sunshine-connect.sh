@@ -34,6 +34,12 @@ if [[ "$#" -eq 0 ]]; then
     exec sunshine-launcher
 fi
 
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    printf 'Usage: sunshine-connect HOST\n' >&2
+    printf 'Set SUNSHINE_CLIENT_WIDTH/HEIGHT/FPS/SCALE to override the client display mode.\n' >&2
+    exit 0
+fi
+
 host="$1"
 shift || true
 
@@ -114,6 +120,125 @@ if ! ssh "${ssh_opts[@]}" "$host" bash -s -- "$width" "$height" "$fps" "$scale" 
     exit 1
 fi
 
+stop_remote() {
+    ssh "${ssh_opts[@]}" "$host" bash -s -- <<'REMOTE' >/dev/null 2>&1 || true
+set -euo pipefail
+export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH"
+if command -v sunshine-stream-host >/dev/null 2>&1; then
+    exec sunshine-stream-host --stop
+fi
+if [[ -x "$HOME/.home-manager/scripts/sunshine-stream-host.sh" ]]; then
+    exec bash "$HOME/.home-manager/scripts/sunshine-stream-host.sh" --stop
+fi
+REMOTE
+}
+
+load_pairing_env() {
+    local secrets_files=()
+    if [[ -n "${SUNSHINE_PAIRING_ENV:-}" ]]; then
+        secrets_files+=("$SUNSHINE_PAIRING_ENV")
+    else
+        secrets_files+=("$HOME/.config/secrets/api_keys/env_vars")
+        secrets_files+=("$HOME/.config/secrets/sunshine/env")
+    fi
+
+    local secrets_file
+    for secrets_file in "${secrets_files[@]}"; do
+        if [[ -r "$secrets_file" ]]; then
+            set -a
+            source "$secrets_file"
+            set +a
+        fi
+    done
+}
+
+ensure_paired() {
+    if moonlight list "$host" >/dev/null 2>&1; then
+        return 0
+    fi
+
+    if [[ "${SUNSHINE_AUTO_PAIR:-1}" != "1" ]]; then
+        return 0
+    fi
+
+    load_pairing_env
+
+    local api_user="${SUNSHINE_USERNAME:-${SUNSHINE_USER:-}}"
+    local api_password="${SUNSHINE_PASSWORD:-}"
+    if [[ -z "$api_user" || -z "$api_password" ]]; then
+        notify_info "Moonlight is not paired with $host; set SUNSHINE_USERNAME and SUNSHINE_PASSWORD in local secrets to auto-pair"
+        return 0
+    fi
+
+    need curl
+
+    local pin="${SUNSHINE_PAIRING_PIN:-}"
+    if [[ ! "$pin" =~ ^[0-9]{4}$ ]]; then
+        printf -v pin '%04d' "$((RANDOM % 10000))"
+    fi
+
+    local client_name="${SUNSHINE_PAIRING_CLIENT_NAME:-${HOSTNAME:-moonlight}}"
+    local payload
+    payload="$(jq -cn --arg pin "$pin" --arg name "$client_name" '{pin: $pin, name: $name}')"
+
+    local pair_log
+    pair_log="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/sunshine-pair.XXXXXX")"
+
+    notify_info "Pairing Moonlight with $host"
+
+    set +e
+    moonlight pair "$host" --pin "$pin" >"$pair_log" 2>&1 &
+    local pair_pid=$!
+    set -e
+
+    local accepted=0
+    for _ in {1..80}; do
+        if ! kill -0 "$pair_pid" 2>/dev/null; then
+            break
+        fi
+
+        if curl --fail --silent --show-error --insecure \
+            --user "$api_user:$api_password" \
+            --header 'Content-Type: application/json' \
+            --data "$payload" \
+            "https://$host:47990/api/pin" >/dev/null 2>&1; then
+            accepted=1
+            break
+        fi
+
+        sleep 0.25
+    done
+
+    for _ in {1..40}; do
+        if ! kill -0 "$pair_pid" 2>/dev/null; then
+            break
+        fi
+        sleep 0.25
+    done
+
+    if kill -0 "$pair_pid" 2>/dev/null; then
+        kill "$pair_pid" 2>/dev/null || true
+    fi
+
+    set +e
+    wait "$pair_pid"
+    set -e
+
+    rm -f "$pair_log"
+
+    if (( accepted == 1 )) && moonlight list "$host" >/dev/null 2>&1; then
+        return 0
+    fi
+
+    notify_error "Automatic Moonlight pairing failed for $host"
+    return 1
+}
+
+if ! ensure_paired; then
+    stop_remote
+    exit 1
+fi
+
 app="${SUNSHINE_MOONLIGHT_APP:-Desktop}"
 moonlight_args=(
     stream
@@ -144,19 +269,10 @@ moonlight "${moonlight_args[@]}" "$host" "$app"
 rc=$?
 set -e
 
-ssh "${ssh_opts[@]}" "$host" bash -s -- "$width" "$height" "$fps" "$scale" <<'REMOTE' >/dev/null 2>&1 || true
-set -euo pipefail
-export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH"
-if command -v sunshine-stream-host >/dev/null 2>&1; then
-    exec sunshine-stream-host --stop
-fi
-if [[ -x "$HOME/.home-manager/scripts/sunshine-stream-host.sh" ]]; then
-    exec bash "$HOME/.home-manager/scripts/sunshine-stream-host.sh" --stop
-fi
-REMOTE
+stop_remote
 
 if (( rc != 0 )); then
-    notify_error "Moonlight failed for $host. If this is the first connection, pair once with: moonlight pair $host"
+    notify_error "Moonlight failed for $host"
 fi
 
 exit "$rc"
