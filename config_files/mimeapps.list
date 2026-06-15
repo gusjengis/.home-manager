@@ -63,3 +63,4 @@ application/pkix-cert=nvim.desktop;
 application/vnd.microsoft.portable-executable=wine-extension-hlp.desktop;
 application/x-msdownload=wine-extension-hlp.desktop;
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop;
+x-scheme-handler/slack=slack.desktop
