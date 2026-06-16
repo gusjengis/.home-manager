@@ -21,6 +21,7 @@
       handy
       wtype
       xdotool
+      gource
     ]
     ++ lib.optionals (PC && config.desktopEnv.enable) [
       lmstudio
