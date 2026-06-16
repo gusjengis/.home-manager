@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Music Assistant
+Comment=Open Music Assistant as a web app
+Exec=chromium --app=http://t470:8095/
+Icon=webapp-music-assistant
+Terminal=false
+Categories=AudioVideo;Music;
+Keywords=music-assistant;music;chrome-t470__-Default;
+StartupNotify=true
+StartupWMClass=chrome-t470__-Default

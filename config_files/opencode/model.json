@@ -1,12 +1,12 @@
 {
   "recent": [
     {
-      "providerID": "anthropic",
-      "modelID": "claude-opus-4-8"
-    },
-    {
       "providerID": "openai",
       "modelID": "gpt-5.5"
+    },
+    {
+      "providerID": "anthropic",
+      "modelID": "claude-opus-4-8"
     },
     {
       "providerID": "opencode",
