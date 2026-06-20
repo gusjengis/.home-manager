@@ -32,6 +32,9 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/ambxst/presets/active_preset -> $HOME/.config/ambxst/presets/active_preset"
     "$HOME/.home-manager/config_files/local/share/ambxst/pinnedapps.json -> $HOME/.local/share/ambxst/pinnedapps.json"
 
+    # handy
+    "$HOME/.home-manager/config_files/local/share/com.pais.handy/settings_store.json -> $HOME/.local/share/com.pais.handy/settings_store.json"
+
     # ssh
     "$HOME/.home-manager/config_files/ssh/config -> $HOME/.ssh/config"
     "$HOME/.home-manager/config_files/ssh/authorized_keys -> $HOME/.ssh/authorized_keys"
