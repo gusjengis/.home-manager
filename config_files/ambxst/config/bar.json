@@ -1,33 +1,31 @@
 {
-    "availableOnFullscreen": false,
+    "position": "top",
+    "launcherIcon": "/home/gusjengis/.home-manager/config_files/ambxst/apple.png",
+    "launcherIconTint": true,
+    "launcherIconFullTint": true,
+    "launcherIconSize": 18,
+    "pillStyle": "default",
+    "screenList": [],
+    "enableFirefoxPlayer": false,
     "barColor": [
         [
             "surface",
             0
         ]
     ],
-    "containBar": true,
-    "enableFirefoxPlayer": false,
     "frameEnabled": false,
     "frameThickness": 6,
-    "hoverRegionHeight": 8,
-    "hoverToReveal": true,
-    "keepBarBorder": false,
-    "keepBarShadow": false,
-    "launcherIcon": "/home/gusjengis/.home-manager/config_files/ambxst/apple.png",
-    "launcherIconFullTint": true,
-    "launcherIconSize": 18,
-    "launcherIconTint": true,
-    "pillStyle": "default",
     "pinnedOnStartup": false,
-    "position": "top",
-    "screenList": [
-    ],
-    "showLayoutButton": false,
-    "showLayoutSwitchButton": true,
+    "hoverToReveal": true,
+    "hoverRegionHeight": 8,
     "showPinButton": true,
-    "showPresetButton": false,
     "showSpecialWorkspaces": true,
     "specialWorkspacesDisplay": "icons",
-    "use12hFormat": false
+    "showPresetButton": false,
+    "showLayoutButton": false,
+    "availableOnFullscreen": false,
+    "use12hFormat": false,
+    "containBar": true,
+    "keepBarShadow": false,
+    "keepBarBorder": false
 }
