@@ -4,6 +4,7 @@ set -euo pipefail
 declare -a LINKS=(
     # tmux
     "$HOME/.home-manager/config_files/tmux/tmux.conf -> $HOME/.config/tmux/tmux.conf"
+    "$HOME/.home-manager/config_files/tmux/github_dark.tmux -> $HOME/.config/tmux/github_dark.tmux"
 
     # default apps
     "$HOME/.home-manager/config_files/xfce4/helpers.rc -> $HOME/.config/xfce4/helpers.rc"
