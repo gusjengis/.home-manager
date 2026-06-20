@@ -13,6 +13,7 @@ application/pkcs8=nvim.desktop;
 application/pkix-cert=nvim.desktop;
 application/vnd.microsoft.portable-executable=wine-extension-hlp.desktop;
 application/x-msdownload=wine-extension-hlp.desktop;
+image/tiff=krita_tiff.desktop;
 
 [Default Applications]
 inode/directory=thunar.desktop;

@@ -138,6 +138,7 @@ link_hicolor_index_theme() {
 
 link_hicolor_index_theme
 link_directory_contents "$HOME/.home-manager/config_files/local/share/icons/hicolor/128x128/apps" "$HOME/.local/share/icons/hicolor/128x128/apps" '*.png'
+link_directory_contents "$HOME/.home-manager/config_files/local/share/icons/hicolor/128x128/apps" "$HOME/.local/share/icons/hicolor/128x128/apps" '*.svg'
 
 if command -v update-desktop-database >/dev/null 2>&1; then
     update-desktop-database "$HOME/.local/share/applications" >/dev/null 2>&1 || true

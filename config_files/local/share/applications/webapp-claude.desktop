@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Claude
+Comment=Open Claude as a web app
+Exec=chromium --app=https://claude.ai/new#settings/usage
+Icon=webapp-claude
+Terminal=false
+Categories=Network;WebBrowser;
+Keywords=claude;ai;chat;chrome-claude.ai__new-Default;
+StartupNotify=true
+StartupWMClass=chrome-claude.ai__new-Default
