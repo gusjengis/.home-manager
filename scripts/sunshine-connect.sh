@@ -255,9 +255,9 @@ if ! ensure_paired; then
 fi
 
 app="${SUNSHINE_MOONLIGHT_APP:-Desktop}"
-pointer_speed_scale="${SUNSHINE_CLIENT_POINTER_SPEED_SCALE:-0.2}"
+pointer_speed_scale="${SUNSHINE_CLIENT_POINTER_SPEED_SCALE:-0.1}"
 if [[ ! "$pointer_speed_scale" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
-    pointer_speed_scale="0.2"
+    pointer_speed_scale="0.15"
 fi
 
 moonlight_env=()
