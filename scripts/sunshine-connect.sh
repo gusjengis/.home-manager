@@ -255,6 +255,16 @@ if ! ensure_paired; then
 fi
 
 app="${SUNSHINE_MOONLIGHT_APP:-Desktop}"
+pointer_speed_scale="${SUNSHINE_CLIENT_POINTER_SPEED_SCALE:-0.2}"
+if [[ ! "$pointer_speed_scale" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+    pointer_speed_scale="0.2"
+fi
+
+moonlight_env=()
+if [[ "${SUNSHINE_MOONLIGHT_ABSOLUTE_MOUSE:-0}" != "1" ]]; then
+    moonlight_env+=(SDL_MOUSE_RELATIVE_SPEED_SCALE="$pointer_speed_scale")
+fi
+
 moonlight_args=(
     stream
     --resolution "${width}x${height}"
@@ -280,7 +290,7 @@ if [[ "${SUNSHINE_MOONLIGHT_HDR:-0}" == "1" ]]; then
 fi
 
 set +e
-moonlight "${moonlight_args[@]}" "$host" "$app"
+env "${moonlight_env[@]}" moonlight "${moonlight_args[@]}" "$host" "$app"
 rc=$?
 set -e
 
