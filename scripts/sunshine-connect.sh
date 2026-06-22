@@ -266,7 +266,7 @@ moonlight_args=(
     --keep-awake
 )
 
-if [[ "${SUNSHINE_MOONLIGHT_ABSOLUTE_MOUSE:-1}" == "1" ]]; then
+if [[ "${SUNSHINE_MOONLIGHT_ABSOLUTE_MOUSE:-0}" == "1" ]]; then
     moonlight_args+=(--absolute-mouse)
 else
     moonlight_args+=(--no-absolute-mouse)
