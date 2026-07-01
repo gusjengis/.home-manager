@@ -7,6 +7,6 @@
 
 {
   home.activation.createDirs = lib.hm.dag.entryBefore [ "syncRepos" ] ''
-    mkdir -p  ~/Documents/Obsidian  ~/Documents/Code/AUR
+    mkdir -p  ~/Documents/Obsidian
   '';
 }
