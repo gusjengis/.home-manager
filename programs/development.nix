@@ -13,7 +13,7 @@
     with pkgs;
     [
       openssl
-      inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+      opencode
       inputs.claude-code-nix.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
     ]
     ++ lib.optionals config.desktopEnv.enable [
