@@ -9,7 +9,7 @@ let
   rebuildCmd = pkgs.writeShellApplication {
     name = "rebuild";
     text = ''
-      exec /run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild switch --impure --flake /etc/nix-modules/nixosModules/ "$@"
+      exec /run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild switch --impure --flake /etc/nix-modules/ "$@"
     '';
   };
 
