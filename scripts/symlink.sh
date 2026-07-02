@@ -112,7 +112,29 @@ link_directory_contents() {
     shopt -u nullglob
 }
 
-link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
+unlink_managed_directory_contents() {
+    local source_dir="$1"
+    local destination_dir="$2"
+    local pattern="$3"
+    local source_path destination_path
+
+    shopt -s nullglob
+    for source_path in "$source_dir"/$pattern; do
+        [[ -f "$source_path" ]] || continue
+        destination_path="$destination_dir/$(basename "$source_path")"
+        [[ -L "$destination_path" ]] || continue
+        [[ "$(readlink "$destination_path")" == "$source_path" ]] || continue
+        rm -f "$destination_path"
+    done
+    shopt -u nullglob
+}
+
+if [[ "${DESKTOP_ENV_ENABLED:-false}" == "true" ]]; then
+    link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
+else
+    link_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" '*.desktop'
+    unlink_managed_directory_contents "$HOME/.home-manager/config_files/local/share/applications" "$HOME/.local/share/applications" 'webapp-*.desktop'
+fi
 link_directory_contents "$HOME/.home-manager/config_files/opencode/plugins" "$HOME/.config/opencode/plugins" '*.js'
 mkdir -p "$HOME/.local/share/icons/hicolor"
 
