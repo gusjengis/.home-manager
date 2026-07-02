@@ -39,7 +39,11 @@
       home.stateVersion = "25.05";
 
       home.sessionVariables = {
-        SYNC_REPO_GROUPS = if config.dev.enable then "core,dev" else "core";
+        SYNC_REPO_GROUPS = lib.concatStringsSep "," (
+          [ "core" ]
+          ++ lib.optional config.dev.enable "dev"
+          ++ lib.optional config.desktopEnv.enable "desktop"
+        );
       };
 
       nixpkgs.config.allowUnfree = true;
