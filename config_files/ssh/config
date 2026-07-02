@@ -12,5 +12,11 @@ Host aur.archlinux.org
   IdentityFile ~/.config/secrets/ssh/AUR-SSH.pem
   User aur
 
+Host TheAlpha
+  HostName alpha
+  User trevogre
+  IdentitiesOnly yes
+  IdentityFile ~/.config/secrets/ssh/fleet_ed25519
+
 Host *
   IdentityFile ~/.config/secrets/ssh/fleet_ed25519
