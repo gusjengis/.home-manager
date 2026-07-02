@@ -9,19 +9,14 @@
   options.gaming.enable = lib.mkEnableOption "gaming" // {
     default = false;
   };
-  config = {
-    home.packages =
-      (with pkgs; [ moonlight-qt ])
-      ++ lib.optionals (config.gaming.enable && config.desktopEnv.enable) (
-        with pkgs;
-        [
-          protonup-qt
-          zulu17
-          prismlauncher
-          atlauncher
-          lutris
-          solitaire-tui
-        ]
-      );
+  config = lib.mkIf (config.gaming.enable && config.desktopEnv.enable) {
+    home.packages = with pkgs; [
+      protonup-qt
+      zulu17
+      prismlauncher
+      atlauncher
+      lutris
+      solitaire-tui
+    ];
   };
 }
