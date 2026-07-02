@@ -1,1 +1,2 @@
 # Repositories that should only sync when desktopEnv.enable is true.
+$HOME/;https://github.com/gusjengis/Wallpapers.git
