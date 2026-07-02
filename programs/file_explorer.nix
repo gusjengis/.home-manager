@@ -23,7 +23,6 @@ in
 {
   home.packages = with pkgs; [
     thunar
-    yazi
     tumbler
     thunar-volman
     thunar-archive-plugin
