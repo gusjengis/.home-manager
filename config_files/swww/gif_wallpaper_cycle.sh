@@ -45,19 +45,19 @@ while true; do
 
   # load all wallpapers in the folder and shuffle list
   wallpapers=(
-    ~/.home-manager/wallpapers/*.avif
-    ~/.home-manager/wallpapers/*.jpeg
-    ~/.home-manager/wallpapers/*.JPEG
-    ~/.home-manager/wallpapers/*.jpg
-    ~/.home-manager/wallpapers/*.png
-    ~/.home-manager/wallpapers/*.gif
-    ~/.home-manager/wallpapers/*.pnm
-    ~/.home-manager/wallpapers/*.tga
-    ~/.home-manager/wallpapers/*.tiff
-    ~/.home-manager/wallpapers/*.webp
-    ~/.home-manager/wallpapers/*.bmp
-    ~/.home-manager/wallpapers/*.farbfeld
-    ~/.home-manager/wallpapers/*.svg 
+    "$HOME"/Wallpapers/*.avif
+    "$HOME"/Wallpapers/*.jpeg
+    "$HOME"/Wallpapers/*.JPEG
+    "$HOME"/Wallpapers/*.jpg
+    "$HOME"/Wallpapers/*.png
+    "$HOME"/Wallpapers/*.gif
+    "$HOME"/Wallpapers/*.pnm
+    "$HOME"/Wallpapers/*.tga
+    "$HOME"/Wallpapers/*.tiff
+    "$HOME"/Wallpapers/*.webp
+    "$HOME"/Wallpapers/*.bmp
+    "$HOME"/Wallpapers/*.farbfeld
+    "$HOME"/Wallpapers/*.svg 
   )
 
   mapfile -t shuffled < <(shuf -e "${wallpapers[@]}")

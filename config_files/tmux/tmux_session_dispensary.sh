@@ -9,6 +9,7 @@ DIRS=(
 )
 
 EXTRA_DIRS=(
+  "$HOME/Wallpapers"
   "$HOME/.config/nvim"
   "$HOME/.config/secrets"
   "$HOME/.home-manager/"

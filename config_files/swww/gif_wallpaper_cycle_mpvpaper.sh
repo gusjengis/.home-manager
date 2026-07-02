@@ -6,7 +6,7 @@ echo $$ > /tmp/wallpaper-script.pid
 
 log_file="/tmp/gif_wallpaper_cycle_mpvpaper.log"
 ambxst_wallpaper_state="${XDG_CACHE_HOME:-$HOME/.cache}/ambxst/wallpapers.json"
-default_wallpaper_dir="$HOME/.home-manager/wallpapers"
+default_wallpaper_dir="$HOME/Wallpapers"
 advance_request_file="/tmp/wallpaper-script.advance"
 
 advance_requested=0

@@ -3,7 +3,7 @@ set -euo pipefail
 
 interval_seconds="${WALLPAPER_INTERVAL_SECONDS:-300}"
 state_file="${XDG_CACHE_HOME:-$HOME/.cache}/ambxst/wallpapers.json"
-default_wallpaper_dir="$HOME/.home-manager/wallpapers"
+default_wallpaper_dir="$HOME/Wallpapers"
 lock_dir="/tmp/ambxst_wallpaper_timer.lock"
 
 shell_ready() {
