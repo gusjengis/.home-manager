@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Nextcloud
+Comment=Open Nextcloud Files as a web app
+Exec=chromium --app=https://alpha.tail29bd65.ts.net/apps/files/files
+Icon=webapp-nextcloud
+Terminal=false
+Categories=Network;FileTransfer;
+Keywords=nextcloud;cloud-storage;files;chrome-alpha.tail29bd65.ts.net__apps_files_files-Default;
+StartupNotify=true
+StartupWMClass=chrome-alpha.tail29bd65.ts.net__apps_files_files-Default
