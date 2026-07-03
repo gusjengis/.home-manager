@@ -35,6 +35,16 @@ in
     tailnetThunarBookmarks
   ];
 
+  # ensure the shared data drive is bookmarked in thunar
+  home.activation.dataThunarBookmark = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    bookmarks="${config.xdg.configHome}/gtk-3.0/bookmarks"
+    mkdir -p "$(dirname "$bookmarks")"
+    touch "$bookmarks"
+    if ! ${pkgs.gnugrep}/bin/grep -qxF 'file:///data Data' "$bookmarks"; then
+      printf 'file:///data Data\n' >> "$bookmarks"
+    fi
+  '';
+
   home.activation.tailnetThunarBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     ${tailnetThunarBookmarks}/bin/tailnet-thunar-bookmarks refresh || true
   '';
