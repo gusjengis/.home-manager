@@ -40,8 +40,8 @@ in
     bookmarks="${config.xdg.configHome}/gtk-3.0/bookmarks"
     mkdir -p "$(dirname "$bookmarks")"
     touch "$bookmarks"
-    if ! ${pkgs.gnugrep}/bin/grep -qxF 'file:///data Data' "$bookmarks"; then
-      printf 'file:///data Data\n' >> "$bookmarks"
+    if ! ${pkgs.gnugrep}/bin/grep -qE '^file:///data( |$)' "$bookmarks"; then
+      printf 'file:///data data\n' >> "$bookmarks"
     fi
   '';
 

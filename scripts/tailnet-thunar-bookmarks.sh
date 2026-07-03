@@ -48,9 +48,9 @@ write_bookmarks() {
   tmp_next="$(mktemp)"
 
   if [ -s "$managed_file" ]; then
-    grep -F -x -v -f "$managed_file" "$bookmarks_file" > "$tmp_preserved" || true
+    grep -F -x -v -f "$managed_file" "$bookmarks_file" | grep -v '^$' > "$tmp_preserved" || true
   else
-    cp "$bookmarks_file" "$tmp_preserved"
+    grep -v '^$' "$bookmarks_file" > "$tmp_preserved" || true
   fi
 
   {
