@@ -18,6 +18,7 @@
     with pkgs;
     [
       btop
+      nethogs
       nvtopPackages.full
       zip
       p7zip
