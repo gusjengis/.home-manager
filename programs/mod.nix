@@ -3,6 +3,7 @@
 {
   imports = [
     ./3d_printing.nix
+    ./agent_tools.nix
     ./audio.nix
     ./browser.nix
     ./development.nix

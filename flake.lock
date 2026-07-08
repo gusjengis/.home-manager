@@ -66,6 +66,22 @@
         "type": "github"
       }
     },
+    "caveman": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783076931,
+        "narHash": "sha256-VqRHx3/4SSCnEh3cUJ/he5saIfwNhS0hOzoH/wwtU2o=",
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
+        "rev": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
+        "type": "github"
+      }
+    },
     "claude-code-nix": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -358,6 +374,7 @@
       "inputs": {
         "alga": "alga",
         "ambxst": "ambxst",
+        "caveman": "caveman",
         "claude-code-nix": "claude-code-nix",
         "home-manager": "home-manager",
         "hyprlog-nixpkgs": "hyprlog-nixpkgs",
