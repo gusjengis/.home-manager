@@ -43,6 +43,9 @@ in
     if ! ${pkgs.gnugrep}/bin/grep -qE '^file:///data( |$)' "$bookmarks"; then
       printf 'file:///data data\n' >> "$bookmarks"
     fi
+    if ! ${pkgs.gnugrep}/bin/grep -qE '^file:///data/Literature( |$)' "$bookmarks"; then
+      printf 'file:///data/Literature Literature\n' >> "$bookmarks"
+    fi
   '';
 
   home.activation.tailnetThunarBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
