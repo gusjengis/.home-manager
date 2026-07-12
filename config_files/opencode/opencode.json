@@ -12,6 +12,29 @@
     }
   },
   "provider": {
+    "ollama-omega": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (omega)",
+      "options": {
+        "baseURL": "http://omega.tail29bd65.ts.net:11434/v1"
+      },
+      "models": {
+        "qwen3:8b": {
+          "name": "Qwen3 8B (omega)",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
+        },
+        "phi4-mini": {
+          "name": "Phi4 Mini (omega)",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
+        }
+      }
+    },
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
