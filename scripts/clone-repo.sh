@@ -60,7 +60,7 @@ clone_repo() {
                 git pull --ff-only -q 2>/dev/null || {
                     local pull_result=$?
                     if [ $pull_result -eq 128 ]; then
-                        echo "$repo_name: confilct with upsteam"
+                        echo "$repo_name: conflict with upsteam"
                     else
                         echo "$repo_name: pull failed"
                     fi
