@@ -17,7 +17,7 @@
       inputs.claude-code-nix.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
     ]
     ++ lib.optionals config.desktopEnv.enable [
-      handy
+      inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.handy
       wtype
       xdotool
       gource

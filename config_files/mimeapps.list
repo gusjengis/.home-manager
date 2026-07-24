@@ -1,5 +1,5 @@
 [Added Associations]
-image/png=gimp.desktop;qimgv.desktop;
+image/png=krita_png.desktop;gimp.desktop;qimgv.desktop;
 audio/flac=vlc.desktop;
 application/x-matroska=vlc.desktop;
 audio/x-matroska=vlc.desktop;

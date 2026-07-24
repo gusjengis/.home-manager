@@ -18,6 +18,10 @@
       url = "github:gusjengis/Ambxst?ref=fix-special-workspaces";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    handy = {
+      url = "github:cjpais/Handy/v0.9.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Caveman skill suite for OpenCode (output-token compression).
     # Update to latest: nix flake update caveman && rehome
     caveman = {
