@@ -97,7 +97,6 @@ let
           networkmanagerapplet
           blueman
           pwvucontrol
-          easyeffects
           gradia
           kdePackages.breeze-icons
           hicolor-icon-theme
