@@ -70,7 +70,8 @@
                 "key": "G",
                 "modifiers": [
                     "SUPER",
-                    "SHIFT"
+                    "SHIFT",
+                    "ALT"
                 ]
             },
             "lockscreen": {

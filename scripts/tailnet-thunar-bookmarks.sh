@@ -3,6 +3,7 @@ set -euo pipefail
 probe_timeout="${TAILNET_THUNAR_PROBE_TIMEOUT:-10}"
 refresh_interval="${TAILNET_THUNAR_REFRESH_INTERVAL:-5}"
 full_refresh_interval="${TAILNET_THUNAR_FULL_REFRESH_INTERVAL:-60}"
+office_gateway="${TAILNET_THUNAR_OFFICE_GATEWAY:-mac.tail29bd65.ts.net}"
 
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
 state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
@@ -34,6 +35,45 @@ probe_peer() {
 
   if nc -z -w "$probe_timeout" "$host" 22 >/dev/null 2>&1; then
     printf 'sftp://%s/ %s\n' "$host" "$(bookmark_label "$host")"
+  fi
+}
+
+office_gateway_ready() {
+  local status_json="$1"
+
+  jq -e --arg gateway "$office_gateway" '
+    def clean_name: sub("[.]$"; "");
+
+    (.BackendState == "Running") and (
+      ((.Self.DNSName // "" | clean_name) == $gateway) or
+      any(
+        .Peer[]?;
+        ((.DNSName // "" | clean_name) == $gateway) and
+        (.Online == true) and
+        ((.AllowedIPs // []) | index("10.145.0.15/32") != null) and
+        ((.AllowedIPs // []) | index("10.145.0.18/32") != null)
+      )
+    )
+  ' "$status_json" >/dev/null
+}
+
+append_office_bookmarks() {
+  local status_json="$1"
+  local new_managed="$2"
+
+  office_gateway_ready "$status_json" || return 0
+
+  if nc -z -w "$probe_timeout" 10.145.0.15 445 >/dev/null 2>&1; then
+    printf 'file:///mnt/office/orthos O: Orthos\n' >> "$new_managed"
+  fi
+
+  if nc -z -w "$probe_timeout" 10.145.0.18 445 >/dev/null 2>&1; then
+    printf '%s\n' \
+      'file:///mnt/office/company/Users U: Users' \
+      'file:///mnt/office/company/Jobs X: Jobs' \
+      'file:///mnt/office/company/Jobs%20Archive Y: Jobs Archive' \
+      'file:///mnt/office/company/Admin Z: Admin' \
+      >> "$new_managed"
   fi
 }
 
@@ -91,6 +131,8 @@ refresh_once() {
   done < "$peers_file"
   wait
 
+  append_office_bookmarks "$status_json" "$new_managed"
+
   sort -u -o "$new_managed" "$new_managed"
   write_bookmarks "$new_managed"
   rm -f "$status_json" "$peers_file" "$new_managed"
@@ -102,7 +144,18 @@ status_hash() {
   jq -r '
     [
       .Self.DNSName,
-      (.Peer[]? | [.DNSName, .Online, .Active, .TailscaleIPs[0]] | @tsv)
+      (
+        .Peer[]? |
+        [
+          .DNSName,
+          .Online,
+          .Active,
+          .TailscaleIPs[0],
+          (.AllowedIPs // [] | join(",")),
+          (.PrimaryRoutes // [] | join(","))
+        ] |
+        @tsv
+      )
     ] | @tsv
   ' "$status_json" | sha256sum | cut -d " " -f 1
 }

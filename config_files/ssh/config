@@ -18,5 +18,11 @@ Host TheAlpha
   IdentitiesOnly yes
   IdentityFile ~/.config/secrets/ssh/fleet_ed25519
 
+Host og
+  HostName og.tail29bd65.ts.net
+  User antho
+  IdentitiesOnly yes
+  IdentityFile ~/.config/secrets/ssh/fleet_ed25519
+
 Host *
   IdentityFile ~/.config/secrets/ssh/fleet_ed25519

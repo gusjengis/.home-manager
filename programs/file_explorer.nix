@@ -54,7 +54,7 @@ in
 
   systemd.user.services.tailnet-thunar-bookmarks = {
     Unit = {
-      Description = "Keep Thunar Tailnet SFTP bookmarks current";
+      Description = "Keep Thunar Tailnet bookmarks current";
       After = [ "default.target" ];
     };
 
@@ -64,9 +64,10 @@ in
       Restart = "always";
       RestartSec = 5;
       Environment = [
-        "TAILNET_THUNAR_PROBE_TIMEOUT=10"
+        "TAILNET_THUNAR_PROBE_TIMEOUT=3"
         "TAILNET_THUNAR_REFRESH_INTERVAL=5"
-        "TAILNET_THUNAR_FULL_REFRESH_INTERVAL=60"
+        "TAILNET_THUNAR_FULL_REFRESH_INTERVAL=15"
+        "TAILNET_THUNAR_OFFICE_GATEWAY=mac.tail29bd65.ts.net"
       ];
     };
 
