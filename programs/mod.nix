@@ -9,6 +9,7 @@
     ./development.nix
     ./file_explorer.nix
     ./image_editing.nix
+    ./mail.nix
     ./messaging.nix
     ./notes.nix
     ./recording.nix

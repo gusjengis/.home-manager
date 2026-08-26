@@ -11,6 +11,7 @@ bookmarks_file="$config_home/gtk-3.0/bookmarks"
 state_dir="$state_home/tailnet-thunar-bookmarks"
 managed_file="$state_dir/managed-bookmarks"
 status_hash_file="$state_dir/status-hash"
+refresh_lock_file="$state_dir/refresh.lock"
 
 bookmark_label() {
   local host="$1"
@@ -57,17 +58,23 @@ office_gateway_ready() {
   ' "$status_json" >/dev/null
 }
 
+is_cifs_mounted() {
+  local path="$1"
+
+  findmnt --kernel --raw --noheadings --types cifs --output TARGET | grep -Fqx -- "$path"
+}
+
 append_office_bookmarks() {
   local status_json="$1"
   local new_managed="$2"
 
   office_gateway_ready "$status_json" || return 0
 
-  if nc -z -w "$probe_timeout" 10.145.0.15 445 >/dev/null 2>&1; then
+  if is_cifs_mounted /mnt/office/orthos; then
     printf 'file:///mnt/office/orthos O: Orthos\n' >> "$new_managed"
   fi
 
-  if nc -z -w "$probe_timeout" 10.145.0.18 445 >/dev/null 2>&1; then
+  if is_cifs_mounted /mnt/office/company; then
     printf '%s\n' \
       'file:///mnt/office/company/Users U: Users' \
       'file:///mnt/office/company/Jobs X: Jobs' \
@@ -82,7 +89,8 @@ write_bookmarks() {
   local tmp_preserved tmp_next
 
   mkdir -p "$(dirname "$bookmarks_file")" "$state_dir"
-  touch "$bookmarks_file" "$managed_file"
+  [ -e "$bookmarks_file" ] || touch "$bookmarks_file"
+  [ -e "$managed_file" ] || touch "$managed_file"
 
   tmp_preserved="$(mktemp)"
   tmp_next="$(mktemp)"
@@ -105,11 +113,13 @@ write_bookmarks() {
     install -m 0644 "$tmp_next" "$bookmarks_file"
   fi
 
-  install -m 0644 "$new_managed" "$managed_file"
+  if ! cmp -s "$new_managed" "$managed_file"; then
+    install -m 0644 "$new_managed" "$managed_file"
+  fi
   rm -f "$tmp_preserved" "$tmp_next"
 }
 
-refresh_once() {
+refresh_once_unlocked() {
   local status_json peers_file new_managed host
 
   mkdir -p "$state_dir"
@@ -136,6 +146,26 @@ refresh_once() {
   sort -u -o "$new_managed" "$new_managed"
   write_bookmarks "$new_managed"
   rm -f "$status_json" "$peers_file" "$new_managed"
+}
+
+refresh_once() {
+  mkdir -p "$state_dir"
+  (
+    flock 9
+    refresh_once_unlocked
+  ) 9> "$refresh_lock_file"
+}
+
+clear_managed() {
+  local new_managed
+
+  mkdir -p "$state_dir"
+  (
+    flock 9
+    new_managed="$(mktemp)"
+    write_bookmarks "$new_managed"
+    rm -f "$new_managed" "$status_hash_file"
+  ) 9> "$refresh_lock_file"
 }
 
 status_hash() {
@@ -194,11 +224,14 @@ case "${1:-refresh}" in
   refresh)
     refresh_once
     ;;
+  clear)
+    clear_managed
+    ;;
   watch)
     watch
     ;;
   *)
-    printf 'Usage: %s [refresh|watch]\n' "$0" >&2
+    printf 'Usage: %s [clear|refresh|watch]\n' "$0" >&2
     exit 2
     ;;
 esac

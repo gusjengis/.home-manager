@@ -22,6 +22,22 @@
       url = "github:cjpais/Handy/v0.9.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Mail stack. All three are pinned to exact revisions and deliberately keep
+    # their own nixpkgs: they are verified to build against it, and following
+    # ours has no upside here.
+    #
+    # Betterbird = Thunderbird ESR fork, profile-compatible with Thunderbird.
+    betterbird-nix = {
+      url = "github:TheAnachronism/betterbird-nix/85fa612d8f3663755d2332144f22203d4f04d431";
+    };
+    # OAuth 2.0 token broker, feeds XOAUTH2 tokens to the mail watcher.
+    ortie = {
+      url = "github:pimalaya/ortie/274bd4c6e5ab50ecafd71ae52c051ffd596156af";
+    };
+    # IMAP IDLE watcher, fires desktop notifications without a mail client running.
+    carillon = {
+      url = "github:pimalaya/carillon/564d88dc2778b347040bf322130dac69f23e17ab";
+    };
     # Caveman skill suite for OpenCode (output-token compression).
     # Update to latest: nix flake update caveman && rehome
     caveman = {

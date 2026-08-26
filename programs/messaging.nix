@@ -7,6 +7,8 @@
 }:
 
 {
+  # Betterbird is declared in mail.nix (profiles, accounts, watcher).
+
   home.packages =
     with pkgs;
     [
