@@ -2,17 +2,12 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
-
-let
-  betterbird = inputs.betterbird-nix.packages.${pkgs.system}.betterbird;
-in
 {
   programs.thunderbird = {
     enable = config.desktopEnv.enable;
-    package = betterbird;
+    package = pkgs.thunderbird;
 
     profiles.default = {
       isDefault = true;
@@ -38,12 +33,9 @@ in
         "mailnews.reuse_message_window"            = false;
         "mailnews.reuse_window.message_limit"      = 10;
 
-        # Betterbird tray / notifications
-        "mail.biff.show_in_tray"                   = true;
-        "mail.minimizeToTray"                      = true;
-        "mail.closeToTray"                         = true;
-        "mail.startupMinimized"                    = true;
-        "mail.minimizeToTray.supportedDesktops"    = "kde,gnome,xfce,mate,hyprland,lxqt";
+        # Notifications
+        "mail.biff.show_alert"                     = true;
+        "mail.biff.use_system_alert"               = true;
 
         # userChrome.css loading
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
@@ -51,20 +43,17 @@ in
     };
   };
 
-  # Betterbird needs a profiles.ini it can write to. Home Manager's Thunderbird
-  # module links it into the read-only Nix store, so replace that link with a
-  # writable copy of the tracked file.
-  home.activation.betterbirdProfilesIni = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  # Thunderbird needs a writable profiles.ini. Replace Home Manager's store
+  # link with a writable copy of the tracked file.
+  home.activation.thunderbirdProfilesIni = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     rm -f "$HOME/.thunderbird/profiles.ini"
     cp "${../.}/config_files/thunderbird/profiles.ini" "$HOME/.thunderbird/profiles.ini"
     chmod u+w "$HOME/.thunderbird/profiles.ini"
   '';
   home.file.".thunderbird/profiles.ini".force = true;
 
-  # Betterbird needs a prefs.js to recognise the profile.  Home Manager only
-  # writes user.js, so we seed a minimal prefs.js once; Betterbird overwrites
-  # it on first launch.
-  home.activation.betterbirdProfile = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  # Seed prefs.js so Thunderbird recognises the Home Manager profile.
+  home.activation.thunderbirdProfile = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     prefs="$HOME/.thunderbird/default/prefs.js"
     if [ ! -f "$prefs" ]; then
       mkdir -p "$(dirname "$prefs")"

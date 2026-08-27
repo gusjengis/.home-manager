@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# sync-mail-filters.sh – bidirectional sync of Betterbird filter files.
+# sync-mail-filters.sh - bidirectional sync of Thunderbird filter files.
 #
 # Usage:
-#   sync-mail-filters.sh save   – copy profile filters → repo (run before rebuild)
-#   sync-mail-filters.sh load   – copy repo filters → profile (after rebuild)
+#   sync-mail-filters.sh save   - copy profile filters to repo (run before rebuild)
+#   sync-mail-filters.sh load   - copy repo filters to profile (after rebuild)
 
 REPO="$HOME/.home-manager/config_files/betterbird/filters"
 PROFILE="$HOME/.thunderbird/default/ImapMail"
 
-# Manually created Betterbird accounts use these ImapMail subdirectories.
+# Manually created Thunderbird accounts use these ImapMail subdirectories.
 declare -A DIRS=(
   [work]="outlook.office365.com"
   [outlook]="outlook.office365-1.com"

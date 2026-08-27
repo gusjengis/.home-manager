@@ -1,4 +1,4 @@
-/* Betterbird userChrome – managed by Home Manager. */
+/* Thunderbird userChrome - managed by Home Manager. */
 
 /* Collapse the menu bar by default; Alt to reveal. */
 #toolbar-menubar { display: none !important; }

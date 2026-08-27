@@ -7,7 +7,7 @@
 }:
 
 {
-  # Betterbird is declared in mail.nix (profiles, accounts, watcher).
+  # Thunderbird is declared in mail.nix.
 
   home.packages =
     with pkgs;

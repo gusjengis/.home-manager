@@ -36,7 +36,7 @@ let
         printf '%s\n' \
           ${lib.escapeShellArg "/v:${cfg.address}"} \
           ${lib.escapeShellArg "/u:${cfg.user}"} \
-          /d:. \
+          ${lib.escapeShellArg "/d:${cfg.domain}"} \
           /cert:tofu \
           /sec:nla \
           '/auth-pkg-list:!kerberos,ntlm,!u2u' \
@@ -59,18 +59,23 @@ in
     };
     user = lib.mkOption {
       type = lib.types.str;
-      default = "antho";
+      default = "Anthony";
       description = "Windows RDP username";
+    };
+    domain = lib.mkOption {
+      type = lib.types.str;
+      default = "AZUREGREEN";
+      description = "Windows RDP domain";
     };
     address = lib.mkOption {
       type = lib.types.str;
-      default = "192.168.122.18";
-      description = "Static IPv4 address of the Windows VM";
+      default = "trevornomad.tail29bd65.ts.net";
+      description = "Tailnet hostname of the Windows computer";
     };
     credentialsFile = lib.mkOption {
       type = lib.types.str;
-      default = "${config.home.homeDirectory}/.config/secrets/windows-smb-credentials";
-      description = "Credential file shared by SMB and RDP launchers";
+      default = "${config.home.homeDirectory}/.config/secrets/trevornomad-credentials";
+      description = "RDP credential file";
     };
   };
 
@@ -86,7 +91,7 @@ in
       [Desktop Entry]
       Type=Application
       Name=Windows 11
-      Comment=Connect to the Windows VM over RDP
+      Comment=Connect to TrevorNomad over RDP
       Exec=${lib.getExe windowsRdp}
       Icon=${config.xdg.dataHome}/icons/windows-logo.webp
       Terminal=false
