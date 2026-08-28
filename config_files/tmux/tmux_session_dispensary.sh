@@ -36,13 +36,39 @@ filter_ignored_dirs() {
   done
 }
 
-if [[ $# -eq 1 ]]; then
-  selected=$1
-else
-  fd_entries=$(
-    fd -t d -d 1 . --absolute-path "${DIRS[@]}" 2>/dev/null \
+expand_path() {
+  local path=$1
+
+  case $path in
+    "~") printf "%s\n" "$HOME" ;;
+    "~/"*) printf "%s/%s\n" "$HOME" "${path#~/}" ;;
+    *) printf "%s\n" "$path" ;;
+  esac
+}
+
+build_fd_entries() {
+  local dirs=()
+  local dir
+
+  for dir in "$@"; do
+    dirs+=("$(expand_path "$dir")")
+  done
+
+  fd -t d -d 1 . --absolute-path "${dirs[@]}" 2>/dev/null \
     | filter_ignored_dirs \
     | sed "s|^$HOME/||"
+}
+
+if [[ $# -gt 0 ]]; then
+  fd_entries=$(build_fd_entries "$@")
+  selected=$(
+    printf "%s\n" "$fd_entries" \
+    | sk --color="bg:#0d1117,fg:#c9d1d9,matched:#58a6ff,matched_bg:#0d1117,current:#c9d1d9,current_bg:#161b22,current_match:#79c0ff,current_match_bg:#161b22,prompt:#58a6ff,pointer:#58a6ff,marker:#3fb950,spinner:#58a6ff,info:#8b949e,header:#8b949e,border:#30363d" --tmux center,50%
+  )
+  [[ $selected ]] && [[ ! "$selected" =~ ^/ ]] && selected="$HOME/$selected"
+else
+  fd_entries=$(
+    build_fd_entries "${DIRS[@]}"
   )
   extra_entries=$(
     printf "%s\n" "${EXTRA_DIRS[@]}" \
