@@ -1,86 +1,35 @@
-source = $HOME/.config/hypr/variables.conf
-source = $HOME/.config/hypr/platform-variables.conf
+local vars = require("platform-variables")
 
-### TERMINAL
+local workspaces = {
+	{ name = "terminal", key = "T", description = "Terminal", command = vars.terminal },
+	{ name = "browser", key = "C", description = "Chromium", command = vars.browser },
+	{ name = "calendar", key = "C", description = "Calendar", command = vars.calendar, shift = true },
+	{ name = "gpt", key = "G", description = "ChatGPT", command = vars.gpt },
+	{ name = "gis", key = "G", description = "GIS", command = vars.gis, shift = true },
+	{ name = "db", key = "D", description = "DB", command = vars.db, shift = true },
+	{ name = "slack", key = "S", description = "Slack", command = vars.slack },
+	{ name = "discord", key = "D", description = "Discord", command = vars.discord },
+	{ name = "notes", key = "N", description = "Notes", command = "obsidian" },
+	{ name = "music", key = "Q", description = "Music", command = vars.music, shift = true },
+	{ name = "musicassistant", key = "M", description = "Music Assistant", command = vars.music_assistant },
+	{ name = "email", key = "E", description = "Email", command = vars.email },
+	{ name = "home", key = "H", description = "Home Assistant", command = vars.homeAssistant, shift = true },
+}
 
-bindd = $SUPER, T, Terminal, togglespecialworkspace, terminal 
-workspace = special:terminal, on-created-empty:$terminal
+for _, workspace in ipairs(workspaces) do
+	local modifiers = vars.SUPER .. (workspace.shift and " + SHIFT" or "")
 
-### BROWSER
+	hl.bind(modifiers .. " + " .. workspace.key, hl.dsp.workspace.toggle_special(workspace.name), {
+		description = workspace.description,
+	})
+	hl.workspace_rule({
+		workspace = "special:" .. workspace.name,
+		on_created_empty = workspace.command,
+	})
+end
 
-bindd = $SUPER, C, Chromium, togglespecialworkspace, browser 
-workspace = special:browser, on-created-empty:$browser 
-
-### CALENDAR
-
-bindd = $SUPER SHIFT, C, Calendar, togglespecialworkspace, calendar 
-workspace = special:calendar, on-created-empty:$calendar
-
-### GPT
-
-bindd = $SUPER, G, ChatGPT, togglespecialworkspace, gpt 
-workspace = special:gpt, on-created-empty:$gpt
-
-### GIS
-bindd = $SUPER SHIFT, G, GIS, togglespecialworkspace, gis 
-workspace = special:gis, on-created-empty:$gis
-
-### DB
-bindd = $SUPER SHIFT, D, DB, togglespecialworkspace, db 
-workspace = special:db, on-created-empty:$db
-
-### CLAUDE
-
-# bindd = $SUPER, A, Claude, togglespecialworkspace, claude 
-# workspace = special:claude, on-created-empty:$claude
-
-### SLACK
-  
-bindd = $SUPER, S, Slack, togglespecialworkspace, slack 
-workspace = special:slack, on-created-empty:$slack  
-
-### DISCORD
-  
-bindd = $SUPER, D, Discord, togglespecialworkspace, discord 
-workspace = special:discord, on-created-empty:$discord
-
-### Plastic
-  
-# bindd = $SUPER, P, Plastic, togglespecialworkspace, plastic 
-# workspace = special:plastic, on-created-empty:plasticgui  
-
-### NOTES
-
-bindd = $SUPER, N, Notes, togglespecialworkspace, notes  
-workspace = special:notes , on-created-empty:obsidian
-
-### MUSIC
-
-bindd = SUPER SHIFT, Q, Music, togglespecialworkspace, music 
-workspace = special:music, on-created-empty:$music
-
-### MUSIC ASSISTANT
-
-bindd = $SUPER, M, Music Assistant, togglespecialworkspace, musicassistant
-workspace = special:musicassistant, on-created-empty:$music_assistant 
-
-### Email
-
-bindd = $SUPER, E, Email, togglespecialworkspace, email 
-workspace = special:email, on-created-empty:$email  
-
-### WHATSAPP
-
-# bindd = $SUPER, W, Whatsapp, togglespecialworkspace, whatsapp 
-# workspace = special:whatsapp, on-created-empty:$whatsapp
-
-### LOG
-
-# bindd = SUPER, L, Hyprlog, togglespecialworkspace, log 
-# workspace = special:log, on-created-empty:$terminal -e sh -lc 'hyprlog; echo; read -p "Press Enter to close..."'
-
-
-bindd = SUPER SHIFT, H, Home Assistant, togglespecialworkspace, home 
-workspace = special:home, on-created-empty:$homeAssistant
-
-windowrule = no_auto_hdr true, match:class kitty
+hl.window_rule({
+	name = "disable-auto-hdr-kitty",
+	match = { class = "kitty" },
+	no_auto_hdr = true,
+})
