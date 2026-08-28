@@ -66,12 +66,12 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/hypr/hyprpaper.conf -> $HOME/.config/hypr/hyprpaper.conf"
     "$HOME/.home-manager/config_files/hypr/hyprsunset.conf -> $HOME/.config/hypr/hyprsunset.conf"
     "$HOME/.home-manager/config_files/hypr/keybinds.conf -> $HOME/.config/hypr/keybinds.conf"
-    "$HOME/.home-manager/config_files/hypr/workspaces.conf -> $HOME/.config/hypr/workspaces.conf"
 
     "$HOME/.home-manager/config_files/hypr/autostart.lua -> $HOME/.config/hypr/autostart.lua"
     "$HOME/.home-manager/config_files/hypr/hyprland.lua -> $HOME/.config/hypr/hyprland.lua"
     "$HOME/.home-manager/config_files/hypr/monitors.lua -> $HOME/.config/hypr/monitors.lua"
     "$HOME/.home-manager/config_files/hypr/variables.lua -> $HOME/.config/hypr/variables.lua"
+    "$HOME/.home-manager/config_files/hypr/workspaces.lua -> $HOME/.config/hypr/workspaces.lua"
 
     # which-key
     "$HOME/.home-manager/config_files/hypr/scripts/which-key.sh -> $HOME/.config/hypr/scripts/which-key.sh"
