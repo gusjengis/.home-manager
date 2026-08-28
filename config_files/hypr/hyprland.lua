@@ -23,7 +23,7 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 -- if there is a local file called "monitors.lua" in the same directory as this file, run that instead of this default config
 require("autostart")
-require("variables")
+local vars = require("platform-variables")
 
 local file_present, monitors = pcall(require, "monitors")
 if not file_present then
@@ -40,8 +40,6 @@ end
 ---------------------
 
 -- Set programs that you use
-local terminal = "kitty"
-local fileManager = "dolphin"
 local menu = "hyprlauncher"
 
 -------------------------------
@@ -242,17 +240,17 @@ hl.device({
 ---- KEYBINDINGS ----
 ---------------------
 
-local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+local mainMod = vars.SUPER -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(vars.terminal))
 local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(
 	mainMod .. " + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(vars.fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
