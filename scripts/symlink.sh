@@ -69,6 +69,7 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/hypr/workspaces.conf -> $HOME/.config/hypr/workspaces.conf"
     "$HOME/.home-manager/config_files/hypr/variables.conf -> $HOME/.config/hypr/variables.conf"
     "$HOME/.home-manager/config_files/hypr/monitors.conf -> $HOME/.config/hypr/monitors.conf"
+    "$HOME/.home-manager/config_files/hypr/hyprland.lua -> $HOME/.config/hypr/hyprland.lua"
 
     # which-key
     "$HOME/.home-manager/config_files/hypr/scripts/which-key.sh -> $HOME/.config/hypr/scripts/which-key.sh"
