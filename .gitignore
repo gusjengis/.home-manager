@@ -1,5 +1,6 @@
 modules.nix
 local.nix
 config_files/hypr/monitors.conf
+config_files/hypr/monitors.lua
 result
 scripts/repo-lists/local.list
