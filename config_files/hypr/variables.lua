@@ -1,5 +1,3 @@
-hl.env("XCURSOR_SIZE", "24")
-
 -- trying to hide window decorations, doesn't seem to work
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("GTK_CSD", "0")

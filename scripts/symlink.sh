@@ -59,16 +59,15 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/waybar/style.css -> $HOME/.config/waybar/style.css"
 
     # hyprland
-    # "$HOME/.home-manager/config_files/hypr/autostart.conf -> $HOME/.config/hypr/autostart.conf"
     "$HOME/.home-manager/config_files/hypr/hyprlog.conf -> $HOME/.config/hypr/hyprlog.conf"
     "$HOME/.home-manager/config_files/hypr/hypridle.conf -> $HOME/.config/hypr/hypridle.conf"
-    "$HOME/.home-manager/config_files/hypr/hyprland.conf -> $HOME/.config/hypr/hyprland.conf"
     "$HOME/.home-manager/config_files/hypr/hyprpaper.conf -> $HOME/.config/hypr/hyprpaper.conf"
     "$HOME/.home-manager/config_files/hypr/hyprsunset.conf -> $HOME/.config/hypr/hyprsunset.conf"
-    "$HOME/.home-manager/config_files/hypr/keybinds.conf -> $HOME/.config/hypr/keybinds.conf"
 
     "$HOME/.home-manager/config_files/hypr/autostart.lua -> $HOME/.config/hypr/autostart.lua"
+    "$HOME/.home-manager/config_files/hypr/appearance.lua -> $HOME/.config/hypr/appearance.lua"
     "$HOME/.home-manager/config_files/hypr/hyprland.lua -> $HOME/.config/hypr/hyprland.lua"
+    "$HOME/.home-manager/config_files/hypr/keybinds.lua -> $HOME/.config/hypr/keybinds.lua"
     "$HOME/.home-manager/config_files/hypr/monitors.lua -> $HOME/.config/hypr/monitors.lua"
     "$HOME/.home-manager/config_files/hypr/variables.lua -> $HOME/.config/hypr/variables.lua"
     "$HOME/.home-manager/config_files/hypr/workspaces.lua -> $HOME/.config/hypr/workspaces.lua"

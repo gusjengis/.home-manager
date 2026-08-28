@@ -210,14 +210,12 @@ in
 
     home.activation.macHyprSetup = lib.mkIf Mac (
       lib.hm.dag.entryAfter [ "symlink" ] ''
-        ln -sf $HOME/.home-manager/config_files/hypr/appearance.mac.conf $HOME/.config/hypr/appearance.conf
         ln -sf $HOME/.home-manager/config_files/hypr/variables.mac.lua $HOME/.config/hypr/platform-variables.lua
       ''
     );
 
     home.activation.pcHyprSetup = lib.mkIf PC (
       lib.hm.dag.entryAfter [ "symlink" ] ''
-        ln -sf $HOME/.home-manager/config_files/hypr/appearance.pc.conf $HOME/.config/hypr/appearance.conf
         ln -sf $HOME/.home-manager/config_files/hypr/variables.pc.lua $HOME/.config/hypr/platform-variables.lua
       ''
     );
