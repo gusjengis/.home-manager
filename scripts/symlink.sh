@@ -59,7 +59,7 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/waybar/style.css -> $HOME/.config/waybar/style.css"
 
     # hyprland
-    "$HOME/.home-manager/config_files/hypr/autostart.conf -> $HOME/.config/hypr/autostart.conf"
+    # "$HOME/.home-manager/config_files/hypr/autostart.conf -> $HOME/.config/hypr/autostart.conf"
     "$HOME/.home-manager/config_files/hypr/hyprlog.conf -> $HOME/.config/hypr/hyprlog.conf"
     "$HOME/.home-manager/config_files/hypr/hypridle.conf -> $HOME/.config/hypr/hypridle.conf"
     "$HOME/.home-manager/config_files/hypr/hyprland.conf -> $HOME/.config/hypr/hyprland.conf"
@@ -69,6 +69,7 @@ declare -a LINKS=(
     "$HOME/.home-manager/config_files/hypr/workspaces.conf -> $HOME/.config/hypr/workspaces.conf"
     "$HOME/.home-manager/config_files/hypr/variables.conf -> $HOME/.config/hypr/variables.conf"
     "$HOME/.home-manager/config_files/hypr/monitors.conf -> $HOME/.config/hypr/monitors.conf"
+    "$HOME/.home-manager/config_files/hypr/autostart.lua -> $HOME/.config/hypr/autostart.lua"
     "$HOME/.home-manager/config_files/hypr/hyprland.lua -> $HOME/.config/hypr/hyprland.lua"
 
     # which-key
