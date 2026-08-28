@@ -1,5 +1,3 @@
-hl.env("XCURSOR_SIZE", "24")
-
 hl.on("hyprland.start", function()
 	hl.exec_cmd("xset r rate 190 50")
 	hl.exec_cmd("hyprctl setcursor $cursor_theme $cursor_size")

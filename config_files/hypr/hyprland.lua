@@ -23,6 +23,8 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 -- if there is a local file called "monitors.lua" in the same directory as this file, run that instead of this default config
 require("autostart")
+require("variables")
+
 local file_present, monitors = pcall(require, "monitors")
 if not file_present then
 	hl.monitor({
