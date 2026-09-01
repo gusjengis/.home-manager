@@ -123,7 +123,7 @@ in
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
-    config.global.log_format = "-";
+    config.global.log_filter = "^$";
   };
 
   news.display = "silent";
