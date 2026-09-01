@@ -33,6 +33,7 @@ in
     kdePackages.filelight
     qimgv
     zathura
+    libreoffice
     tailnetThunarBookmarks
   ];
 

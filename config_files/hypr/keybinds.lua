@@ -14,6 +14,7 @@ local function execAndReset(command)
 	end
 end
 
+bind("SUPER + SPACE", hl.dsp.exec_cmd("ambxst run launcher"), "App Launcher")
 bind(
 	"SUPER + CTRL + ALT + SPACE",
 	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/waypipe-launcher.sh"),
@@ -35,11 +36,7 @@ bind(
 	hl.dsp.exec_cmd("bash " .. home .. "/.home-manager/config_files/hypr/scripts/next-wallpaper.sh"),
 	"Next Wallpaper"
 )
-bind(
-	"SUPER + CTRL + W",
-	hl.dsp.exec_cmd("pkill waybar; nohup waybar >/tmp/waybar.log 2>&1 &"),
-	"Restart Waybar"
-)
+bind("SUPER + CTRL + W", hl.dsp.exec_cmd("pkill waybar; nohup waybar >/tmp/waybar.log 2>&1 &"), "Restart Waybar")
 bind("SUPER + J", hl.dsp.layout("togglesplit"), "Rotate Split")
 
 bind("code:202", hl.dsp.exec_cmd("handy --toggle-transcription"), "Dictate")
@@ -88,19 +85,11 @@ for workspace = 1, 10 do
 		hl.dsp.focus({ workspace = workspace, on_current_monitor = true }),
 		"Workspace " .. workspace
 	)
-	bind(
-		"SUPER + SHIFT + " .. key,
-		hl.dsp.window.move({ workspace = workspace }),
-		"Move to Workspace " .. workspace
-	)
+	bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = workspace }), "Move to Workspace " .. workspace)
 end
 
 bind("SUPER + CTRL + ALT + SHIFT + E", hl.dsp.exit(), "Exit Hyprland")
-bind(
-	"SUPER + CTRL + ALT + SHIFT + S",
-	hl.dsp.exec_cmd("alga power off; systemctl poweroff"),
-	"Shutdown"
-)
+bind("SUPER + CTRL + ALT + SHIFT + S", hl.dsp.exec_cmd("alga power off; systemctl poweroff"), "Shutdown")
 bind("SUPER + CTRL + ALT + SHIFT + R", hl.dsp.exec_cmd("systemctl reboot"), "Restart")
 
 bind("SUPER + mouse:272", hl.dsp.window.drag(), "Move Window", { mouse = true })
