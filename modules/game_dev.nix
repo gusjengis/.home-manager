@@ -16,16 +16,15 @@
     home.packages =
       with pkgs;
       [
-        python314
-        blender
-        vscode
       ]
       ++ lib.optionals PC [
-        unityhub
-        plasticscm-client-complete
-        dotnetCorePackages.dotnet_9.sdk
-        stable.roslyn-ls
-        cudaPackages.cudatoolkit
+        # vscode
+        # unityhub
+        # blender
+        # plasticscm-client-complete
+        # dotnetCorePackages.dotnet_9.sdk
+        # stable.roslyn-ls
+        # cudaPackages.cudatoolkit
       ];
   };
 }
