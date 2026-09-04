@@ -11,8 +11,6 @@ let
   kvantumTheme = "KvAdaptaDark";
 in
 {
-  fonts.fontconfig.enable = true;
-
   home.packages = [ pkgs.papirus-icon-theme ];
 
   ###### Environment hints (kept minimal but practical)

@@ -4,6 +4,19 @@
   lib,
   ...
 }:
+let
+  helveticaNeueLtStd = pkgs.stdenvNoCC.mkDerivation {
+    pname = "helvetica-neue-lt-std";
+    version = "2014.08.16";
+    src = ./fonts/helvetica-neue-lt-std;
+
+    dontUnpack = true;
+
+    installPhase = ''
+      install -Dm644 "$src"/*.otf -t $out/share/fonts/opentype
+    '';
+  };
+in
 {
   imports = [
     ./desktop_env/mod.nix
@@ -37,6 +50,10 @@
       home.homeDirectory = "/home/gusjengis";
 
       home.stateVersion = "25.05";
+
+      fonts.fontconfig.enable = true;
+
+      home.packages = [ helveticaNeueLtStd ];
 
       home.sessionVariables = {
         SYNC_REPO_GROUPS = lib.concatStringsSep "," (
