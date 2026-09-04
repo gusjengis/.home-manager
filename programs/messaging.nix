@@ -7,8 +7,6 @@
 }:
 
 {
-  # Thunderbird is declared in mail.nix.
-
   home.packages =
     with pkgs;
     [

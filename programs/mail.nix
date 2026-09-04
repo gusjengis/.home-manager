@@ -4,7 +4,7 @@
   lib,
   ...
 }:
-{
+lib.mkIf config.desktopEnv.enable {
   programs.thunderbird = {
     enable = config.desktopEnv.enable;
     package = pkgs.thunderbird;
