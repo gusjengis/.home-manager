@@ -15,9 +15,10 @@
       openssl
       opencode
       inputs.claude-code-nix.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
+      python314
     ]
     ++ lib.optionals config.desktopEnv.enable [
-      inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.handy
+      handy
       wtype
       xdotool
       gource

@@ -18,10 +18,6 @@
       url = "github:gusjengis/Ambxst?ref=fix-special-workspaces";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    handy = {
-      url = "github:cjpais/Handy/v0.9.3";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # Mail helpers keep their own verified nixpkgs inputs.
     # OAuth 2.0 token broker, feeds XOAUTH2 tokens to the mail watcher.
     ortie = {

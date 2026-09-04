@@ -21,6 +21,13 @@ let
       exec home-manager switch --impure --flake "$hm_repo/" "$@"
     '';
   };
+
+  rjmatrix = pkgs.rustPlatform.buildRustPackage {
+    pname = "rjmatrix";
+    version = "1.0.7";
+    src = inputs.rmatrix.outPath;
+    cargoLock.lockFile = "${inputs.rmatrix.outPath}/Cargo.lock";
+  };
 in
 {
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
@@ -111,7 +118,7 @@ in
     ]
     ++ lib.optionals config.desktopEnv.enable [
       pipes-rs
-      inputs.rmatrix.packages.${pkgs.stdenv.hostPlatform.system}.rjmatrix
+      rjmatrix
     ];
 
   programs.fzf = {
