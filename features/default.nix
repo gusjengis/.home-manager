@@ -1,0 +1,19 @@
+{
+  imports = [
+    ./agents
+    ./applications
+    ./development
+    ./desktop
+    ./files
+    ./gaming
+    ./git
+    ./java
+    ./media
+    ./printing
+    ./repo-sync
+    ./secrets
+    ./ssh
+    ./system-tools
+    ./terminal
+  ];
+}

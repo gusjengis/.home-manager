@@ -20,12 +20,11 @@ in
 {
   imports = [
     ./desktop_env/mod.nix
+    ./features
+    ./legacy/ambxst
     ./modules/mod.nix
-    ./programs/mod.nix
-    ./utilities/mod.nix
-    ./create_directories.nix
+    ./policy/insecure-packages.nix
     ./link_files.nix
-    ./update_on_boot.nix
   ]
   ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/modules.nix) /home/gusjengis/.home-manager/modules.nix
   ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/local.nix) /home/gusjengis/.home-manager/local.nix;
@@ -54,14 +53,6 @@ in
       fonts.fontconfig.enable = true;
 
       home.packages = [ helveticaNeueLtStd ];
-
-      home.sessionVariables = {
-        SYNC_REPO_GROUPS = lib.concatStringsSep "," (
-          [ "core" ]
-          ++ lib.optional config.dev.enable "dev"
-          ++ lib.optional config.desktopEnv.enable "desktop"
-        );
-      };
 
       nixpkgs.config.allowUnfree = true;
     }

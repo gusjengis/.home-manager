@@ -16,7 +16,6 @@ let
       '';
     };
 
-  sunshineLauncher = mkRepoScript "sunshine-launcher" "sunshine-launcher.sh";
   sunshineConnect = mkRepoScript "sunshine-connect" "sunshine-connect.sh";
   sunshineStreamHost = mkRepoScript "sunshine-stream-host" "sunshine-stream-host.sh";
 in
@@ -31,18 +30,13 @@ in
       jq
       libnotify
       moonlight-qt
-      openssh
       tailscale
       sunshineConnect
-      sunshineLauncher
       sunshineStreamHost
     ];
 
     programs.bash.shellAliases = {
-      moonlight-remote = "sunshine-launcher";
       pcstream = "sunshine-connect pc";
-      remote-game = "sunshine-launcher";
-      sunshine-remote = "sunshine-launcher";
     };
   };
 }

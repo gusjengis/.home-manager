@@ -42,7 +42,8 @@ with_timeout() {
 }
 
 if [[ "$#" -eq 0 ]]; then
-    exec sunshine-launcher
+    printf 'Usage: sunshine-connect <host>\n' >&2
+    exit 2
 fi
 
 if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then

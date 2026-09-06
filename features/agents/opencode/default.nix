@@ -1,0 +1,47 @@
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+let
+  configRoot = "${config.home.homeDirectory}/.home-manager/features/agents/opencode";
+in
+{
+  # Pinned to the upstream flake rather than pkgs.opencode, which trails behind.
+  # The tag lives in flake.nix; bump it there.
+  home.packages = [ inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+
+  programs.bash.shellAliases.oc = "opencode";
+
+  # Settings and plugins are linked back into this repository so edits apply on
+  # the next OpenCode start, and so state OpenCode writes itself (recent models,
+  # UI preferences) is versioned and synced to other machines.
+  xdg.configFile = {
+    "opencode/opencode.json".source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/opencode.json";
+
+    "opencode/plugins/session-notify.js".source =
+      config.lib.file.mkOutOfStoreSymlink "${configRoot}/plugins/session-notify.js";
+
+    # Caveman skill suite (caveman, caveman-commit, caveman-review, ...).
+    # OpenCode scans ~/.config/opencode/skills recursively for **/SKILL.md, so
+    # linking the whole skills dir picks up every sub-skill.
+    # Update to latest: nix flake update caveman && rehome
+    "opencode/skills/caveman-suite".source = "${inputs.caveman}/skills";
+
+    # Caveman's OpenCode installer makes Caveman default-on by adding this
+    # always-loaded rule file. Source it from the pinned flake input instead of
+    # running the installer, so the behavior is reproducible through Home Manager.
+    "opencode/AGENTS.md".text = ''
+      <!-- caveman-begin -->
+      ${builtins.readFile "${inputs.caveman}/src/rules/caveman-activate.md"}
+      <!-- caveman-end -->
+    '';
+  };
+
+  # OpenCode saves state by atomically replacing files, which breaks individual
+  # symlinks. Link the directory instead; only model.json and kv.json are
+  # tracked, while locks and prompt history are ignored beside them.
+  home.file.".local/state/opencode".source =
+    config.lib.file.mkOutOfStoreSymlink "${configRoot}/state";
+}

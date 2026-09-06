@@ -1,0 +1,41 @@
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  configRoot = "${config.home.homeDirectory}/.home-manager/features/ssh";
+in
+{
+  home.packages = [ pkgs.openssh ];
+
+  home.file = {
+    ".ssh/config".source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/config";
+    ".ssh/authorized_keys".source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/authorized_keys";
+  };
+
+  # Synced private keys may arrive as 0644 because Git does not preserve
+  # arbitrary regular-file modes. OpenSSH refuses to use them until corrected.
+  home.activation.sshSecretPermissions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    secrets_dir="${config.home.homeDirectory}/.config/secrets"
+    ssh_secrets="$secrets_dir/ssh"
+
+    if [ -d "$ssh_secrets" ]; then
+      ${pkgs.coreutils}/bin/chmod 700 "$secrets_dir" "$ssh_secrets" 2>/dev/null || true
+
+      for file in "$ssh_secrets"/*; do
+        [ -f "$file" ] || continue
+        case "$file" in
+          *.pub) ${pkgs.coreutils}/bin/chmod 644 "$file" 2>/dev/null || true ;;
+          *) ${pkgs.coreutils}/bin/chmod 600 "$file" 2>/dev/null || true ;;
+        esac
+      done
+    fi
+  '';
+
+  # These pre-existing links remain intentionally unmanaged. Both currently
+  # point at missing files; their original purpose is unknown:
+  #   ~/.ssh/id_ed25519     -> ~/.config/secrets/ssh/id_ed25519
+  #   ~/.ssh/id_ed25519.pub -> ~/.home-manager/config_files/ssh/id_ed25519.pub
+}

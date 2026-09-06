@@ -17,3 +17,11 @@ If the user asks to download wallpapers, use these preferences:
 # Rebuilds
 
 When rebuilding, use the rehome command if available.
+
+# Configuration Files
+
+- Keep application configuration beside its owning Nix module whenever practical.
+- Deploy editable configuration with Home Manager out-of-store symlinks, using `config.lib.file.mkOutOfStoreSymlink`, rather than store-backed `source = ./path` links or embedded file contents.
+- Prefer linking an application configuration directory when the application atomically replaces files; otherwise it may replace an individual symlink instead of updating its repository target.
+- Use store-backed files only when immutability and rebuild-controlled changes are explicitly desired.
+- Rationale: configuration edits and application-written settings should update this repository immediately, remain writable, work after a program reload without a Home Manager rebuild, and persist across computers through Git.

@@ -313,6 +313,27 @@
         "type": "github"
       }
     },
+    "opencode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788565620,
+        "narHash": "sha256-lCXlxTOhcX70jxJAbpolyGlIxQK2nst+6bFhq3Xzdmc=",
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "rev": "16747470f976aca3d362ad730bcd3fe82ecc2c9a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "ref": "v1.18.29",
+        "repo": "opencode",
+        "type": "github"
+      }
+    },
     "ortie": {
       "inputs": {
         "fenix": "fenix_2",
@@ -467,9 +488,9 @@
         "hyprlog-nixpkgs": "hyprlog-nixpkgs",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_3",
+        "opencode": "opencode",
         "ortie": "ortie",
-        "rmatrix": "rmatrix",
-        "stable-nixpkgs": "stable-nixpkgs"
+        "rmatrix": "rmatrix"
       }
     },
     "rust-analyzer-src": {
@@ -504,21 +525,6 @@
         "ref": "nightly",
         "repo": "rust-analyzer",
         "type": "github"
-      }
-    },
-    "stable-nixpkgs": {
-      "locked": {
-        "lastModified": 1782847189,
-        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-25.11",
-        "type": "indirect"
       }
     },
     "systems": {

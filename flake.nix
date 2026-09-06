@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     hyprlog-nixpkgs.url = "github:gusjengis/nixpkgs?ref=add-hyprlog";
-    stable-nixpkgs.url = "nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
@@ -33,13 +32,18 @@
       url = "github:JuliusBrussee/caveman";
       flake = false;
     };
+    # OpenCode pinned upstream, ahead of the nixpkgs package.
+    # Bump by editing the tag below, then: nix flake update opencode && rehome
+    opencode = {
+      url = "github:anomalyco/opencode/v1.18.29";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      stable-nixpkgs,
       home-manager,
       nix-flatpak,
       hyprlog-nixpkgs,
@@ -58,9 +62,6 @@
         ];
         config.allowUnfree = true;
       };
-      stable = import stable-nixpkgs {
-        inherit system;
-      };
       hyprlog-nixpkgs = import inputs.hyprlog-nixpkgs {
         inherit system;
       };
@@ -78,7 +79,6 @@
             inherit Mac;
             inherit PC;
             inherit inputs;
-            inherit stable;
             inherit hyprlog-nixpkgs;
           };
           modules = [

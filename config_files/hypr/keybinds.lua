@@ -7,24 +7,8 @@ local function bind(keys, dispatcher, description, flags)
 	hl.bind(keys, dispatcher, flags)
 end
 
-local function execAndReset(command)
-	return function()
-		hl.dispatch(hl.dsp.exec_cmd(command))
-		hl.dispatch(hl.dsp.submap("reset"))
-	end
-end
-
-bind("SUPER + SPACE", hl.dsp.exec_cmd("ambxst run launcher"), "App Launcher")
-bind(
-	"SUPER + CTRL + ALT + SPACE",
-	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/waypipe-launcher.sh"),
-	"Remote App Launcher"
-)
-bind(
-	"SUPER + CTRL + ALT + M",
-	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/sunshine-launcher.sh"),
-	"Moonlight Remote Launcher"
-)
+bind("SUPER + SPACE", hl.dsp.exec_cmd("qs ipc call launcher toggle"), "App Launcher")
+bind("SUPER + CTRL + SPACE", hl.dsp.exec_cmd("qs ipc call launcher remote"), "Remote Launcher")
 bind("SUPER + Q", hl.dsp.exec_cmd(vars.terminal), "Launch Terminal")
 bind("SUPER + B", hl.dsp.exec_cmd(vars.browser), "Launch Browser")
 bind("ALT + F4", hl.dsp.window.close(), "Close Program")
@@ -33,10 +17,9 @@ bind("SUPER + F", hl.dsp.exec_cmd(vars.fileManager), "Launch File Manager")
 bind("SUPER + V", hl.dsp.window.float(), "Toggle Floating")
 bind(
 	"SUPER + SHIFT + N",
-	hl.dsp.exec_cmd("bash " .. home .. "/.home-manager/config_files/hypr/scripts/next-wallpaper.sh"),
+	hl.dsp.exec_cmd("bash " .. home .. "/.home-manager/features/desktop/wallpaper/next-wallpaper.sh"),
 	"Next Wallpaper"
 )
-bind("SUPER + CTRL + W", hl.dsp.exec_cmd("pkill waybar; nohup waybar >/tmp/waybar.log 2>&1 &"), "Restart Waybar")
 bind("SUPER + J", hl.dsp.layout("togglesplit"), "Rotate Split")
 
 bind("code:202", hl.dsp.exec_cmd("handy --toggle-transcription"), "Dictate")
@@ -46,17 +29,17 @@ hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("handy --toggle-transcription"), { r
 
 bind(
 	"SUPER + SHIFT + S",
-	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/hdr-safe-screenshot.sh output " .. home .. "/Pictures/Screenshots"),
+	hl.dsp.exec_cmd("take-screenshot output " .. home .. "/Pictures/Screenshots"),
 	"Screenshot"
 )
 bind(
 	"SUPER + SHIFT + A",
-	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/hdr-safe-screenshot.sh region " .. home .. "/Pictures/Screenshots"),
+	hl.dsp.exec_cmd("take-screenshot region " .. home .. "/Pictures/Screenshots"),
 	"Screenshot Area"
 )
 bind(
 	"SUPER + SHIFT + W",
-	hl.dsp.exec_cmd(home .. "/.home-manager/scripts/hdr-safe-screenshot.sh window " .. home .. "/Pictures/Screenshots"),
+	hl.dsp.exec_cmd("take-screenshot window " .. home .. "/Pictures/Screenshots"),
 	"Screenshot Window"
 )
 
@@ -122,36 +105,6 @@ bind(
 	"SUPER + H",
 	hl.dsp.exec_cmd("pkill wl-kbptr || wl-kbptr -c " .. home .. "/.home-manager/config_files/wl-kbptr/config"),
 	"Hop"
-)
-
-local function definePickerSubmap(name, configDir, closeCommand, moveScript, activateScript)
-	local configPath = home .. "/.home-manager/config_files/" .. configDir
-
-	hl.define_submap(name, function()
-		hl.bind("escape", execAndReset(closeCommand))
-		hl.bind("up", hl.dsp.exec_cmd(moveScript .. " " .. configPath .. " up"))
-		hl.bind("down", hl.dsp.exec_cmd(moveScript .. " " .. configPath .. " down"))
-		hl.bind("k", hl.dsp.exec_cmd(moveScript .. " " .. configPath .. " up"))
-		hl.bind("j", hl.dsp.exec_cmd(moveScript .. " " .. configPath .. " down"))
-		hl.bind("return", execAndReset(activateScript .. " " .. configPath))
-		hl.bind("KP_Enter", execAndReset(activateScript .. " " .. configPath))
-	end)
-end
-
-definePickerSubmap(
-	"waypipe-launcher",
-	"eww-waypipe-launcher",
-	"eww --config " .. home .. "/.home-manager/config_files/eww-waypipe-launcher close waypipe-hosts",
-	home .. "/.home-manager/scripts/waypipe-launcher-eww-move.sh",
-	home .. "/.home-manager/scripts/waypipe-launcher-eww-activate.sh"
-)
-
-definePickerSubmap(
-	"sunshine-launcher",
-	"eww-sunshine-launcher",
-	"eww --config " .. home .. "/.home-manager/config_files/eww-sunshine-launcher close sunshine-hosts",
-	home .. "/.home-manager/scripts/sunshine-launcher-eww-move.sh",
-	home .. "/.home-manager/scripts/sunshine-launcher-eww-activate.sh"
 )
 
 hl.bind("SUPER + SHIFT + F4", hl.dsp.submap("focus_lock"))

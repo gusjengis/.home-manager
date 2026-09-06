@@ -10,7 +10,7 @@ return {
 	terminal = "kitty",
 	browser = "chromium",
 	desktopLauncher = desktopLauncher,
-	email = "thunderbird",
+	email = "mailspring",
 	music = desktopLauncher .. " webapp-qobuz",
 	onedrive = desktopLauncher .. " webapp-onedrive",
 	unity = home .. "/Unity/Hub/Editor/6000.0.23f1/Editor/Unity '" .. home .. "/Cloud Repositories/3DT/'",
