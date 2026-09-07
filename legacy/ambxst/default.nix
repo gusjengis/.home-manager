@@ -159,7 +159,10 @@ in
       phosphorIcons
     ];
 
-    xdg.configFile."ambxst".source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/config";
+    xdg.configFile."ambxst" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/config";
+      force = true;
+    };
 
     xdg.dataFile."ambxst/pinnedapps.json".source =
       config.lib.file.mkOutOfStoreSymlink "${configRoot}/pinnedapps.json";

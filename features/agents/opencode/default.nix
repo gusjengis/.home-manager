@@ -42,6 +42,8 @@ in
   # OpenCode saves state by atomically replacing files, which breaks individual
   # symlinks. Link the directory instead; only model.json and kv.json are
   # tracked, while locks and prompt history are ignored beside them.
-  home.file.".local/state/opencode".source =
-    config.lib.file.mkOutOfStoreSymlink "${configRoot}/state";
+  home.file.".local/state/opencode" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/state";
+    force = true;
+  };
 }

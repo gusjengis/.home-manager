@@ -32,7 +32,10 @@ class BackendTests(unittest.TestCase):
         self.assertEqual(backend.validate_id(desktop_id), desktop_id)
         command = backend.ssh_command("node.tail.ts.net", "run", desktop_id)
         self.assertEqual(command[-2], "node.tail.ts.net")
-        self.assertEqual(shlex.split(command[-1].split("; exec ", 1)[1]),
+        remote = shlex.split(command[-1])
+        self.assertEqual(remote[:2], ["sh", "-c"])
+        self.assertEqual(len(remote), 3)
+        self.assertEqual(shlex.split(remote[2].split("; exec ", 1)[1]),
                          ["quickshell-remote-apps", "run", desktop_id])
         self.assertIn("BatchMode=yes", command)
         self.assertIn("StrictHostKeyChecking=accept-new", command)

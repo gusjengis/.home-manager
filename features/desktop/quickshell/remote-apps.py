@@ -49,7 +49,8 @@ def ssh_command(host, *args):
         '/usr/local/share:/usr/share}"; '
         "exec " + shlex.join(["quickshell-remote-apps", *args])
     )
-    return ["ssh", *SSH_OPTIONS, host, remote]
+    # Waypipe executes a program, not shell syntax; keep setup inside its session.
+    return ["ssh", *SSH_OPTIONS, host, shlex.join(["sh", "-c", remote])]
 
 
 def capture_metadata(command, timeout):
