@@ -43,7 +43,21 @@ in
     # The whole directory is linked back into this repository, so new Hypr
     # config files need no Nix change and host-local files (monitors.lua) never
     # reach the store.
-    xdg.configFile."hypr".source = config.lib.file.mkOutOfStoreSymlink configDir;
+    xdg.configFile."hypr" = {
+      source = config.lib.file.mkOutOfStoreSymlink configDir;
+      force = true;
+    };
+
+    # Home Manager's `force` cannot replace a pre-existing *directory* with a
+    # symlink (its `ln -Tsf` gives up on non-empty directories). Until the
+    # managed symlink exists, clear any real directory left at the target so
+    # linkGeneration can install the repo-backed symlink on every host.
+    home.activation.hyprMigrateToSymlink = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+      hyprTarget="$HOME/.config/hypr"
+      if [[ -e "$hyprTarget" && ! -L "$hyprTarget" ]]; then
+        rm -rf "$hyprTarget"
+      fi
+    '';
 
     home.activation.hyprlandPlatformVariables =
       lib.mkIf (platformVariables != null)
