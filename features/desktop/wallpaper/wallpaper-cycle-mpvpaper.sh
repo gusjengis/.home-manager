@@ -255,10 +255,7 @@ while true; do
     fi
 
     write_ambxst_wallpaper "$img" "$wall_path"
-    "$HOME/.home-manager/features/desktop/wallpaper/update-accent.sh" "$img" >/dev/null 2>&1 || true
     current_img="$img"
-  else
-    "$HOME/.home-manager/features/desktop/wallpaper/update-accent.sh" "$current_img" >/dev/null 2>&1 || true
   fi
 
   if ! wait_or_advance 300 "$current_img"; then
@@ -278,5 +275,4 @@ while true; do
   fi
 
   write_ambxst_wallpaper "$img" "$wall_path"
-  "$HOME/.home-manager/features/desktop/wallpaper/update-accent.sh" "$img" >/dev/null 2>&1 || true
 done

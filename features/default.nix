@@ -10,6 +10,7 @@
     ./java
     ./media
     ./printing
+    ./remote
     ./repo-sync
     ./secrets
     ./ssh

@@ -2,7 +2,7 @@
 Name=Neovim
 GenericName=Text Editor
 Comment=Edit text files
-Exec=/home/gusjengis/.home-manager/scripts/launch-in-kitty.sh nvim %F
+Exec=/home/gusjengis/.home-manager/features/desktop/webapps/launch-in-kitty.sh nvim %F
 Terminal=false
 Type=Application
 Icon=nvim

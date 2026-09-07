@@ -1,5 +1,6 @@
 modules.nix
 local.nix
-config_files/hypr/monitors.lua
+features/desktop/hyprland/config/monitors.lua
+features/desktop/hyprland/config/platform-variables.lua
 result
 features/repo-sync/repos/local.list

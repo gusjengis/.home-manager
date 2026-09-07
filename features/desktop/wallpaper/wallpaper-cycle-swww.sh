@@ -64,7 +64,6 @@ while true; do
 
   for img in "${shuffled[@]}"; do
     "${CMD_PREFIX[@]}" "$img" "${SETTINGS[@]}"
-    "$HOME/.home-manager/features/desktop/wallpaper/update-accent.sh" "$img" >/dev/null 2>&1 || true
     wait_or_advance 300
   done
 done

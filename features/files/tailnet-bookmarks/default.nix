@@ -1,9 +1,14 @@
 {
+  config,
   pkgs,
   lib,
   ...
 }:
 let
+  # Single source of truth for the OG VM lives with its RDP launcher, in
+  # features/remote/windows-vm. The bookmark and the launcher must agree.
+  og = config.windowsVm.og;
+
   tailnetThunarBookmarks = pkgs.writeShellApplication {
     name = "tailnet-thunar-bookmarks";
     runtimeInputs = with pkgs; [
@@ -38,10 +43,10 @@ in
         "TAILNET_THUNAR_REFRESH_INTERVAL=5"
         "TAILNET_THUNAR_FULL_REFRESH_INTERVAL=60"
         "TAILNET_THUNAR_OFFICE_GATEWAY=mac.tail29bd65.ts.net"
-        "TAILNET_THUNAR_OG_HOST=pc.tail29bd65.ts.net"
-        "TAILNET_THUNAR_OG_ADDRESS=192.168.122.18"
-        "TAILNET_THUNAR_OG_SHARE=WindowsRoot"
-        "TAILNET_THUNAR_OG_USER=antho"
+        "TAILNET_THUNAR_OG_HOST=${lib.last (lib.splitString "@" og.startHost)}"
+        "TAILNET_THUNAR_OG_ADDRESS=${og.address}"
+        "TAILNET_THUNAR_OG_SHARE=${og.smbShare}"
+        "TAILNET_THUNAR_OG_USER=${og.user}"
       ];
     };
 

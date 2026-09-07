@@ -220,6 +220,11 @@ in
         default = "${config.home.homeDirectory}/.config/secrets/windows-smb-credentials";
         description = "Credential file holding the OG password";
       };
+      smbShare = lib.mkOption {
+        type = lib.types.str;
+        default = "WindowsRoot";
+        description = "SMB share published as the OG Thunar bookmark";
+      };
       bootTimeout = lib.mkOption {
         type = lib.types.int;
         default = 180;
@@ -231,7 +236,7 @@ in
   config = lib.mkIf (cfg.enable && config.desktopEnv.enable) {
     home.packages = [ pkgs.freerdp ] ++ launchers;
 
-    xdg.dataFile."icons/windows-logo.webp".source = ../windows-logo.webp;
+    xdg.dataFile."icons/windows-logo.webp".source = ./windows-logo.webp;
 
     xdg.dataFile."applications/windows-vm.desktop".text = ''
       [Desktop Entry]

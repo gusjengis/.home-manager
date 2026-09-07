@@ -19,12 +19,9 @@ let
 in
 {
   imports = [
-    ./desktop_env/mod.nix
     ./features
     ./legacy/ambxst
-    ./modules/mod.nix
     ./policy/insecure-packages.nix
-    ./link_files.nix
   ]
   ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/modules.nix) /home/gusjengis/.home-manager/modules.nix
   ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/local.nix) /home/gusjengis/.home-manager/local.nix;

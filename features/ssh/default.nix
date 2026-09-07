@@ -34,8 +34,9 @@ in
     fi
   '';
 
-  # These pre-existing links remain intentionally unmanaged. Both currently
-  # point at missing files; their original purpose is unknown:
+  # These pre-existing links remain intentionally unmanaged. Both point at
+  # missing files; their original purpose is unknown. The second targets the
+  # deleted config_files/ tree, so it can never resolve again:
   #   ~/.ssh/id_ed25519     -> ~/.config/secrets/ssh/id_ed25519
   #   ~/.ssh/id_ed25519.pub -> ~/.home-manager/config_files/ssh/id_ed25519.pub
 }

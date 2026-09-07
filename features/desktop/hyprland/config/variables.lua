@@ -3,7 +3,7 @@ hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("GTK_CSD", "0")
 
 local home = os.getenv("HOME")
-local desktopLauncher = home .. "/.home-manager/scripts/launch-desktop-entry.sh"
+local desktopLauncher = home .. "/.home-manager/features/desktop/webapps/launch-desktop-entry.sh"
 
 return {
 	SUPER = "SUPER",

@@ -21,7 +21,6 @@ peers; it does not guarantee that a peer has this helper installed.
 - Wallpapers, possibly Quickshell or Bash.
 - Bar and notification UI in Quickshell. Waybar/dunst configs are removed;
   this launcher does not implement a notification server.
-- Move remaining Wofi controls (focus-lock confirmation) to Quickshell.
 - Sunshine remote-access menu, if still wanted; its CLI helpers remain.
 - Verify remote GUI launches between physical machines after deploying both ends.
 - Handle application-specific foreground/new-instance flags where apps daemonize

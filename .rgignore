@@ -7,4 +7,4 @@ retired_wallpapers/
 !local.nix
 !scripts/repo-lists/local.list
 !modules.nix
-!config_files/hypr/monitors.lua
+!features/desktop/hyprland/config/monitors.lua

@@ -103,14 +103,11 @@ bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), "Hidden", { locked 
 
 bind(
 	"SUPER + H",
-	hl.dsp.exec_cmd("pkill wl-kbptr || wl-kbptr -c " .. home .. "/.home-manager/config_files/wl-kbptr/config"),
+	hl.dsp.exec_cmd(
+		"pkill wl-kbptr || wl-kbptr -c " .. home .. "/.home-manager/features/desktop/cursor/wl-kbptr.conf"
+	),
 	"Hop"
 )
-
-hl.bind("SUPER + SHIFT + F4", hl.dsp.submap("focus_lock"))
-hl.define_submap("focus_lock", function()
-	hl.bind("CTRL + ESCAPE", hl.dsp.exec_cmd(home .. "/.home-manager/scripts/focus-lock.sh"))
-end)
 
 hl.window_rule({
 	name = "suppress-maximize-events",

@@ -7,7 +7,7 @@ desktop_id="${desktop_name}.desktop"
 
 desktop_path="$HOME/.local/share/applications/$desktop_id"
 if [[ ! -f "$desktop_path" ]]; then
-    desktop_path="$HOME/.home-manager/config_files/local/share/applications/$desktop_id"
+    desktop_path="$HOME/.home-manager/features/desktop/webapps/applications/$desktop_id"
 fi
 
 if command -v gtk-launch >/dev/null 2>&1; then

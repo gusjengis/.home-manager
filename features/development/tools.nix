@@ -17,7 +17,6 @@
       cloc
     ]
     ++ lib.optionals config.desktopEnv.enable [
-      handy
       wtype
       xdotool
       gource
