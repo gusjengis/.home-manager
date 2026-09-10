@@ -15,6 +15,17 @@ in
     ".ssh/authorized_keys".source = config.lib.file.mkOutOfStoreSymlink "${configRoot}/authorized_keys";
   };
 
+  # Old generations linked these paths into the deleted config_files tree.
+  # Remove only dangling symlinks before Home Manager checks link targets;
+  # never replace a real file or a valid link here.
+  home.activation.sshMigrateDanglingLinks = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    for target in "$HOME/.ssh/config" "$HOME/.ssh/authorized_keys"; do
+      if [[ -L "$target" && ! -e "$target" ]]; then
+        rm "$target"
+      fi
+    done
+  '';
+
   # Synced private keys may arrive as 0644 because Git does not preserve
   # arbitrary regular-file modes. OpenSSH refuses to use them until corrected.
   home.activation.sshSecretPermissions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
