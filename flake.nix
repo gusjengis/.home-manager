@@ -3,6 +3,9 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    # Keep system and Home Manager package sets independent during migration.
+    nixpkgs-system.url = "github:NixOS/nixpkgs/nixos-unstable";
+    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     alga.url = "github:Tenzer/alga";
@@ -46,6 +49,7 @@
   outputs =
     {
       nixpkgs,
+      nixpkgs-system,
       home-manager,
       ...
     }@inputs:
@@ -55,6 +59,8 @@
       # Every machine this configuration is deployed to, with the machine-id
       # `rehome` uses to pick one automatically.
       hosts = import ./hosts;
+
+      systemHosts = lib.filterAttrs (_: host: host.systemManaged or true) hosts;
 
       pkgsFor =
         system:
@@ -81,8 +87,24 @@
             ./home.nix
           ];
         };
+
+      nixosConfigurationFor =
+        hostName: host:
+        nixpkgs-system.lib.nixosSystem {
+          system = host.system;
+          specialArgs = {
+            inherit inputs;
+            system = host.system;
+          };
+          modules = [
+            (./system/hosts + "/${hostName}/hardware-configuration.nix")
+            (./system/hosts + "/${hostName}/configuration.nix")
+            ./system/modules
+          ];
+        };
     in
     {
       homeConfigurations = lib.mapAttrs homeConfigurationFor hosts;
+      nixosConfigurations = lib.mapAttrs nixosConfigurationFor systemHosts;
     };
 }
