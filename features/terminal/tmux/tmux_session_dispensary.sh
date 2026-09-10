@@ -14,7 +14,6 @@ EXTRA_DIRS=(
   "$HOME/.config/secrets"
   "$HOME/.home-manager/"
   "/etc/nixos"
-  "/etc/nix-modules"
 
 )
 

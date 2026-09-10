@@ -1,8 +1,8 @@
 # System configuration migration
 
-This directory is the additive first stage of moving NixOS and Home Manager
-into one repository. Existing `/etc/nix-modules` and `/etc/nixos` checkouts
-remain untouched and are still the active rebuild path.
+This directory holds NixOS configuration in the same repository as Home
+Manager. Existing `/etc/nix-modules` and `/etc/nixos` checkouts remain untouched
+as rollback copies, but `rebuild` and automatic updates use this unified flake.
 
 `flake.nix` exposes `nixosConfigurations.<host>` for every roster entry whose
 `systemManaged` value is not false.
@@ -15,10 +15,10 @@ remote access and produces the same top-level derivations as the legacy flake:
 nix eval --impure --raw ".#nixosConfigurations.pc.config.system.build.toplevel.drvPath"
 ```
 
-Do not switch rebuild automation to this flake until the mac profile is tracked
-and each host has built its named output. Until then, rollback is simply the
-existing command:
+Every tracked host has built and switched its named output. Rollback remains:
 
 ```bash
 sudo nixos-rebuild switch --impure --flake /etc/nix-modules
+home-manager generations
+/nix/store/<previous-home-manager-generation>/activate
 ```

@@ -3,13 +3,14 @@ set -u
 set -o pipefail
 
 hm_repo="$HOME/.home-manager"
-modules_repo="/etc/nix-modules"
 sync_command="${SYNC_REPOS_COMMAND:-sync-repos}"
 rebuild_command="${REBUILD_COMMAND:-rebuild}"
 rehome_command="${REHOME_COMMAND:-rehome}"
 
 state_dir="${XDG_RUNTIME_DIR:-/run/user/$UID}/home-manager-notifications"
 log_file="$state_dir/update.log"
+deployment_state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/home-manager"
+deployed_revision_file="$deployment_state_dir/deployed-revision"
 
 notify() {
   local urgency="normal"
@@ -35,41 +36,36 @@ if [[ ! -d "$hm_repo/.git" ]]; then
   exit 1
 fi
 
-if [[ ! -d "$modules_repo/.git" ]]; then
-  notify --urgency=critical "nixos-rebuild" "$modules_repo is not a Git repository"
-  exit 1
-fi
-
-hm_before="$(git -C "$hm_repo" rev-parse HEAD)"
-modules_before="$(git -C "$modules_repo" rev-parse HEAD)"
-
 if ! "$sync_command"; then
   notify --urgency=critical "sync" "one or more repositories failed to sync"
   failed=1
 fi
 
 hm_after="$(git -C "$hm_repo" rev-parse HEAD)"
-modules_after="$(git -C "$modules_repo" rev-parse HEAD)"
+deployed_revision=""
+if [[ -r "$deployed_revision_file" ]]; then
+  deployed_revision="$(<"$deployed_revision_file")"
+fi
 
-if [[ "$modules_before" != "$modules_after" ]]; then
+if [[ "$deployed_revision" != "$hm_after" ]]; then
   if ! "$rebuild_command"; then
-    notify --urgency=critical "nixos-rebuild" "nix-modules changed, rebuild failed"
+    notify --urgency=critical "nixos-rebuild" "unified configuration changed, rebuild failed"
     failed=1
   else
     notify "nixos-rebuild" "rebuild succeeded"
+    if ! "$rehome_command"; then
+      notify --urgency=critical "home-manager" "home-manager changed, switch failed"
+      failed=1
+    else
+      notify "home-manager" "rehome succeeded"
+      mkdir -p "$deployment_state_dir"
+      printf '%s\n' "$hm_after" >"$deployed_revision_file.tmp"
+      mv "$deployed_revision_file.tmp" "$deployed_revision_file"
+    fi
   fi
 fi
 
-if [[ "$hm_before" != "$hm_after" ]]; then
-  if ! "$rehome_command"; then
-    notify --urgency=critical "home-manager" "home-manager changed, switch failed"
-    failed=1
-  else
-    notify "home-manager" "rehome succeeded"
-  fi
-fi
-
-if [[ "$modules_before" == "$modules_after" && "$hm_before" == "$hm_after" ]]; then
+if [[ "$deployed_revision" == "$hm_after" ]]; then
   notify "update" "no repository changes found"
 fi
 

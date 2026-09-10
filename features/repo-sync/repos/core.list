@@ -1,4 +1,3 @@
-/etc/;https://github.com/gusjengis/nix-modules.git
 $HOME/;https://github.com/gusjengis/.home-manager.git
 $HOME/.config/;https://github.com/gusjengis/nvim.git
 $HOME/.config/;https://github.com/gusjengis/secrets.git
