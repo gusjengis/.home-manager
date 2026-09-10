@@ -40,12 +40,7 @@
 
     keyboards = {
       default = {
-        extraConfig = ''
-          [ids]
-          05ac:0353:6f083222
-          [main]
-          capslock = overload(control, esc)
-        '';
+        extraConfig = "          \t[ids]\n          \t\t05ac:0353:6f083222\n\t\t[main]\n\t\t\tcapslock = overload(control, esc)        ";
       };
     };
   };
