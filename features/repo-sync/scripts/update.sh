@@ -9,8 +9,9 @@ rehome_command="${REHOME_COMMAND:-rehome}"
 
 state_dir="${XDG_RUNTIME_DIR:-/run/user/$UID}/home-manager-notifications"
 log_file="$state_dir/update.log"
-deployment_state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/home-manager"
+deployment_state_dir="${HM_DEPLOY_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/home-manager}"
 deployed_revision_file="$deployment_state_dir/deployed-revision"
+deployment_lock_file="$deployment_state_dir/update.lock"
 
 notify() {
   local urgency="normal"
@@ -30,6 +31,17 @@ notify() {
 notify "update" "starting sync and rebuild checks"
 
 failed=0
+
+# A Home Manager activation holds this lock for its whole run, and activation
+# is what starts this service. Without the guard the update would rebuild the
+# system and re-activate Home Manager from inside the activation that launched
+# it, which deadlocks against the user systemd manager.
+mkdir -p "$deployment_state_dir"
+exec 9>"$deployment_lock_file"
+if ! flock -n 9; then
+  notify "update" "activation or another update in progress, skipping"
+  exit 0
+fi
 
 if [[ ! -d "$hm_repo/.git" ]]; then
   notify --urgency=critical "home-manager" "$hm_repo is not a Git repository"

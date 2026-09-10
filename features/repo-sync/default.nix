@@ -6,6 +6,11 @@
 }:
 let
   repoRoot = "${config.home.homeDirectory}/.home-manager";
+  deployStateDir = "${config.xdg.stateHome}/home-manager";
+  # Held for the whole activation, and taken non-blocking by `update-home`.
+  # Activation starts the update service, so without this the service would
+  # rebuild and re-activate from inside the activation it was started by.
+  deployLockFile = "${deployStateDir}/update.lock";
   repoGroups = lib.concatStringsSep "," (
     [ "core" ]
     ++ lib.optional config.dev.enable "dev"
@@ -34,9 +39,11 @@ let
     runtimeInputs = [
       pkgs.coreutils
       pkgs.git
+      pkgs.util-linux
       syncRepos
     ];
     text = ''
+      export HM_DEPLOY_STATE_DIR=${deployStateDir}
       export SYNC_REPOS_COMMAND=${lib.getExe syncRepos}
       export REBUILD_COMMAND=${config.home.profileDirectory}/bin/rebuild
       export REHOME_COMMAND=${config.home.profileDirectory}/bin/rehome
@@ -93,6 +100,18 @@ in
   ];
 
   home.sessionVariables.SYNC_REPO_GROUPS = repoGroups;
+
+  # Take the deployment lock for the rest of this activation. The file
+  # descriptor stays open until activation exits, so `update-home` started by
+  # reloadSystemd below sees the lock and skips instead of rebuilding and
+  # re-activating underneath us. Non-blocking on purpose: a manual switch
+  # during an automatic update must not wait, Home Manager's own profile lock
+  # already serialises the two.
+  home.activation.homeUpdateLock = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    mkdir -p ${deployStateDir}
+    exec 9>${deployLockFile}
+    ${pkgs.util-linux}/bin/flock -n 9 || true
+  '';
 
   programs.bash.shellAliases = {
     sync = "sync-repos";
