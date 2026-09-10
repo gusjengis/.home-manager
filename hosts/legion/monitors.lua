@@ -5,12 +5,17 @@ hl.monitor({
 	transform = 0,
 	position = "0x0",
 
-	supports_wide_color = 1,
-	supports_hdr = 1,
-	bitdepth = 10,
-	cm = "hdr",
-	sdrbrightness = 1.4,
-	sdr_min_luminance = 0.0,
+	-- Disabled for the same reason as hosts/pc/monitors.lua: this Hyprland
+	-- build aborts in applyMonitorRule when the GBM allocator cannot provide
+	-- XR30, which crash-loops the session at login. Legion has not been seen
+	-- crashing yet, it is still on the old compositor, so re-enable these four
+	-- lines once the fork handles the fallback.
+	-- supports_wide_color = 1,
+	-- supports_hdr = 1,
+	-- bitdepth = 10,
+	-- cm = "hdr",
+	-- sdrbrightness = 1.4,
+	-- sdr_min_luminance = 0.0,
 })
 
 hl.monitor({
