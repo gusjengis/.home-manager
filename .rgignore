@@ -4,6 +4,7 @@ plugins/
 retired_wallpapers/
 *.png
 *.jpg
+*.otf
 !local.nix
 !scripts/repo-lists/local.list
 !modules.nix
