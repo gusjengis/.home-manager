@@ -1,12 +1,16 @@
 # Reorganization Handoff
 
-Status of the ongoing restructuring of this Home Manager configuration.
+Status of the restructuring of this Home Manager configuration.
 
 ## The goal
 
-One folder per feature. Opening a feature folder should show everything about
-that feature: its Nix declaration, its config files, its scripts, its assets,
-its services. No hunting across a parallel `config_files/` tree.
+One folder per feature, one folder per machine. Opening a feature folder should
+show everything about that feature: its Nix declaration, its config files, its
+scripts, its assets, its services. Opening a host folder should show everything
+that makes that machine different from the others.
+
+Every machine builds from this repository alone. Nothing a machine needs is
+allowed to live in an untracked file or in a hand-built directory.
 
 ## Rules being followed
 
@@ -27,8 +31,21 @@ its services. No hunting across a parallel `config_files/` tree.
 - Secrets are read at runtime by shell code only. Nothing under
   `~/.config/secrets` is ever read by Nix, because anything Nix reads is copied
   into the world-readable `/nix/store`.
+- Anything installed by hand is a bug. `cargo install`, `cmake && make`, and a
+  package that only exists in an untracked file are all the same failure: the
+  machine stops being reproducible from this repository.
 
-## Done
+## Layout
+
+```
+flake.nix            inputs and one homeConfiguration per machine
+home.nix             what every machine shares, plus the shared option defaults
+hosts/               one folder per machine, and the machine-id roster
+packages/            packages built from this repository, exposed as an overlay
+features/            one folder per feature
+legacy/ambxst/       old shell, isolated, still launchable, not integrated
+policy/              insecure package allowances, with owners documented
+```
 
 ```
 features/
@@ -40,6 +57,7 @@ features/
 ├── files/           thunar, documents, default-apps, tailnet-bookmarks
 ├── gaming/
 ├── git/             git, gh, lazygit, GH_TOKEN wiring
+├── hardware/        battery
 ├── java/            shared by gaming and development
 ├── media/           playback, creation
 ├── printing/bambu/
@@ -49,207 +67,207 @@ features/
 ├── ssh/             package, config, authorized_keys, key permissions
 ├── system-tools/    archives, connectivity, hardware, monitoring, shell, storage
 └── terminal/        shell (bash/commands/tools), tmux, kitty, pipes-rs, rjmatrix
-
-legacy/ambxst/       old shell, isolated, still launchable, not integrated
-policy/              insecure package allowances, with owners documented
 ```
+
+## Machines
+
+| host     | arch    | role                                    | monitors.lua |
+|----------|---------|-----------------------------------------|--------------|
+| `pc`     | x86_64  | main desktop; gaming, gamedev, bambu, VM | yes          |
+| `alpha`  | x86_64  | headless server                          | no           |
+| `omega`  | x86_64  | headless server                          | no           |
+| `legion` | x86_64  | laptop, full desktop                     | no           |
+| `mac`    | aarch64 | Asahi laptop, full desktop               | yes          |
+| `t480s`  | x86_64  | laptop, full desktop                     | yes          |
+| `t470`   | x86_64  | laptop, headless                         | no           |
+| `zombie` | x86_64  | laptop, headless                         | no           |
+
+### How a machine knows which configuration it is
+
+Every one of these machines reports the hostname `nixos`, so the hostname is
+useless as an identifier. Tailscale is no better: its local `HostName` is also
+`nixos` on all of them, and the distinct tailnet name only exists in `DNSName`,
+which is control-plane state rather than anything the machine knows about
+itself. Using it would mean a rebuild needs a running daemon and a reachable
+coordination server, and that renaming a machine in a web dashboard silently
+changes what it builds.
+
+`/etc/machine-id` is used instead. It is unique per install, readable offline,
+needs no daemon, and exists before networking. `hosts/default.nix` maps each id
+to a name, and `rehome` bakes that table into itself at build time.
+
+```bash
+rehome            # resolve this machine from /etc/machine-id
+rehome mac        # build a named host explicitly
+HM_HOST=mac rehome
+```
+
+An unrecognised machine-id is an error, not a guess. It prints the id, the
+known hosts, and — purely as a hint — the name Tailscale has for the machine.
+
+A reinstall regenerates the machine-id. Use `rehome <name>` until the new id is
+recorded in `hosts/default.nix`.
+
+## Done
+
+The whole old deployment mechanism is gone: `scripts/symlink.sh`,
+`link_files.nix`, the `config_files/` tree, `modules/`, `desktop_env/`, and
+finally `scripts/` itself. Every configuration file is owned by the feature
+that uses it, and every machine-specific value is owned by a host folder.
 
 Deleted along the way: Thunderbird (replaced by Mailspring), Signal, Krita,
 Swappy, all Eww configs and helper scripts, Wofi and the accent pipeline, all of
 Sunshine and Moonlight, the Waypipe launcher, the Eww calendar, `profile.webp`,
-empty `readme.md`, the tracked `result` symlink, and the unused `stable-nixpkgs`
-flake input.
+empty `readme.md`, the tracked `result` symlink, `hyprpaper` and its config,
+`clean-broken-desktop-entries.sh`, the orphaned `current-window.sh` and
+`open_chromium.sh`, and the unused `stable-nixpkgs`, `ortie`, `carillon` and
+`hyprlog-nixpkgs` flake inputs.
 
-The old deployment mechanism is gone: `scripts/symlink.sh`, `link_files.nix`,
-and the whole `config_files/` tree have been deleted. `modules/` is gone too.
-Every configuration file is now owned by the feature that uses it.
+### Hosts, and the end of the untracked files
+
+`modules.nix` and `local.nix` were gitignored, so each machine's identity lived
+only on that machine. They are replaced by `hosts/<name>/default.nix`, and
+`flake.nix` now exposes one `homeConfiguration` per machine.
+
+- `monitors.lua` is tracked as `hosts/<name>/monitors.lua` and symlinked into
+  the Hypr config directory during activation, the same way
+  `platform-variables.lua` already was. The `mac` dual-monitor HDR layout
+  existed in no repository before this.
+- `.gitignore` now lists only the two activation-written symlinks, whose targets
+  are themselves tracked.
+- Because each host declares its own `system`, `builtins.currentSystem` is gone
+  and **`rehome` no longer passes `--impure`**.
+- `Mac` and `PC` were architecture flags wearing machine-name costumes, passed
+  through `specialArgs`. They are gone; modules test
+  `pkgs.stdenv.hostPlatform.isx86_64` directly, which is what they always meant.
+
+Real breakage this surfaced, now fixed:
+
+- `hyprsunset` is started by `autostart.lua` on every desktop host but was only
+  installed on `pc`, through `local.nix`. It was silently missing on `legion`,
+  `mac` and `t480s`. It now belongs to the hyprland feature.
+- `features/development/tools.nix` declared a module argument `stable` that
+  nothing provided.
+- `alga` and `easyeffects` were undeclared everywhere except `pc`; they are now
+  `hosts/pc/default.nix`.
+
+### Hyprland is built from a fork, declaratively
+
+Hyprland used to be compiled by hand into `~/Documents/Code/Hyprland/build` on
+every machine, and `bash.nix` execed that path directly. It is now a flake
+input pinned to a branch:
+
+```nix
+hyprland.url = "github:gusjengis/Hyprland/personal";
+```
+
+`nix flake update hyprland && rehome` moves a machine to whatever that branch
+points at now. Switching to upstream later is a URL change: `hyprwm/Hyprland/main`
+for dev, or a tag for a release. Its nixpkgs deliberately does not follow ours,
+because Hyprland pins the nixpkgs it is tested against.
+
+Doing this found that the `personal` branch did not compile. Commit `7f0d9d6`
+("workspace: reuse rule updates for blur") removed six listener declarations
+from `CMonitor::m_listeners`. Five were the blur listeners it meant to replace
+with workspace rules, but `commitResult` came from upstream and is still used in
+`Monitor.cpp`. Fixed in `976e510a9`. It went unnoticed because the running
+binary was built from an older commit and `build/` was never recompiled.
+
+**Hyprland is now Home Manager's, not the system's.** `programs.hyprland` was
+removed from `/etc/nix-modules/desktop_env/hyprland.nix`. It installed a second
+Hyprland from nixpkgs, and its capability wrapper at `/run/wrappers/bin/Hyprland`
+shadowed the fork on `PATH`, so `start-hyprland`, which resolves through
+`execvp`, launched the nixpkgs build. Nothing needed the system copy: no display
+manager is configured, so its session entry was never read.
+
+What moved, and where it went:
+
+| was provided by `programs.hyprland` | now |
+|---|---|
+| `hyprland` | Home Manager, from the fork |
+| `xdg-desktop-portal-hyprland` | Home Manager, from the same flake input |
+| `xwayland` | `programs.xwayland.enable` on the system |
+| `cap_sys_nice` wrapper | gone; the hand-built binary never used it either |
+
+The portal must match the compositor's commit or screen sharing and the file
+picker break, which is why it comes from the same input. The GTK backend stays
+system-wide for Flatpak, with `xdg.portal.config.common.default = [ "gtk" ]`.
+`/etc/nix-modules/desktop_env/bedtime_lockout.nix` no longer refers to
+`${pkgs.hyprland}/bin/hyprctl`; it resolves `hyprctl` from the user's profile,
+so it neither builds a second Hyprland nor risks a mismatched IPC.
+
+### Battery warnings
+
+`scripts/battery-monitor.sh` was a `while true; sleep 60` loop started from
+`autostart.lua` on every host, including desktops with no battery, calling a
+script that shelled out to `acpi -b`. On `mac` that reports the Logitech mouse
+as a second battery.
+
+It is now `features/hardware/battery`: a systemd user timer gated on
+`laptop.enable`, running a `writeShellApplication` that reads sysfs and skips
+peripherals by their `scope` attribute. It survives a Hyprland restart, logs to
+the journal, and does not exist at all on `pc`, `alpha` or `omega`.
+
+### Earlier work
+
+Desktop split (`hyprland`, `theme`, `cursor`, `webapps` as features, with
+`~/.config/hypr` a single directory link), Quickshell's Tailnet host picker and
+remote application launcher over Waypipe, the `windows-vm` feature, and the
+deletion of Sunshine, Moonlight, Waybar, dunst, Eww and Wofi. See the git
+history for detail; those areas are settled.
 
 ## What's left
 
-### Latest progress: remote access, Sunshine deleted
+### 1. Desktop shell
 
-- Sunshine and Moonlight are gone: `modules/remote_streaming.nix`,
-  `sunshine-connect.sh`, `sunshine-stream-host.sh`, the `moonlight-qt` package,
-  the `remoteStreaming.enable` option, and the `pcstream` alias. Nothing in this
-  repository referenced them elsewhere.
-- `features/remote/windows-vm/` owns the RDP launchers and `windows-logo.webp`.
-  Both `windows-rdp` and `og-rdp` were already packaged with `writeShellApplication`
-  and explicit `runtimeInputs`, so nothing needed repackaging, unlike the Sunshine
-  wrappers that used to `exec` out of `scripts/`.
-- The OG VM's address, user, SSH host, and SMB share now live in one place. The
-  Thunar bookmark service reads them from `windowsVm.og` instead of repeating
-  them, and a new `windowsVm.og.smbShare` option carries the share name. The
-  generated unit environment is byte-identical to before.
-- `modules/` and `modules/mod.nix` are deleted, with the `home.nix` import.
-- Verification: build, `rehome`, `windows-rdp` and `og-rdp` on `PATH`, both
-  desktop entries and the icon deployed, the OG launcher still reads its
-  credentials file and execs `xfreerdp` through `/args-from:fd:3`, the bookmarks
-  service stayed active with unchanged OG environment, and the Sunshine helpers
-  and `pcstream` are gone.
-- Note: `sunshine.service` still exists as a user unit from the NixOS side, and a
-  Flatpak Sunshine unit is linked. Neither is controlled by this repository.
-  `~/.config/secrets/` has no Sunshine entry to clean up.
+The moves are finished; this is build work, tracked in
+`features/desktop/quickshell/TODO.md`.
 
-### Earlier: desktop_env retired, linker deleted
+- Bar and notification UI in Quickshell. Waybar and dunst are gone and nothing
+  replaced them.
+- Wallpapers. Nothing paints the background — chosen deliberately, the old shell
+  was the renderer. `features/desktop/wallpaper/` still holds five scripts
+  targeting three backends, one of which (`swww`) is not installed. Accent
+  extraction died with Wofi and would need rebuilding for a themed Quickshell.
+- Keybinding help menu from Hyprland's active binds.
+- Verify a remote GUI launch between two physical machines; only localhost has
+  been tested.
+- Remote launch logs have no rotation.
+- `TODO.md` still mentions a Sunshine menu; those helpers are deleted.
 
-- `features/desktop/theme/` and `features/desktop/cursor/` came from
-  `desktop_env/`, which is now deleted along with its `home.nix` import.
-  `wl-kbptr.conf` moved in with cursor. It needs no link: nothing reads
-  `~/.config/wl-kbptr`, since `keybinds.lua` passes the repository path to `-c`.
-- `features/desktop/webapps/` owns the 17 desktop entries, 14 icons, and both
-  launcher scripts. Links are per file, because `~/.local/share/applications`
-  and the icon directory are shared with Steam, Lutris, wine, and Home Manager's
-  own `og-vm.desktop`. The entry list is read from the directory, so adding a
-  webapp needs no Nix edit.
-- `webapp-*` entries and icons follow `desktopEnv.enable`; `btop`, `nvim`, and
-  `chromium-browser` do not, because `features/files/default-apps/mimeapps.list`
-  names them as handlers. That reproduces what `symlink.sh` did with its
-  `DESKTOP_ENV_ENABLED` unlink loop, using generation cleanup instead.
-- `features/applications/handy/` took the package from `development/tools.nix`.
-  Contrary to the earlier note here, its data directory is **not** linked:
-  `~/.local/share/com.pais.handy` is 2.4 MB of recordings, models, `history.db`,
-  and WebKit caches. Only `settings_store.json` is linked, so if Handy ever
-  replaces that file instead of writing in place, activation will refuse to
-  clobber it and the file should stop being versioned.
-- Wofi and the accent pipeline are deleted: its config, `style.css`,
-  `terminal-runner.sh`, `update-accent.sh`, the four wallpaper-cycler calls, the
-  `ensureAccentCacheFile` activation, and the `wofi` and `wallust` packages.
-  Nothing had called Wofi since Quickshell took `SUPER+SPACE` and `focus-lock.sh`
-  was removed. Note that `wofi` is still on `PATH` from the NixOS side, in
-  `/etc/nix-modules`, which this repository does not control.
-- Verification: build, `rehome`, all 17 entries and 14 icons resolve into the
-  repository, unmanaged neighbours survived (33 entries remain in the directory),
-  `xdg-mime query default` still answers `nvim.desktop` and
-  `chromium-browser.desktop`, Handy's settings link resolves while its data
-  directory is untouched, `hyprctl reload` is clean at 73 binds, and `wallust`
-  is gone from `PATH`.
-- Note: the icon and desktop-database refresh in the webapps activation is a
-  no-op on this host, since neither `gtk-update-icon-cache` nor
-  `update-desktop-database` is on `PATH`. `symlink.sh` had the same guarded
-  calls, so this is not a regression, and icon lookup works without them.
+### 2. Still installed by hand
 
-### Earlier: Hyprland feature
+- **`hyprlog`, `hyprlogd` and `timeline-hyprfocusd-snitch` come from
+  `~/.cargo/bin`.** `autostart.lua` starts two of them, and they only run where
+  `cargo install` has been run. Left deliberately: hyprlog is being rewritten
+  and will be packaged in `packages/` then. Marked `NOT REPRODUCIBLE` in
+  `autostart.lua`.
+- `~/Documents/Code/Hyprland/build` is no longer used by anything and can be
+  deleted whenever convenient. Keep the checkout for development.
 
-- `features/desktop/hyprland/` now owns the module that was
-  `desktop_env/hyprland.nix`, plus `config/`, which is exactly the contents of
-  `~/.config/hypr`: the Lua graph, the four `.conf` files, `scripts/`, and
-  host-local `monitors.lua`.
-- `~/.config/hypr` is a single out-of-store symlink to
-  `features/desktop/hyprland/config`, replacing 11 `scripts/symlink.sh` entries.
-  New Hypr files need no Nix change, and files written by hand land in the
-  repository immediately. `default.nix` sits outside `config/` so it is not
-  exposed as Hypr configuration.
-- `monitors.lua` never reaches the store, since the directory link is resolved
-  at runtime rather than by Nix.
-- `platform-variables.lua` is chosen by `Mac`/`PC` in activation, as a symlink
-  inside `config/` rather than a separate link in `~/.config/hypr`, which the
-  directory link makes impossible. It is gitignored, like `monitors.lua`.
-- Deleted: `focus-lock.sh` with its `SUPER+SHIFT+F4` submap and `CTRL+ESCAPE`
-  bind, and `system-status.sh`.
-- Behavior change, deliberate: Hypr config is now gated on `desktopEnv.enable`.
-  The old linker deployed it on every host.
-- Verification: build, `rehome`, `~/.config/hypr` resolves into the repository,
-  writes through the link land in the repository, `hyprctl reload` returned ok,
-  binds dropped 75 to 73 with no `focus_lock` submap left, Slack and Discord
-  binds still resolve through `platform-variables`, and the monitor stayed at
-  3840x2160@144.
-- The old `~/.config/hypr` was deleted before activation because a directory
-  link cannot replace a real directory. It held no regular files, only stale
-  links: the previous generation's, a long-broken `hyprfocus.conf`, and
-  `scripts/which-key.sh` and `shaders/crt.frag`, both pointing at files that
-  never existed in this repository.
+### 3. Build distribution
 
-### Latest progress: Quickshell remote launcher
+No Hyprland binary cache is configured, so `aquamarine`, `hyprutils`,
+`hyprgraphics`, `hyprcursor`, `hyprlang` and `xdph` all compile from source on
+every machine, even though upstream publishes them to `hyprland.cachix.org`.
+Adding it needs `nix.settings.substituters` and `trusted-public-keys` on the
+NixOS side. Four machines run the desktop, and `mac` is aarch64 so it cannot
+share an x86 build at all.
 
-- Quickshell now owns both the Tailnet host picker and remote app picker locally.
-  `SUPER+SPACE` opens local apps; `SUPER+CTRL+SPACE` opens remote hosts.
-- `features/desktop/quickshell/remote-apps.py` supplies JSON app metadata and
-  embedded icons over SSH, then launches the selected desktop ID through Waypipe.
-  Its Nix module installs the helper, Waypipe, and xwayland-satellite on each
-  desktop host. Deploy this revision with `rehome` on both ends.
-- Cancelled metadata requests terminate/reap their SSH process group. Remote
-  app sessions are detached from Quickshell reloads; failures return through IPC.
-- Waybar/dunst configs, their linker entries, Waybar binding/reload plumbing,
-  and now-unused bar/media helper scripts have been removed with approval.
-  Eww remains removed. Wofi has since been deleted too.
-- Verification: Home Manager build and `rehome` passed, 20 backend tests passed,
-  Quickshell loaded and IPC menus were exercised, local export and SSH export
-  through localhost passed (79 apps, 76 icons). A GTK display connection through
-  Waypipe over localhost also passed. Physical-peer GUI launch needs verification
-  after remote deployment. See the Quickshell roadmap for behavioral limits.
+### 4. Loose ends
 
-### 1. Desktop shell — mostly done
-
-The split is finished: hyprland, theme, cursor, and webapps are all features,
-and `desktop_env/` is gone. What remains here is shell UI work, not moves.
-
-**Shell direction confirmed:** use Quickshell instead of Waybar, dunst, and Eww.
-Their old configs are removed; the bar and notification UI are still to be built.
-
-Also stale: `hyprlog.conf` is linked and `autostart.lua:7` runs `hyprlogd`, but
-the `hyprlog` package is commented out. `hyprpaper.conf` is linked and the
-package installed, but nothing starts it. `hyprsunset.conf` is linked and
-`autostart.lua:5` starts `hyprsunset`, but the package only comes from the
-untracked `local.nix`.
-
-Orphaned Hypr scripts with no caller, now in
-`features/desktop/hyprland/config/scripts/`: `current-window.sh` and
-`open_chromium.sh` (commented out at `autostart.lua:13`). They ride along with
-the directory link, so they now land in `~/.config/hypr/scripts/`.
-`system-status.sh` was deleted.
-
-### 2. Remote access — done
-
-`features/remote/windows-vm/` owns the RDP launchers, and `modules/` is gone.
-Sunshine and Moonlight were deleted rather than moved.
-
-### 3. Retire the last of the old mechanism — done
-
-`scripts/symlink.sh`, `link_files.nix`, its `home.nix` import, and the
-`config_files/` tree are deleted. `scripts/` is down to three files:
-
-| Script | Owner |
-|---|---|
-| `battery-monitor.sh`, `battery-notify.sh` | `autostart.lua:10` — a laptop/power feature |
-| `clean-broken-desktop-entries.sh` | no caller; manual tool, keep or delete |
-
-Once those move or go, `scripts/` disappears too.
-
-### 4. Hosts and profiles
-
-`home.nix` still mixes root imports, identity, feature options, the Helvetica
-derivation, and a desktop-only `LD_LIBRARY_PATH`.
-
-- Move the Helvetica derivation to `packages/helvetica-neue/` with `fonts/`.
-- Move identity and option defaults to `hosts/gusjengis/`.
-- `home.nix:26-27` imports `modules.nix` and `local.nix` by absolute path
-  guarded on `pathExists`. Both are gitignored host-local files. Fold them into
-  a proper host module.
-- `flake.nix:69-70` calls every aarch64 machine `Mac` and every x86_64 machine
-  `PC`. These are architecture flags wearing machine-name costumes, and they
-  are threaded through modules as `specialArgs`. Consider renaming, or deriving
-  real host identity instead.
-- `flake.nix:50` falls back to `x86_64-linux` when `builtins.currentSystem` is
-  unavailable, which is why `rehome` passes `--impure`.
-
-### 5. Loose ends
-
-- **`flake.nix` has two unused inputs**, `ortie` and `carillon`, both mail
-  helpers with explanatory comments but no consumer. `hyprlog-nixpkgs` is
-  passed through `specialArgs` but its only use is commented out.
-- **`.gitignore` and `.rgignore` now point at
-  `features/desktop/hyprland/config/monitors.lua`.** Keep it and
-  `config/platform-variables.lua` untracked; the directory link resolves them at
-  runtime so they never reach the store.
-- **Quickshell rebuild list** is in `features/desktop/quickshell/TODO.md`:
-  keybind help, wallpapers, bar/notifications, and remote-launch verification.
-  Waypipe host/app menus are implemented.
-- **`features/desktop/wallpaper/`** holds five scripts targeting three backends,
-  one of which (`swww`) is not installed. Left unsorted deliberately; sort it
-  out when Quickshell gains wallpaper support. Accent extraction is gone with
-  Wofi, so a themed Quickshell would need it rebuilt.
-- **`features/desktop/theme/` is not gated on `desktopEnv.enable`**, unlike
-  cursor, hyprland, and webapps. Preserved as it was; worth deciding on.
+- The packaged Hyprland reports `built from branch unknown ... dirty`, because
+  the GitHub tarball carries no git metadata. Cosmetic.
+- **`features/desktop/theme/` is deliberately not gated on `desktopEnv.enable`.**
+  The headless machines run GUI programs such as Thunar displayed elsewhere over
+  Waypipe, and those need the icon theme and the GTK/Qt hints. Do not "fix" it.
+- `features/applications/handy/`'s data directory is not linked; only
+  `settings_store.json` is. If Handy ever replaces that file instead of writing
+  in place, activation will refuse to clobber it and it should stop being
+  versioned.
+- The webapps activation refreshes the icon and desktop databases, which is a
+  no-op here because neither `gtk-update-icon-cache` nor `update-desktop-database`
+  is on `PATH`. `symlink.sh` had the same guarded calls.
 
 ## Known issues not caused by the reorganization
 
@@ -258,30 +276,23 @@ derivation, and a desktop-only `LD_LIBRARY_PATH`.
   `wl-paste > ~/.config/secrets/PAT && chmod 600 ~/.config/secrets/PAT`
   or `env -u GH_TOKEN gh auth token > ~/.config/secrets/PAT`. Then commit the
   secrets repo.
-- **The NixOS side has an unrelated evaluation error.** `nodejs_24` and `nil`
-  were added to `/etc/nix-modules/software/nvim.nix` (Rust was already there),
-  but the system will not build until this is fixed:
-  `Module '/etc/nixos/windows-vm.nix' has an unsupported attribute
-  'virtual-machines'` — it needs a top-level `config`/`options` attribute
-  removed. Until then Node and nil are on neither the system nor Home Manager.
-- **Nothing paints the desktop background.** Chosen deliberately; the old shell
-  was the renderer.
 - **Screenshots blow out** when Hyprland's wallpaper blur is in frame. Capture
   itself is fixed and HDR-correct; the remaining issue is upstream Hyprland.
 
 ## Gotchas worth knowing
 
-- **Nix flakes ignore untracked files.** After creating a feature, `git add` it
-  or the build fails with "Path ... is not tracked by Git". Nothing needs to be
-  committed, only staged.
-- **The old linker left stale symlinks** pointing at `config_files/` paths. Home
-  Manager refuses to clobber them and aborts activation partway. They were all
-  cleared during the migration, but the same rule applies to any future move:
-  delete the stale link first, and verify it is still a symlink and not a real
-  file the app has since rewritten.
+- **Nix flakes ignore untracked files.** After creating a feature or a host,
+  `git add` it or the build fails with "Path ... is not tracked by Git". Nothing
+  needs to be committed, only staged.
 - **A directory link cannot replace a real directory.** Home Manager aborts
   instead. Check the directory holds nothing unmanaged, then delete it before
-  activating.
+  activating. The hyprland feature does this itself in `hyprMigrateToSymlink`.
+- **Stale symlinks abort activation.** Home Manager refuses to clobber them and
+  stops partway. When moving a file, delete the old link first, and verify it is
+  still a symlink and not a real file the application has since rewritten.
+- **`set -e` and `&&` as the last command of a loop body.** A non-matching
+  `[ ... ] && echo` at the end of a `while read` loop exits the subshell, which
+  silently emptied `rehome`'s host lookup. Use `if`.
 - **`pgrep -x quickshell` never matches.** The wrapped binary's process name is
   `.quickshell-wra`. Use `pgrep -f quickshell`.
 - **Do not `pkill -f` a pattern that appears in your own command line.** It
@@ -292,8 +303,18 @@ derivation, and a desktop-only `LD_LIBRARY_PATH`.
 ## Verifying a change
 
 ```bash
-nix build .#homeConfigurations.gusjengis.activationPackage --no-link   # build only
-rehome                                                                 # activate
+nix build .#homeConfigurations.pc.activationPackage --no-link   # build one host
+rehome                                                          # activate this one
+```
+
+Check every host still evaluates after touching anything shared:
+
+```bash
+for h in pc alpha omega legion mac t480s t470 zombie; do
+  printf '%-8s ' "$h"
+  nix eval --raw ".#homeConfigurations.$h.activationPackage.drvPath" >/dev/null 2>&1 \
+    && echo OK || echo FAIL
+done
 ```
 
 To confirm a link resolves back into the repository rather than the store:

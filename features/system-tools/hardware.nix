@@ -1,14 +1,14 @@
 {
   config,
   pkgs,
-  PC,
   lib,
   ...
 }:
 
 {
   home.packages =
-    lib.optionals PC [ pkgs.wineWow64Packages.waylandFull ]
+    # Wine's 64-bit Wayland build is x86-only.
+    lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [ pkgs.wineWow64Packages.waylandFull ]
     ++ lib.optionals config.desktopEnv.enable [
       pkgs.ventoy
       pkgs.usbutils

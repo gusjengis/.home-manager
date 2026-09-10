@@ -7,6 +7,7 @@
     ./files
     ./gaming
     ./git
+    ./hardware
     ./java
     ./media
     ./printing

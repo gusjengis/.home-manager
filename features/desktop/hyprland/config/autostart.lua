@@ -4,12 +4,20 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user start --no-block thunar.service")
 	hl.exec_cmd("hyprsunset")
 	hl.exec_cmd("hypridle")
+
+	-- NOT REPRODUCIBLE: hyprlogd and timeline-hyprfocusd-snitch are installed by
+	-- hand with `cargo install` into ~/.cargo/bin, so they only run where that
+	-- has been done. Deliberate for now; hyprlog is being rewritten and will be
+	-- packaged in packages/ when it is.
 	hl.exec_cmd("hyprlogd snitch")
 	hl.exec_cmd("timeline-hyprfocusd-snitch")
+
 	-- hl.exec_cmd("alga power on")
-	hl.exec_cmd("~/.home-manager/scripts/battery-monitor.sh")
+
+	-- Low-battery warnings are a systemd user timer now, on laptops only.
+	-- See features/hardware/battery.
+
 	hl.exec_cmd("kdeconnectd")
 	hl.exec_cmd("qs -d -n")
-	-- hl.exec_cmd("~/.config/hypr/scripts/open_chromium.sh")
 	hl.exec_cmd("handy --start-hidden")
 end)

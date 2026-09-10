@@ -1,45 +1,45 @@
+# Everything every machine shares. Per-machine settings live in hosts/<name>,
+# and the roster of machines is hosts/default.nix.
 {
   config,
-  pkgs,
   lib,
+  pkgs,
+  hostName,
   ...
 }:
-let
-  helveticaNeueLtStd = pkgs.stdenvNoCC.mkDerivation {
-    pname = "helvetica-neue-lt-std";
-    version = "2014.08.16";
-    src = ./fonts/helvetica-neue-lt-std;
 
-    dontUnpack = true;
-
-    installPhase = ''
-      install -Dm644 "$src"/*.otf -t $out/share/fonts/opentype
-    '';
-  };
-in
 {
   imports = [
     ./features
     ./legacy/ambxst
     ./policy/insecure-packages.nix
-  ]
-  ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/modules.nix) /home/gusjengis/.home-manager/modules.nix
-  ++ lib.optional (builtins.pathExists /home/gusjengis/.home-manager/local.nix) /home/gusjengis/.home-manager/local.nix;
+    ./hosts/${hostName}
+  ];
 
-  options.desktopEnv.enable = lib.mkEnableOption "desktop environment packages" // {
-    default = true;
-  };
+  options = {
+    host.name = lib.mkOption {
+      type = lib.types.str;
+      readOnly = true;
+      description = "Which entry of hosts/ this machine is building.";
+    };
 
-  options.dev.enable = lib.mkEnableOption "dev tools and repos" // {
-    default = true;
-  };
+    desktopEnv.enable = lib.mkEnableOption "desktop environment packages" // {
+      default = true;
+    };
 
-  options.laptop.enable = lib.mkEnableOption "is a laptop" // {
-    default = true;
+    dev.enable = lib.mkEnableOption "dev tools and repos" // {
+      default = true;
+    };
+
+    laptop.enable = lib.mkEnableOption "is a laptop" // {
+      default = true;
+    };
   };
 
   config = lib.mkMerge [
     {
+      host.name = hostName;
+
       programs.home-manager.enable = true;
 
       home.username = "gusjengis";
@@ -49,7 +49,7 @@ in
 
       fonts.fontconfig.enable = true;
 
-      home.packages = [ helveticaNeueLtStd ];
+      home.packages = [ pkgs.helvetica-neue-lt-std ];
 
       nixpkgs.config.allowUnfree = true;
     }
@@ -60,5 +60,4 @@ in
       };
     })
   ];
-
 }

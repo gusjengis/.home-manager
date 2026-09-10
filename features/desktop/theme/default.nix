@@ -1,3 +1,10 @@
+# GTK/Qt theming.
+#
+# Deliberately NOT gated on desktopEnv.enable, unlike every other feature under
+# desktop/. The headless machines still run GUI programs such as Thunar, which
+# are displayed on another machine over Waypipe, and those programs need the
+# icon theme and the GTK/Qt environment hints to render correctly. Gating this
+# would leave remote windows unthemed.
 {
   config,
   lib,

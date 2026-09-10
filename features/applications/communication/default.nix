@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  PC,
   ...
 }:
 
@@ -19,7 +18,10 @@
 
       mailspring
     ]
-    ++ lib.optionals (PC && config.desktopEnv.enable) [
+    # No aarch64 builds. The Hyprland keybinds fall back to the webapp
+    # launchers where these are missing; see the hyprland feature's
+    # platform-variables selection.
+    ++ lib.optionals (pkgs.stdenv.hostPlatform.isx86_64 && config.desktopEnv.enable) [
       zoom-us
       discord-canary
       slack

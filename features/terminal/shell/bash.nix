@@ -8,13 +8,14 @@
 
   programs.bash = {
     enable = true;
+    # Log in on tty1 and the compositor takes over. Hyprland itself is the fork
+    # pinned in flake.nix and installed by features/desktop/hyprland, so this no
+    # longer points at a hand-built tree in ~/Documents/Code/Hyprland.
     initExtra = lib.optionalString config.desktopEnv.enable ''
-      if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ] && command -v Hyprland >/dev/null 2>&1; then
-        if command -v ~/Documents/Code/Hyprland/build/Hyprland >/dev/null 2>&1; then
-          exec start-hyprland --path ~/Documents/Code/Hyprland/build/Hyprland
-        elif command -v start-hyprland >/dev/null 1>&1; then
+      if [ -z "$WAYLAND_DISPLAY" ] && [ "x$XDG_VTNR" = "x1" ]; then
+        if command -v start-hyprland >/dev/null 2>&1; then
           exec start-hyprland
-        else
+        elif command -v Hyprland >/dev/null 2>&1; then
           exec Hyprland
         fi
       fi

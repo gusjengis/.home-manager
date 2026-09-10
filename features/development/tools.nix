@@ -1,12 +1,14 @@
 {
   config,
   pkgs,
-  stable,
-  PC,
   lib,
   ...
 }:
 
+let
+  # These have no aarch64 build.
+  x86Only = pkgs.stdenv.hostPlatform.isx86_64;
+in
 {
   home.packages =
     with pkgs;
@@ -21,7 +23,7 @@
       xdotool
       gource
     ]
-    ++ lib.optionals (PC && config.desktopEnv.enable) [
+    ++ lib.optionals (x86Only && config.desktopEnv.enable) [
       lmstudio
     ]
     ++ lib.optionals (config.dev.enable && config.desktopEnv.enable) [
@@ -30,7 +32,7 @@
       android-tools
       zulu17
     ]
-    ++ lib.optionals (PC && config.dev.enable && config.desktopEnv.enable) [
+    ++ lib.optionals (x86Only && config.dev.enable && config.desktopEnv.enable) [
       arduino
       android-studio
     ];
