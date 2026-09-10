@@ -44,14 +44,17 @@ in
         # local.nix, so it was missing on every host but the desktop.
         hyprsunset
         libnotify
-        linux-wallpaperengine
         awww
         font-awesome
         nerd-fonts.iosevka
         nerd-fonts.symbols-only
       ])
     # No aarch64 build.
-    ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [ pkgs.vial ];
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isx86_64 [
+      # Neither package has an aarch64 build.
+      pkgs.linux-wallpaperengine
+      pkgs.vial
+    ];
 
     # Portals are declared here rather than dropped into home.packages so that
     # exactly one hyprland.portal exists and it is the one built from the same
