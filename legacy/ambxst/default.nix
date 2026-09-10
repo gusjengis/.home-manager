@@ -164,6 +164,17 @@ in
       force = true;
     };
 
+    # Older generations created ~/.config/ambxst as a real directory filled
+    # with per-file symlinks into the now-deleted config_files tree. Preserve
+    # that directory as a backup before replacing it with the repository-backed
+    # directory symlink.
+    home.activation.ambxstMigrateToSymlink = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+      ambxstTarget="$HOME/.config/ambxst"
+      if [[ -d "$ambxstTarget" && ! -L "$ambxstTarget" ]]; then
+        mv "$ambxstTarget" "$ambxstTarget.pre-home-manager-$(date +%Y%m%d%H%M%S)"
+      fi
+    '';
+
     xdg.dataFile."ambxst/pinnedapps.json".source =
       config.lib.file.mkOutOfStoreSymlink "${configRoot}/pinnedapps.json";
   };
