@@ -4,14 +4,14 @@ hl.monitor({
 	position = "0x0",
 	scale = 1.0,
 
-	-- 10-bit/HDR is disabled: with this Hyprland build the GBM allocator
-	-- cannot allocate XR30 on the NVIDIA primary ("format XR30 isn't
-	-- supported by primary backend") and the compositor aborts inside
-	-- applyMonitorRule, which crash-loops the session at login.
-	-- bitdepth = 10,
-	-- cm = "hdr",
-	-- sdr_max_luminance = 350,
-	-- sdr_min_luminance = 0,
+	-- This GPU advertises XB30/AB30 but not XR30/AR30, so the XR30 attempt in
+	-- Monitor.cpp's formats10bit list fails and the XB30 fallback is what
+	-- actually drives 10-bit here. That failed allocation is logged and is
+	-- expected, it is not the cause of a crash.
+	bitdepth = 10,
+	cm = "hdr",
+	sdr_max_luminance = 350,
+	sdr_min_luminance = 0,
 })
 
 local wideGaps = {
