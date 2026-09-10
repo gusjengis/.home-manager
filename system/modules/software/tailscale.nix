@@ -57,15 +57,22 @@
 
       # have the job run this shell script
       script = with pkgs; ''
-        # wait for tailscaled to settle
-        sleep 2
-
-        # check if we are already authenticated to tailscale
-        status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-        if [ "$status" = "Running" ]; then
-          ${tailscale}/bin/tailscale set --accept-routes=true
-          exit 0
-        fi
+        # A daemon restart can briefly report NoState even when this node is
+        # authenticated. Wait instead of treating that transient state as a
+        # fresh login and calling `tailscale up` against existing preferences.
+        for _ in $(${coreutils}/bin/seq 1 30); do
+          status="$(${tailscale}/bin/tailscale status -json 2>/dev/null | ${jq}/bin/jq -r .BackendState 2>/dev/null || true)"
+          case "$status" in
+            Running)
+              ${tailscale}/bin/tailscale set --accept-routes=true
+              exit 0
+              ;;
+            NeedsLogin)
+              break
+              ;;
+          esac
+          sleep 1
+        done
 
         # otherwise authenticate with tailscale
         if [ -f /home/gusjengis/.config/secrets/api_keys/env_vars ]; then
@@ -78,7 +85,7 @@
         fi
 
 
-        ${tailscale}/bin/tailscale up -authkey "$TAILSCALE_AUTH_KEY" --accept-routes=true
+        TS_AUTHKEY="$TAILSCALE_AUTH_KEY" ${tailscale}/bin/tailscale up --reset --accept-routes=true
         # --ssh --accept-dns=true
       '';
     };
