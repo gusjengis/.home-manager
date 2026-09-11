@@ -15,6 +15,7 @@ bind("ALT + F4", hl.dsp.window.close(), "Close Program")
 bind("SUPER + F11", hl.dsp.window.fullscreen(), "Fullscreen")
 bind("SUPER + F", hl.dsp.exec_cmd(vars.fileManager), "Launch File Manager")
 bind("SUPER + V", hl.dsp.window.float(), "Toggle Floating")
+bind("SUPER + W", hl.dsp.exec_cmd("qs ipc call wallpaper toggle"), "Wallpaper Picker")
 bind(
 	"SUPER + SHIFT + N",
 	hl.dsp.exec_cmd("bash " .. home .. "/.home-manager/features/desktop/wallpaper/next-wallpaper.sh"),

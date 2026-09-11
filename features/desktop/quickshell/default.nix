@@ -6,7 +6,15 @@
 }:
 let
   configRoot = "${config.home.homeDirectory}/.home-manager/features/desktop/quickshell/config";
+  wallpaperController = "${config.home.homeDirectory}/.home-manager/features/desktop/wallpaper/wallpaperctl.py";
   python = pkgs.python3.withPackages (ps: [ ps.pygobject3 ]);
+  wallpaperctl = pkgs.writeShellApplication {
+    name = "wallpaperctl";
+    runtimeInputs = [ pkgs.awww pkgs.python3 ];
+    text = ''
+      exec python3 "${wallpaperController}" "$@"
+    '';
+  };
   remoteApps = pkgs.stdenvNoCC.mkDerivation {
     pname = "quickshell-remote-apps";
     version = "1";
@@ -28,7 +36,7 @@ in
 {
   config = lib.mkIf config.desktopEnv.enable {
     # Waypipe starts its remote server before the metadata helper's wrapper runs.
-    home.packages = [ pkgs.quickshell remoteApps pkgs.waypipe pkgs.xwayland-satellite ];
+    home.packages = [ pkgs.quickshell remoteApps wallpaperctl pkgs.waypipe pkgs.xwayland-satellite ];
 
     # Link the directory so Quickshell and future tooling can atomically replace
     # files without breaking repository-backed configuration.

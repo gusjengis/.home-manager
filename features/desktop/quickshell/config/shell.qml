@@ -30,6 +30,28 @@ ShellRoot {
         }
     }
 
+    IpcHandler {
+        target: "wallpaper"
+        function toggle(): void {
+            wallpaperPicker.toggle();
+        }
+        function open(): void {
+            wallpaperPicker.show();
+        }
+    }
+
+    Component.onCompleted: Quickshell.execDetached(["wallpaperctl", "restore"])
+
+    Timer {
+        interval: 300000
+        repeat: true
+        running: true
+        onTriggered: {
+            if (!wallpaperPicker.visible)
+                Quickshell.execDetached(["wallpaperctl", "random"]);
+        }
+    }
+
     Launcher {
         id: localLauncher
         initialMode: "local"
@@ -42,5 +64,9 @@ ShellRoot {
         initialMode: "hosts"
         backgroundColor: root.backgroundColor
         textColor: root.textColor
+    }
+
+    WallpaperPicker {
+        id: wallpaperPicker
     }
 }
