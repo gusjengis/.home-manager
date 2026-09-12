@@ -43,6 +43,7 @@ ShellRoot {
     Component.onCompleted: Quickshell.execDetached(["wallpaperctl", "restore"])
 
     Timer {
+        id: wallpaperCycle
         interval: 300000
         repeat: true
         running: true
@@ -50,6 +51,13 @@ ShellRoot {
             if (!wallpaperPicker.visible)
                 Quickshell.execDetached(["wallpaperctl", "random"]);
         }
+    }
+
+    FileView {
+        path: (Quickshell.env("XDG_STATE_HOME") || Quickshell.env("HOME") + "/.local/state")
+            + "/wallpaper/current"
+        watchChanges: true
+        onTextChanged: wallpaperCycle.restart()
     }
 
     Launcher {

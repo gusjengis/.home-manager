@@ -16,7 +16,9 @@
       kdePackages.kdeconnect-kde
       kdePackages.kpeople
 
-      mailspring
+      (mailspring.override {
+        commandLineArgs = "--password-store=gnome-libsecret";
+      })
     ]
     # No aarch64 builds. The Hyprland keybinds fall back to the webapp
     # launchers where these are missing; see the hyprland feature's
