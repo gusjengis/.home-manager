@@ -18,7 +18,7 @@ hl.on("hyprland.start", function()
 	-- Low-battery warnings are a systemd user timer now, on laptops only.
 	-- See features/hardware/battery.
 
-	hl.exec_cmd("kdeconnectd")
+	hl.exec_cmd("kdeconnect-indicator")
 	hl.exec_cmd("qs -d -n")
 	hl.exec_cmd("handy --start-hidden")
 	hl.exec_cmd("mailspring --background")

@@ -1,8 +1,12 @@
+//@ pragma UseQApplication
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import "bar"
+import "theme"
 
 // QuickShell launcher shell. Two dedicated popups: a local application launcher
 // and a remote launcher (Tailnet host picker, then applications on a chosen
@@ -10,8 +14,10 @@ import Quickshell.Io
 // LaunchProcess.qml helpers).
 ShellRoot {
     id: root
-    property color backgroundColor: "#222222"
-    property color textColor: "#ffffff"
+    property color backgroundColor: Theme.background
+    property color textColor: Theme.text
+
+    Bar { }
 
     IpcHandler {
         target: "launcher"

@@ -10,6 +10,11 @@
 - Detached remote sessions survive Quickshell configuration reloads. Failure
   details appear in the launcher; private logs live in
   `~/.local/state/quickshell/remote-apps/`.
+- Toggleable multi-monitor status bar with workspaces, subscription usage,
+  system tray, clock, and shared theme.
+- Per-monitor huge-margin mode (`SUPER+F12`, active monitor only), declared in
+  each host's `monitors.lua` through `monitor-modes.lua`. Monitors in that mode
+  keep their window size when the bar opens; others reserve space for it.
 
 Run `rehome` with this revision on each remote machine before using its app list.
 SSH must authenticate noninteractively. Host discovery includes Linux Tailnet
@@ -19,8 +24,7 @@ peers; it does not guarantee that a peer has this helper installed.
 
 - Add a keybinding help menu from Hyprland's active binds and descriptions.
 - Wallpapers, possibly Quickshell or Bash.
-- Bar and notification UI in Quickshell. Waybar/dunst configs are removed;
-  this launcher does not implement a notification server.
+- Add notification UI/server in Quickshell; dunst config was removed.
 - Sunshine remote-access menu, if still wanted; its CLI helpers remain.
 - Verify remote GUI launches between physical machines after deploying both ends.
 - Handle application-specific foreground/new-instance flags where apps daemonize

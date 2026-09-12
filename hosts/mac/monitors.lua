@@ -11,3 +11,14 @@ hl.monitor({
 	scale = 2.0,
 	position = "3840x1080",
 })
+
+require("monitor-modes").configure({
+	["HDMI-A-1"] = {
+		enabled = true,
+		margins = { top = 200, right = 747, bottom = 200, left = 747 },
+	},
+	["eDP-1"] = {
+		enabled = false,
+		margins = { top = 100, right = 278, bottom = 100, left = 278 },
+	},
+})

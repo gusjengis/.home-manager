@@ -1,6 +1,6 @@
 hl.monitor({
 	output = "HDMI-A-1",
-	mode = "3840x2160@144.00",
+	mode = "3840x2160@120.00",
 	position = "0x0",
 	scale = 1.0,
 
@@ -10,29 +10,9 @@ hl.monitor({
 	sdr_min_luminance = 0,
 })
 
-local wideGaps = {
-	top = 200,
-	right = 747,
-	bottom = 200,
-	left = 747,
-}
-
-local wideGapsEnabled = false
-
-hl.config({
-	general = {
-		gaps_out = wideGaps,
+require("monitor-modes").configure({
+	["HDMI-A-1"] = {
+		enabled = true,
+		margins = { top = 200, right = 747, bottom = 200, left = 747 },
 	},
-})
-
-hl.bind("SUPER + F12", function()
-	wideGapsEnabled = not wideGapsEnabled
-
-	hl.config({
-		general = {
-			gaps_out = wideGapsEnabled and wideGaps or 0,
-		},
-	})
-end, {
-	description = "Toggle Outer Gaps",
 })
